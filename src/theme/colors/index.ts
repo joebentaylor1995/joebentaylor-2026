@@ -16,11 +16,11 @@ import { Colors } from './interface';
 // NOTE • These colors serve as the base for all color variations
 export const colors: Colors = {
 	brand: {
-		bc1: generateColorVariants('#8000FF'),
-		bc2: generateColorVariants('#380377'),
-		bc3: generateColorVariants('#210048'),
-		bc4: generateColorVariants('#F7F7F7'),
-		bc5: generateColorVariants('#838383'),
+		bc1: generateColorVariants('#1653FF'),
+		bc2: generateColorVariants('#0043FF'),
+		bc3: generateColorVariants('#212121'),
+		bc4: generateColorVariants('#121212'),
+		bc5: generateColorVariants('#686A6E'),
 	},
 
 	global: {

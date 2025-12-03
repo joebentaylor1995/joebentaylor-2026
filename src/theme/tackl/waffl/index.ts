@@ -28,13 +28,13 @@ const baseGridStyles = css`
 	${bp.m`
 		--grid-columns: repeat(${columns?.m}, 1fr);
 		--grid-gutter: ${gutter.m};
-		--grid-margin: calc(var(--grid-gutter) / 2);
+		--grid-margin: ${gutter.m};
 	`}
 
 	${bp.l`
 		--grid-columns: repeat(${columns?.l}, 1fr);
 		--grid-gutter: ${gutter.l};
-		--grid-margin: calc(var(--grid-gutter) / 2);
+		--grid-margin: ${gutter.l};
 	`}
 `;
 

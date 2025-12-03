@@ -27,8 +27,8 @@ export const grid: Grid = {
 	},
 	gutter: {
 		s: '2.4rem',
-		m: '2.4rem',
-		l: '3.6rem',
+		m: '3.6rem',
+		l: '4.8rem',
 	},
 	maxSize: '1440px',
 };

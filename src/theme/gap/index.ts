@@ -13,13 +13,13 @@ import { Gap } from './interface';
 // ------------
 export const gap: Gap = {
 	xxs: '0.3rem',
-	xs: '0.4rem',
-	s: '0.8rem',
-	sm: '1.2rem',
-	m: '1.6rem',
-	l: '2.4rem',
-	xl: '3.2rem',
-	xxl: '4rem',
-	huge: '4.8rem',
-	uber: '6.4rem',
+	xs: '0.6rem',
+	s: '1.2rem',
+	sm: '1.8rem',
+	m: '2.4rem',
+	l: '3.6rem',
+	xl: '4.8rem',
+	xxl: '6rem',
+	huge: '7.2rem',
+	uber: '9.6rem',
 };

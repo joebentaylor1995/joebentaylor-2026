@@ -80,7 +80,7 @@ export const Jacket = styled(Aside)<JacketProps>(
 		pointer-events: none;
 		transition: all 1s ${getEase('bezzy')};
 
-		> .grid {
+		> waffl-grid {
 			height: 100%;
 		}
 	`
