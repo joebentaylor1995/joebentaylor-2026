@@ -5,28 +5,23 @@
 import AnimationPlugins from '@parts/AnimationPlugins';
 import Contexts from '@parts/Contexts';
 import CookieBar from '@parts/CookieBar';
+import GridExposer from '@parts/GridExposer';
 import { GlobalStyle, theme } from '@theme';
-import { inter } from '@theme/fonts';
+import { sequel, ppNeueMontreal } from '@theme/fonts';
 import StyledComponentsRegistry from '@utils/registry';
 import { ViewTransitions } from '@utils/viewTransitions';
 import { gsap } from 'gsap';
 import type { LenisRef } from 'lenis/react';
 import { ReactLenis } from 'lenis/react';
-import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-// Lazy load GridExposer since it's only used in development
-// Disabled SSR as it's not critical for server rendering
-const GridExposer = dynamic(() => import('@parts/GridExposer'), {
-	ssr: false,
-});
 
 // Component
 // ------------
 const Client = ({ children }: { children: React.ReactNode }) => {
 	// NOTE • Font Classes
-	const classes = `${inter.variable}`;
+	const classes = `${sequel.variable} ${ppNeueMontreal.variable}`;
 
 	// NOTE • Lenis Setup
 	const lenisRef = useRef<LenisRef>(null);
