@@ -13,6 +13,7 @@ import { ViewTransitions } from '@utils/viewTransitions';
 import { gsap } from 'gsap';
 import type { LenisRef } from 'lenis/react';
 import { ReactLenis } from 'lenis/react';
+import Cursor from '@parts/Cursor';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 
@@ -63,6 +64,7 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 										ref={lenisRef}
 									/>
 									<AnimationPlugins />
+									<Cursor />
 									{children}
 								</Contexts>
 							</ThemeProvider>

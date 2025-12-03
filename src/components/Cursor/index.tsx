@@ -1,0 +1,89 @@
+'use client';
+
+// Imports
+// ------------
+import { useEffect, useRef } from 'react';
+
+// Styles + Interfaces
+// ------------
+import * as S from './styles';
+
+// Component
+// ------------
+const Cursor = () => {
+    // Refs
+    const circleRef = useRef<HTMLDivElement>(null);
+
+    // Animation Setup
+    useEffect(() => {
+        const circleElement = circleRef.current;
+        if (!circleElement) return;
+
+        // Mouse + custom cursor position objects
+        const mouse = { x: 0, y: 0 };
+        const previousMouse = { x: 0, y: 0 };
+        const circle = { x: 0, y: 0 };
+
+        // Scaling and rotation vars
+        let currentScale = 0;
+        let currentAngle = 0;
+
+        // Mousemove event updates 'mouse'
+        const handleMouseMove = (e: MouseEvent) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+
+        // Smoothing factor (0 = smoothest, 1 = instant)
+        const speed = 0.075;
+
+        // Animation loop
+        const tick = () => {
+            // === MOVE ===
+            circle.x += (mouse.x - circle.x) * speed;
+            circle.y += (mouse.y - circle.y) * speed;
+            const translateTransform = `translate(${circle.x}px, ${circle.y}px)`;
+
+            // === SQUEEZE ===
+            const deltaMouseX = mouse.x - previousMouse.x;
+            const deltaMouseY = mouse.y - previousMouse.y;
+            previousMouse.x = mouse.x;
+            previousMouse.y = mouse.y;
+
+            const mouseVelocity = Math.min(Math.sqrt(deltaMouseX ** 2 + deltaMouseY ** 2) * 4, 150);
+            const scaleValue = (mouseVelocity / 150) * 0.5;
+            currentScale += (scaleValue - currentScale) * speed;
+            const scaleTransform = `scale(${1 + currentScale}, ${1 - currentScale})`;
+
+            // === ROTATE ===
+            const angle = Math.atan2(deltaMouseY, deltaMouseX) * 180 / Math.PI;
+            if (mouseVelocity > 20) {
+                currentAngle = angle;
+            }
+            const rotateTransform = `rotate(${currentAngle}deg)`;
+
+            // Apply transforms in order: translate -> rotate -> scale
+            if (circleElement) {
+                circleElement.style.transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
+            }
+
+            window.requestAnimationFrame(tick);
+        };
+
+        // Start the animation loop
+        tick();
+
+        // Cleanup
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
+    }, []);
+
+    return <S.Jacket ref={circleRef} aria-hidden="true" />;
+}
+
+// Exports
+// ------------
+Cursor.displayName = 'Cursor';
+export default Cursor;
