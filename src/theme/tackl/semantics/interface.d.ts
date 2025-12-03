@@ -14,6 +14,7 @@ export interface SemanticProps extends GridProps {
     ref?: React.Ref<unknown>;
     id?: string;
     className?: string;
+    style?: React.CSSProperties;
     $marBottom?: boolean;
     $marTop?: boolean;
     $mar?: boolean;
