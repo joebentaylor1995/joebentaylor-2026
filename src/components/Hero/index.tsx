@@ -3,20 +3,22 @@
 // Imports
 // ------------
 import UnicornScene from 'unicornstudio-react/next';
-import { useRef } from 'react';
 import Grid from '@waffl';
+import Button from '@parts/Button';
 import StarHeading from '@parts/StarHeading';
 import CopyrightYear from '@parts/CopyrightYear';
-import { VideoPlayer } from 'react-datocms';
-import { useResponsive } from '@utils/useResponsive';
-import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
+import { VideoPlayer } from 'react-datocms';
+import { useRef, useState, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { useAnimation } from '@utils/useAnimation';
+import { waitForFonts } from '@utils/waitForFonts';
+import { useResponsive } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
 import * as I from './interface';
 import * as S from './styles';
-import { useAnimation } from '@/utils/useAnimation';
 
 // Component
 // ------------
@@ -29,11 +31,21 @@ const Hero = ({
 }: I.HeroProps) => {
 	// Refs
 	const textRef = useRef<HTMLElement>(null);
-	const subheadingRef = useRef<HTMLElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
+	const textSplitRef = useRef<SplitText | null>(null);
+	const subheadingSplitRef = useRef<SplitText | null>(null);
+	const bottomContentRef = useRef<HTMLElement>(null);
+
+	// Responsive Breakpoints
+	const { isMobile } = useResponsive();
+
+	// State to control when animations trigger
+	const [shouldAnimate, setShouldAnimate] = useState(false);
 
 	const handleLoad = () => {
 		console.log('Scene loaded successfully!');
+		// Trigger animations when scene loads
+		setTimeout(() => setShouldAnimate(true), 500);
 	};
 
 	const handleError = (error: Error) => {
@@ -41,39 +53,29 @@ const Hero = ({
 		alert(`Scene loading failed: ${error}`);
 	};
 
-	const { isDesktop } = useResponsive();
-
+	// Create splits with autoSplit for reflow handling
+	// Wait for fonts to load before splitting to prevent layout shifts
 	useAnimation(
 		({ isDesktop }) => {
-			const textSplit = SplitText.create(textRef.current, {
-				type: 'lines, words',
-				mask: 'words',
-				wordsClass: 'word++',
-			});
+			// Wait for fonts to load before creating splits
+			waitForFonts().then(() => {
+				if (textRef.current && !textSplitRef.current) {
+					textSplitRef.current = SplitText.create(textRef.current, {
+						type: 'words',
+						mask: 'words',
+						wordsClass: 'word++',
+						autoSplit: true, // Keep for reflow handling
+						reduceWhiteSpace: true, // Fix Safari spacing issues
+						onSplit: self => {
+							// Capture the split instance for later animation
+							textSplitRef.current = self;
 
-			const subheadingSplit = SplitText.create(subheadingRef.current, {
-				type: 'words',
-				wordsClass: 'word++',
-			});
-
-			gsap.from(subheadingSplit.words, {
-				filter: 'blur(6px)',
-				duration: 0.8,
-				ease: 'cubic-bezier(0, 0, 0, 1)',
-				stagger: {
-					each: 0.15,
-					ease: 'linear',
-				},
-			});
-
-			gsap.from(textSplit.words, {
-				yPercent: 100, // Travel distance: 100% (upward mask in)
-				duration: 0.643, // Duration: 643ms
-				ease: 'cubic-bezier(0, 0, 0, 1)', // Acceleration: Slow down
-				stagger: {
-					each: 0.051, // Delay: 51ms per word (Order: Forward)
-					ease: 'cubic-bezier(0.8, 0, 0.2, 1)', // Smoothing: Natural
-				},
+							gsap.set(self.words, {
+								yPercent: 100,
+							});
+						},
+					});
+				}
 			});
 		},
 		{
@@ -81,6 +83,38 @@ const Hero = ({
 			dependencies: [textRef],
 		}
 	);
+
+	// Trigger animations when shouldAnimate becomes true
+	useEffect(() => {
+		if (!shouldAnimate) return;
+
+		const slowCurve = 'cubic-bezier(0, 0, 0, 1)';
+		const smoothCurve = 'cubic-bezier(0.8, 0, 0.2, 1)';
+
+		// Animate text
+		if (textSplitRef.current?.words) {
+			gsap.to(textSplitRef.current.words, {
+				yPercent: 0,
+				duration: 0.643,
+				ease: slowCurve,
+				stagger: {
+					each: 0.051,
+					ease: smoothCurve,
+				},
+			});
+		}
+	}, [shouldAnimate]);
+
+	// Cleanup splits on unmount
+	useEffect(() => {
+		return () => {
+			textSplitRef.current?.revert();
+			subheadingSplitRef.current?.revert();
+		};
+	}, []);
+
+	// Bottom content offset
+	const bottomheight = (bottomContentRef.current?.offsetHeight ?? 51) / 10;
 
 	return (
 		<S.Jacket ref={jacketRef}>
@@ -98,34 +132,29 @@ const Hero = ({
 				/>
 			</S.Background>
 
-			<S.CenterContent>
+			<S.CenterContent $offset={bottomheight}>
 				<Grid>
-					<S.Texts $l='8/12'>
-						<StarHeading
-							text={subheading}
-							semantic='h1'
-							passedRef={subheadingRef}
-						/>
+					<S.Texts $m='4/7' $l='8/12'>
+						<StarHeading text={subheading} semantic='h1' />
 						<S.Text ref={textRef}>{title}</S.Text>
+						{isMobile && <Button href='/' label='View Profile' />}
 					</S.Texts>
 				</Grid>
 			</S.CenterContent>
 
-			<S.BottomContent>
+			<S.BottomContent ref={bottomContentRef}>
 				<Grid>
-					{isDesktop && (
-						<S.VideoPreview $l='1/2'>
-							<VideoPlayer
-								data={videoThumbnail}
-								autoPlay
-								muted
-								loop
-								playsInline
-							/>
-						</S.VideoPreview>
-					)}
+					<S.VideoPreview $s='1/2' $m='1/4' $l='1/3'>
+						<VideoPlayer
+							data={videoThumbnail}
+							autoPlay
+							muted
+							loop
+							playsInline
+						/>
+					</S.VideoPreview>
 
-					<S.Copyright $l='8/13'>
+					<S.Copyright $s='2/3' $m='4/7' $l='8/13'>
 						1995
 						<hr />
 						&copy;

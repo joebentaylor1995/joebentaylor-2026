@@ -10,6 +10,7 @@ import { GlobalStyle, theme } from '@theme';
 import { sequel, ppNeueMontreal } from '@theme/fonts';
 import StyledComponentsRegistry from '@utils/registry';
 import { ViewTransitions } from '@utils/viewTransitions';
+import { usePageTitle } from '@utils/usePageTitle';
 import { gsap } from 'gsap';
 import type { LenisRef } from 'lenis/react';
 import { ReactLenis } from 'lenis/react';
@@ -26,7 +27,10 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 	// NOTE • Lenis Setup
 	const lenisRef = useRef<LenisRef>(null);
 
-	// NOTE •   Lenis + GSAP
+	// NOTE • Page Title (changes when tab is hidden/visible)
+	usePageTitle('✦ 𝗚𝗘𝗧 𝗙𝗥𝗘𝗘 𝗗𝗘𝗦𝗜𝗚𝗡 𝗪𝗢𝗥𝗞!', '𝗧𝗥𝗜𝗖𝗞𝗘𝗗 𝗬𝗔! 😃');
+
+	// NOTE •   Lenis + GSAP
 	useEffect(() => {
 		function update(time: number) {
 			lenisRef.current?.lenis?.raf(time * 1000);

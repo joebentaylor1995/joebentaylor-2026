@@ -3,85 +3,99 @@
 // Imports
 // ------------
 import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { useIsDesktop } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
-import * as S from './styles';
+import { Jacket } from './styles';
 
 // Component
 // ------------
 const Cursor = () => {
-    // Refs
-    const circleRef = useRef<HTMLDivElement>(null);
+	// NOTE • Configuration
+	const CURSOR_SPEED = 0.25; // Lower = faster (0.1 = very fast, 1.0 = slow)
+	const STRETCH_SENSITIVITY = 400; // Higher = less sensitive to movement
+	const MAX_STRETCH = 0.25; // Maximum stretch amount (0.1 = subtle, 0.5 = dramatic)
 
-    // Animation Setup
-    useEffect(() => {
-        const circleElement = circleRef.current;
-        if (!circleElement) return;
+	// NOTE • Refs
+	const jellyRef = useRef<HTMLDivElement>(null);
+	const pos = useRef({ x: 0, y: 0 });
+	const vel = useRef({ x: 0, y: 0 });
+	const animationRef = useRef<gsap.core.Tween | null>(null);
 
-        // Mouse + custom cursor position objects
-        const mouse = { x: 0, y: 0 };
-        const previousMouse = { x: 0, y: 0 };
-        const circle = { x: 0, y: 0 };
+	// NOTE • Window Size
+	const isDesktop = useIsDesktop();
 
-        // Scaling and rotation vars
-        let currentScale = 0;
-        let currentAngle = 0;
+	// NOTE • Animate Jelly Blob
+	useEffect(() => {
+		if (!isDesktop) return;
 
-        // Mousemove event updates 'mouse'
-        const handleMouseMove = (e: MouseEvent) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        };
-        window.addEventListener('mousemove', handleMouseMove);
+		const getAngle = (diffX: number, diffY: number) =>
+			(Math.atan2(diffY, diffX) * 180) / Math.PI;
 
-        // Smoothing factor (0 = smoothest, 1 = instant)
-        const speed = 0.12;
+		const getScale = (diffX: number, diffY: number) => {
+			const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+			return Math.min(distance / STRETCH_SENSITIVITY, MAX_STRETCH);
+		};
 
-        // Animation loop
-        const tick = () => {
-            // === MOVE ===
-            circle.x += (mouse.x - circle.x) * speed;
-            circle.y += (mouse.y - circle.y) * speed;
-            const translateTransform = `translate(${circle.x}px, ${circle.y}px)`;
+		const updateJellyBlob = () => {
+			if (!jellyRef.current) return;
 
-            // === SQUEEZE ===
-            const deltaMouseX = mouse.x - previousMouse.x;
-            const deltaMouseY = mouse.y - previousMouse.y;
-            previousMouse.x = mouse.x;
-            previousMouse.y = mouse.y;
+			const rotation = getAngle(vel.current.x, vel.current.y);
+			const scale = getScale(vel.current.x, vel.current.y);
 
-            const mouseVelocity = Math.min(Math.sqrt(deltaMouseX ** 2 + deltaMouseY ** 2) * 4, 150);
-            const scaleValue = (mouseVelocity / 150) * 0.5;
-            currentScale += (scaleValue - currentScale) * speed;
-            const scaleTransform = `scale(${1 + currentScale}, ${1 - currentScale})`;
+			gsap.set(jellyRef.current, {
+				x: pos.current.x,
+				y: pos.current.y,
+				rotate: rotation,
+				scaleX: 1 + scale,
+				scaleY: 1 - scale,
+			});
+		};
 
-            // === ROTATE ===
-            const angle = Math.atan2(deltaMouseY, deltaMouseX) * 180 / Math.PI;
-            if (mouseVelocity > 20) {
-                currentAngle = angle;
-            }
-            const rotateTransform = `rotate(${currentAngle}deg)`;
+		const handleMouseMove = (e: MouseEvent) => {
+			const newX = e.clientX;
+			const newY = e.clientY;
 
-            // Apply transforms in order: translate -> rotate -> scale
-            if (circleElement) {
-                circleElement.style.transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
-            }
+			// Kill previous animation to prevent buildup
+			if (animationRef.current) {
+				animationRef.current.kill();
+			}
 
-            window.requestAnimationFrame(tick);
-        };
+			const updateVelocity = () => {
+				vel.current.x = newX - pos.current.x;
+				vel.current.y = newY - pos.current.y;
+				updateJellyBlob();
+			};
 
-        // Start the animation loop
-        tick();
+			animationRef.current = gsap.to(pos.current, {
+				x: newX,
+				y: newY,
+				duration: CURSOR_SPEED,
+				ease: 'power3.out',
+				onUpdate: updateVelocity,
+			});
+		};
 
-        // Cleanup
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-        };
-    }, []);
+		window.addEventListener('mousemove', handleMouseMove, {
+			passive: true,
+		});
 
-    return <S.Jacket ref={circleRef} aria-hidden="true" />;
-}
+		return () => {
+			window.removeEventListener('mousemove', handleMouseMove);
+			// Kill any running animations on cleanup
+			if (animationRef.current) {
+				animationRef.current.kill();
+			}
+		};
+	}, [isDesktop]);
+
+	// Don't render on mobile/tablet
+	if (!isDesktop) return null;
+
+	return <Jacket ref={jellyRef} aria-hidden='true' />;
+};
 
 // Exports
 // ------------

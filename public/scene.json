@@ -32,20 +32,20 @@
 		{
 			"breakpoints": [
 				{
-					"min": 992,
+					"name": "Desktop",
 					"max": null,
+					"min": 992,
 					"props": {
-						"scale": 0.8,
-						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 },
+						"fitToCanvas": 1,
 						"playbackRate": 0.6,
-						"fitToCanvas": 1
-					},
-					"name": "Desktop"
+						"scale": 0.8,
+						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 }
+					}
 				},
 				{
-					"min": 0,
 					"name": "Mobile",
 					"max": 575,
+					"min": 0,
 					"props": {
 						"fitToCanvas": 0,
 						"scale": 1,
@@ -61,8 +61,8 @@
 			"type": "video",
 			"usesPingPong": false,
 			"texture": false,
-			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Scene%201%20(1).mp4",
-			"playbackRate": 0.61,
+			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Final%20Hero.mp4",
+			"playbackRate": 0.6,
 			"loop": true,
 			"trackMouse": 0,
 			"trackAxes": "xy",
@@ -125,9 +125,9 @@
 						"id": "74536fb0-8568-4a75-a5a1-be6b8c37aad8",
 						"prop": "amount",
 						"transition": {
-							"duration": 1000,
+							"ease": "easeInOutQuart",
 							"delay": 0,
-							"ease": "easeInOutQuart"
+							"duration": 1000
 						},
 						"progress": 0,
 						"rawProgress": 0,
@@ -187,8 +187,8 @@
 						"id": "8b716a0e-50ae-47d8-a444-36c1b84c812f",
 						"prop": "mix",
 						"transition": {
-							"ease": "easeInOutQuad",
 							"delay": 250,
+							"ease": "easeInOutQuad",
 							"duration": 2000
 						},
 						"complete": false,
@@ -217,16 +217,16 @@
 		{
 			"breakpoints": [
 				{
+					"name": "Desktop",
 					"max": null,
-					"min": 992,
 					"props": { "intensity": 0.18 },
-					"name": "Desktop"
+					"min": 992
 				},
 				{
 					"name": "Mobile",
-					"min": 0,
 					"props": { "intensity": 0.1 },
-					"max": 575
+					"max": 575,
+					"min": 0
 				}
 			],
 			"visible": true,
@@ -263,15 +263,15 @@
 			"breakpoints": [
 				{
 					"max": null,
-					"props": { "opacity": 0 },
+					"name": "Desktop",
 					"min": 992,
-					"name": "Desktop"
+					"props": { "opacity": 0 }
 				},
 				{
-					"min": 0,
-					"props": { "opacity": 0.6 },
 					"max": 575,
-					"name": "Mobile"
+					"name": "Mobile",
+					"min": 0,
+					"props": { "opacity": 0.6 }
 				}
 			],
 			"visible": true,

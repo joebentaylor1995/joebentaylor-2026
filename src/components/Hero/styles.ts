@@ -44,11 +44,11 @@ export const Background = styled.div(
 
 		&:after {
 			${bp.l`
-        content: '';
-        position: absolute;
-        inset: 0 0 0 50%;
-        background: linear-gradient(270deg, ${getGlobal('black', 60)} 0%, ${getGlobal('black', 0)} 100%);
-      `}
+				content: '';
+				position: absolute;
+				inset: 0 0 0 50%;
+				background: linear-gradient(270deg, ${getGlobal('black', 60)} 0%, ${getGlobal('black', 0)} 100%);
+			`}
 		}
 	`
 );
@@ -58,7 +58,9 @@ export const Texts = styled(Div)(
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: ${getGap('sm')};
+		gap: ${getGap('s')};
+
+		${bp.m` gap: ${getGap('sm')}; `}
 	`
 );
 
@@ -66,13 +68,22 @@ export const Text = styled(P)(
 	props => css`
 		${bodyL}
 		color: ${getGlobal('white')};
+
+		/* Fix character shifting when SplitText splits text */
+		font-kerning: none;
+		text-rendering: optimizeSpeed;
 	`
 );
 
-export const CenterContent = styled(Div)(
+export const CenterContent = styled(Div)<{ $offset: number }>(
 	props => css`
+		--offset: calc(${props.$offset}rem / 2);
+
 		position: relative;
 		height: 100%;
+		padding-bottom: var(--offset);
+
+		${bp.m` padding-bottom: 0; `}
 	`
 );
 
@@ -83,15 +94,10 @@ export const BottomContent = styled(Footer)(
 		position: absolute;
 		inset: auto 0 var(--offset) 0;
 
-		${bp.m`
-      --offset: ${getGap('l')};
-    `}
+		${bp.m` --offset: ${getGap('l')}; `}
+		${bp.l` --offset: ${getGap('xl')}; `}
 
-		${bp.l`
-      --offset: ${getGap('xl')};
-    `}
-
-    waffl-grid {
+    	waffl-grid {
 			align-items: flex-end;
 		}
 	`
@@ -105,7 +111,9 @@ export const Copyright = styled(Div)(
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: ${getGap('sm')};
+		gap: ${getGap('s')};
+
+		${bp.m` gap: ${getGap('sm')}; `}
 
 		hr {
 			flex: 1;
@@ -118,12 +126,14 @@ export const Copyright = styled(Div)(
 
 export const VideoPreview = styled(Div)(
 	props => css`
-		width: 14.4rem;
+		width: 10.2rem;
 		aspect-ratio: 3/4;
 		height: 100%;
 		position: relative;
 		overflow: hidden;
 		border-radius: ${getRadius('s')};
+
+		${bp.m` width: 14.4rem; `}
 
 		mux-player {
 			--media-object-fit: cover;

@@ -2,34 +2,32 @@
 // ------------
 import styled, { css } from 'styled-components';
 import { bp, Div, getGlobal, getRadius } from '@tackl';
-import { } from '@tackl/type';
+import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {
-
-}
+interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Div)(
-    props => css`
-        --size: 4.8rem;
+	props => css`
+		--size: 4.8rem;
 
-        display: none;
-        position: fixed;
-        z-index: 9999;
-        top: calc(var(--size) / 2 * -1);
-        left: calc(var(--size) / 2 * -1);
+		display: none;
+		position: fixed;
+		z-index: 9999;
+		top: calc(var(--size) / 2 * -1);
+		left: calc(var(--size) / 2 * -1);
 
-        width: var(--size);
-        height: var(--size);
+		width: var(--size);
+		height: var(--size);
 
-        border: 1px solid ${getGlobal('white')};
-        border-radius: ${getRadius('round')};
+		border: 1px solid ${getGlobal('white')};
+		border-radius: ${getRadius('round')};
 
-        pointer-events: none;
+		pointer-events: none;
 
-        ${bp.l` display: block; `}
-    `
+		${bp.l` display: block; `}
+	`
 );
