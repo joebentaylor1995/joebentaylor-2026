@@ -18,6 +18,8 @@ export const bodyL: RuleSet = css`
 	${sharedBodyStyles}
 	font-size: 2.2rem;
 
+	${bp.sm` font-size: 2.4rem; `}
+
 	${bp.l` font-size: 2.6rem; `}
 `;
 
@@ -27,6 +29,7 @@ export const bodyM: RuleSet = css`
 	font-size: 1.6rem;
 	letter-spacing: 0.5px;
 
+	${bp.sm` font-size: 1.7rem; `}
 	${bp.l` font-size: 1.8rem; `}
 `;
 
@@ -36,9 +39,9 @@ export const bodyS: RuleSet = css`
 	font-size: 1.2rem;
 	letter-spacing: 0.5px;
 
+	${bp.sm` font-size: 1.3rem; `}
 	${bp.l` font-size: 1.4rem; `}
 `;
-
 
 export const captionL: RuleSet = css`
 	font-family: ${getFont('heading')};
@@ -51,9 +54,9 @@ export const captionL: RuleSet = css`
 	letter-spacing: 1px;
 	text-transform: uppercase;
 
+	${bp.sm` font-size: 0.9rem; `}
 	${bp.l` font-size: 1rem; `}
 `;
-
 
 export const captionS: RuleSet = css`
 	font-family: ${getFont('body')};
@@ -65,5 +68,6 @@ export const captionS: RuleSet = css`
 	line-height: 1.2;
 	letter-spacing: 0.2px;
 
+	${bp.sm` font-size: 0.9rem; `}
 	${bp.l` font-size: 1rem; `}
 `;

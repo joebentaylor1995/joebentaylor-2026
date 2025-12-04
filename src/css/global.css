@@ -27,11 +27,16 @@ section {
 /* Typography & Links */
 html {
 	font-size: 62.5%; /* 10px base font size for easier rem calculations */
-	interpolate-size: allow-keywords; /* Allow keywords in interpolate-size – Not well supported yet in all browsers */
+	interpolate-size: allow-keywords; /* Allow keywords in interpolate-size – Not well supported yet in all browsers */
+	overscroll-behavior: none; /* Prevent Safari overscroll bounce */
+	-webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 body {
 	line-height: 1;
+	overscroll-behavior: none; /* Prevent Safari overscroll bounce */
+	position: relative;
+	overflow-x: hidden;
 }
 
 a {

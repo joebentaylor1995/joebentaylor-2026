@@ -16,7 +16,6 @@ import Header from '@parts/Header';
 //         return null;
 //     }
 // }
-
 // Component
 // ------------
 const Server = async ({ children }: { children: React.ReactNode }) => {

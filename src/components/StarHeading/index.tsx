@@ -11,16 +11,16 @@ import * as S from './styles';
 
 // Component
 // ------------
-const StarHeading = ({ text, semantic }: I.StarHeadingProps) => {
-    const HeadingTag = semantic || 'span';
+const StarHeading = ({ text, semantic, passedRef }: I.StarHeadingProps) => {
+	const HeadingTag = semantic || 'span';
 
-    return (
-        <S.Jacket>
-            <Icon type="star" />
-            <HeadingTag>{text}</HeadingTag>
-        </S.Jacket>
-    );
-}
+	return (
+		<S.Jacket ref={passedRef}>
+			<Icon type='star' />
+			<HeadingTag>{text}</HeadingTag>
+		</S.Jacket>
+	);
+};
 
 // Exports
 // ------------

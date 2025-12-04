@@ -65,6 +65,11 @@ export const GlobalStyle = createGlobalStyle`
 		--bezzy3: ${theme.easing.bezzy3};
 	}
 
-	body { background: var(--black) }
+	body {background: var(--black) }
 	* { color: var(--white) }
+
+	::selection {
+		background: ${theme.colors.brand.bc1[100]};
+		color: ${theme.colors.global.white[100]};
+	}
 `;

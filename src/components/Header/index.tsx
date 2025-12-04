@@ -2,6 +2,7 @@
 
 // Imports
 // ------------
+import Logo from '@parts/Logo';
 
 // Styles
 // ------------
@@ -16,6 +17,7 @@ interface HeaderProps {}
 const Header = ({}: HeaderProps) => {
 	return (
 		<Jacket>
+			<Logo />
 			{/*  */}
 			{/*  */}
 			{/*  */}

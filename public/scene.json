@@ -37,7 +37,7 @@
 					"props": {
 						"scale": 0.8,
 						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 },
-						"playbackRate": 0.61,
+						"playbackRate": 0.6,
 						"fitToCanvas": 1
 					},
 					"name": "Desktop"
@@ -50,7 +50,7 @@
 						"fitToCanvas": 0,
 						"scale": 1,
 						"pos": { "type": "Vec2", "_x": 1, "_y": 0.5 },
-						"playbackRate": 0.58
+						"playbackRate": 0.8
 					}
 				}
 			],
