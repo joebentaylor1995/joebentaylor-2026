@@ -38,10 +38,10 @@ const Hero = ({ subheading, title, videoThumbnail, video, unicornScene }: I.Hero
             <S.Background>
                 <UnicornScene
                     jsonFilePath="/scene.json"
-                    dpi={[1, 1.5, 2]}
+                    dpi={1.5}
                     fps={120}
                     lazyLoad={false}
-                    production={process.env.NODE_ENV === 'production'}
+                    production={true}
                     onLoad={handleLoad}
                     onError={handleError}
                     ariaLabel="Animated background scene"

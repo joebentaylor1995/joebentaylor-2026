@@ -28,8 +28,11 @@ export const Jacket = styled(Section)(
 
 export const Background = styled.div(
   props => css`
-    position: fixed;
-    inset: 0;
+    --unicorn-width: 100%;
+    --unicorn-height: 100%;
+
+    position: absolute;
+    inset: 0 ;
     z-index: -1;
 
     &:after {

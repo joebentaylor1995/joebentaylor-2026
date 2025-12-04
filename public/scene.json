@@ -32,37 +32,37 @@
 		{
 			"breakpoints": [
 				{
+					"min": 992,
 					"max": null,
 					"props": {
 						"scale": 0.8,
 						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 },
-						"fitToCanvas": 1,
-						"playbackRate": 0.59
+						"playbackRate": 0.61,
+						"fitToCanvas": 1
 					},
-					"name": "Desktop",
-					"min": 992
+					"name": "Desktop"
 				},
 				{
-					"name": "Mobile",
 					"min": 0,
+					"name": "Mobile",
 					"max": 575,
 					"props": {
-						"playbackRate": 0.64,
 						"fitToCanvas": 0,
 						"scale": 1,
-						"pos": { "type": "Vec2", "_x": 1, "_y": 0.5 }
+						"pos": { "type": "Vec2", "_x": 1, "_y": 0.5 },
+						"playbackRate": 0.58
 					}
 				}
 			],
 			"visible": true,
 			"aspectRatio": 1,
-			"userDownsample": 0.5,
+			"userDownsample": 1,
 			"layerType": "effect",
 			"type": "video",
 			"usesPingPong": false,
 			"texture": false,
-			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Scene%201.mp4",
-			"playbackRate": 0.59,
+			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Scene%201%20(1).mp4",
+			"playbackRate": 0.61,
 			"loop": true,
 			"trackMouse": 0,
 			"trackAxes": "xy",
@@ -125,9 +125,9 @@
 						"id": "74536fb0-8568-4a75-a5a1-be6b8c37aad8",
 						"prop": "amount",
 						"transition": {
+							"duration": 1000,
 							"delay": 0,
-							"ease": "easeInOutQuart",
-							"duration": 1000
+							"ease": "easeInOutQuart"
 						},
 						"progress": 0,
 						"rawProgress": 0,
@@ -187,9 +187,9 @@
 						"id": "8b716a0e-50ae-47d8-a444-36c1b84c812f",
 						"prop": "mix",
 						"transition": {
-							"duration": 2000,
 							"ease": "easeInOutQuad",
-							"delay": 250
+							"delay": 250,
+							"duration": 2000
 						},
 						"complete": false,
 						"progress": 0,
@@ -217,16 +217,16 @@
 		{
 			"breakpoints": [
 				{
-					"name": "Desktop",
-					"min": 992,
 					"max": null,
-					"props": { "intensity": 0.18 }
+					"min": 992,
+					"props": { "intensity": 0.18 },
+					"name": "Desktop"
 				},
 				{
-					"props": { "intensity": 0.1 },
 					"name": "Mobile",
-					"max": 575,
-					"min": 0
+					"min": 0,
+					"props": { "intensity": 0.1 },
+					"max": 575
 				}
 			],
 			"visible": true,
@@ -262,15 +262,15 @@
 		{
 			"breakpoints": [
 				{
-					"name": "Desktop",
-					"min": 992,
+					"max": null,
 					"props": { "opacity": 0 },
-					"max": null
+					"min": 992,
+					"name": "Desktop"
 				},
 				{
-					"max": 575,
 					"min": 0,
 					"props": { "opacity": 0.6 },
+					"max": 575,
 					"name": "Mobile"
 				}
 			],
@@ -341,7 +341,8 @@
 		"dpi": 1.5,
 		"scale": 1,
 		"includeLogo": false,
-		"isProduction": true
+		"isProduction": true,
+		"freePlan": false
 	},
 	"version": "1.5.2",
 	"id": "JqXdcWn5LCeuEY3FFuJL"
