@@ -17,7 +17,6 @@ import Cursor from '@parts/Cursor';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 
-
 // Component
 // ------------
 const Client = ({ children }: { children: React.ReactNode }) => {

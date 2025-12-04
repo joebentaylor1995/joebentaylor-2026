@@ -4,6 +4,7 @@ declare module 'unicornstudio-react/next' {
 	interface UnicornSceneProps {
 		projectId?: string;
 		filePath?: string;
+		jsonFilePath?: string;
 		width?: string | number;
 		height?: string | number;
 		scale?: number;

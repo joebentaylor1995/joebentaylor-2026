@@ -1,0 +1,45 @@
+// Imports
+// ------------
+import styled, { css } from 'styled-components';
+import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+import { captionL } from '@tackl/type';
+
+// Interfaces
+// ------------
+interface CHANGE_ME {
+
+}
+
+// Exports
+// ------------
+export const Jacket = styled(Div)(
+    props => css`
+        --gap: ${getGap('s')};
+
+        display: flex;
+        align-items: center;
+        gap: var(--gap);
+
+        svg {
+            --size: 1rem;
+            width: var(--size);
+            height: var(--size);
+            fill: ${getGlobal('white')};
+
+            ${bp.l`
+                --size: 1.2rem;
+            `}
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        span {
+            ${captionL}
+            color: ${getGlobal('white')};
+        }
+    `
+);

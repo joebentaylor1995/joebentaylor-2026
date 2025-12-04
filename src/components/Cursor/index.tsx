@@ -36,7 +36,7 @@ const Cursor = () => {
         window.addEventListener('mousemove', handleMouseMove);
 
         // Smoothing factor (0 = smoothest, 1 = instant)
-        const speed = 0.075;
+        const speed = 0.12;
 
         // Animation loop
         const tick = () => {

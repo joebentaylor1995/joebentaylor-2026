@@ -15,7 +15,7 @@ declare module 'lenis/react' {
 		rafPriority?: number;
 		className?: string;
 		children?: React.ReactNode;
-		ref?: RefObject<LenisRef>;
+		ref?: RefObject<LenisRef | null>;
 	}
 
 	export const ReactLenis: ComponentType<ReactLenisProps>;

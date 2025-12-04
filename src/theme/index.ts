@@ -52,6 +52,11 @@ export const theme: Theme = {
 // NOTE • This is the global style applied to the body and all elements.
 export const GlobalStyle = createGlobalStyle`
 	/* In the event we need to use our theme values in the CSS */
+	:root {
+		--sat: env(safe-area-inset-top, 0px);
+  		--sab: env(safe-area-inset-bottom, 0px);
+	}
+
 	html {
 		--black: ${theme.colors.global.black[100]};
 		--white: ${theme.colors.global.white[100]};

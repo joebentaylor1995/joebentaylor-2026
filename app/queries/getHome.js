@@ -6,6 +6,20 @@ export const GET_HOME = `
             videoThumbnail {
                 url
                 id
+                video {
+                    streamingUrl
+                    thumbhash
+                    thumbnailUrl
+                    muxPlaybackId
+                    muxAssetId
+                    mp4Url
+                    height
+                    framerate
+                    duration
+                    blurhash
+                    blurUpThumb
+                    alt
+                }
             }
             video {
                 url

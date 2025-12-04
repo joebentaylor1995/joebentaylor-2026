@@ -24,14 +24,14 @@ const Page = async () => {
 	const { home } = data;
 
 
-	console.table(home);
+	// console.table(home);
 
 	return (
 		<>
 			<Hero
 				subheading={home?.subheading}
 				title={home?.title}
-				videoThumbnail={home?.videoThumbnail}
+				videoThumbnail={home?.videoThumbnail?.video}
 				video={home?.video}
 				unicornScene={home?.unicornScene}
 			/>
