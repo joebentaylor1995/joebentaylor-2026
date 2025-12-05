@@ -41,6 +41,13 @@ export const Col = styled(Div)(
 		/*  */
 	`
 );
+
+export const LogoWrapper = styled.div(
+	props => css`
+		position: relative; /* Needed for magnetic transform */
+		display: inline-block; /* Keep logo inline but allow transforms */
+	`
+);
 interface ButtonProps {
 	$isFirst?: boolean;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -53,6 +60,7 @@ export const Button = styled.button<ButtonProps>(
 
 		display: ${props.$isFirst ? 'none' : 'block'};
 		padding-block: ${getGap('xs')};
+		position: relative; /* Needed for magnetic transform */
 
 		> span {
 			display: block;
@@ -94,7 +102,7 @@ export const Button = styled.button<ButtonProps>(
 			--ease: ${getEase('bezzy2')};
 
 			display: inline-block;
-			text-shadow: 0 1.32em 0 ${getGlobal('white', 60)};
+			vertical-align: middle;
 			color: ${getGlobal('white')};
 			transition: transform var(--speed) var(--ease);
 
@@ -106,6 +114,10 @@ export const Button = styled.button<ButtonProps>(
 						}`
 				)
 				.join('\n')}
+
+			${bp.l`
+				text-shadow: 0 1.32em 0 ${getGlobal('white', 60)};
+			`}
 		}
 	`
 );

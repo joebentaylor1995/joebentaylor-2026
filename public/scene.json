@@ -32,25 +32,23 @@
 		{
 			"breakpoints": [
 				{
-					"name": "Desktop",
-					"max": null,
 					"min": 992,
+					"max": null,
 					"props": {
-						"fitToCanvas": 1,
 						"playbackRate": 0.6,
-						"scale": 0.8,
-						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 }
-					}
+						"pos": { "type": "Vec2", "_x": 0.5, "_y": 0.5 },
+						"fitToCanvas": 1
+					},
+					"name": "Desktop"
 				},
 				{
-					"name": "Mobile",
 					"max": 575,
 					"min": 0,
+					"name": "Mobile",
 					"props": {
-						"fitToCanvas": 0,
-						"scale": 1,
 						"pos": { "type": "Vec2", "_x": 1, "_y": 0.5 },
-						"playbackRate": 0.8
+						"playbackRate": 0.8,
+						"fitToCanvas": 0
 					}
 				}
 			],
@@ -61,7 +59,7 @@
 			"type": "video",
 			"usesPingPong": false,
 			"texture": false,
-			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Final%20Hero.mp4",
+			"src": "https://assets.unicorn.studio/videos/ezJUTjjStWdMq1qV0UsA4cnZR263/Scene%201%20(5)%20(1).mp4",
 			"playbackRate": 0.6,
 			"loop": true,
 			"trackMouse": 0,
@@ -70,7 +68,7 @@
 			"animating": true,
 			"isMask": 0,
 			"compiledFragmentShaders": [
-				"#version 300 es\nprecision mediump float;in vec2 vTextureCoord;\nuniform sampler2D uTexture;\nuniform sampler2D uVideoTexture;\nuniform float uScale;\nuniform vec2 uPos;\nuniform int uFitToCanvas;uniform vec2 uMousePos;\nuniform vec2 uResolution;\nvec3 blend (int blendMode, vec3 src, vec3 dst) {\nreturn src;\n}out vec4 fragColor;const float PI = 3.14159265359;\nmat2 rot(float a) {\nreturn mat2(cos(a),-sin(a),sin(a),cos(a));\n}void main() {\nvec2 uv = vTextureCoord;\nvec4 bg = texture(uTexture, uv);ivec2 texSize = textureSize(uVideoTexture, 0);\nfloat texWidth = float(texSize.x);\nfloat texHeight = float(texSize.y);\nfloat videoAspect = texWidth / texHeight;float screenAspect = (uResolution.x / uResolution.y);\nvec2 centeredUV = uv;if (uFitToCanvas == 1) {\nvec2 centered = uv - 0.5;\nif (screenAspect < videoAspect) {\ncenteredUV = vec2( (uv.x - 0.5) * (screenAspect / videoAspect), uv.y - 0.5) + 0.5;\n} else {\ncenteredUV = vec2( uv.x - 0.5, (uv.y - 0.5) * (videoAspect / screenAspect) ) + 0.5;\n}\ncenteredUV += (bg.rg * 2.0 - 1.0) * 0.0000;\n} else {\nvec2 pos = uPos + mix(vec2(0), (uMousePos-0.5), 0.0000);\ncenteredUV = centeredUV - pos;\ncenteredUV.x *= screenAspect;\ncenteredUV = (centeredUV) / uScale;\ncenteredUV = centeredUV * rot(0.0000 * 2.0 * PI);\ncenteredUV.x /= videoAspect;\ncenteredUV += 0.5;\ncenteredUV += (bg.rg * 2.0 - 1.0) * 0.0000;\nif(centeredUV.x < 0.0 || centeredUV.x > 1.0 || centeredUV.y < 0.0 || centeredUV.y > 1.0) {\nfragColor = bg;\nreturn;\n}\n}vec4 color = texture(uVideoTexture, centeredUV);if(0 > 0) {\ncolor.rgb = blend(0, bg.rgb, color.rgb);\n}color.rgb = mix(bg.rgb, color.rgb, 1.0000) * color.a;\ncolor.a = max(bg.a, color.a * 1.0000);\nfragColor = color;}"
+				"#version 300 es\nprecision mediump float;in vec2 vTextureCoord;\nuniform sampler2D uTexture;\nuniform sampler2D uVideoTexture;\nuniform vec2 uPos;\nuniform int uFitToCanvas;uniform vec2 uMousePos;\nuniform vec2 uResolution;\nvec3 blend (int blendMode, vec3 src, vec3 dst) {\nreturn src;\n}out vec4 fragColor;const float PI = 3.14159265359;\nmat2 rot(float a) {\nreturn mat2(cos(a),-sin(a),sin(a),cos(a));\n}void main() {\nvec2 uv = vTextureCoord;\nvec4 bg = texture(uTexture, uv);ivec2 texSize = textureSize(uVideoTexture, 0);\nfloat texWidth = float(texSize.x);\nfloat texHeight = float(texSize.y);\nfloat videoAspect = texWidth / texHeight;float screenAspect = (uResolution.x / uResolution.y);\nvec2 centeredUV = uv;if (uFitToCanvas == 1) {\nvec2 centered = uv - 0.5;\nif (screenAspect < videoAspect) {\ncenteredUV = vec2( (uv.x - 0.5) * (screenAspect / videoAspect), uv.y - 0.5) + 0.5;\n} else {\ncenteredUV = vec2( uv.x - 0.5, (uv.y - 0.5) * (videoAspect / screenAspect) ) + 0.5;\n}\ncenteredUV += (bg.rg * 2.0 - 1.0) * 0.0000;\n} else {\nvec2 pos = uPos + mix(vec2(0), (uMousePos-0.5), 0.0000);\ncenteredUV = centeredUV - pos;\ncenteredUV.x *= screenAspect;\ncenteredUV = (centeredUV) / 1.0000;\ncenteredUV = centeredUV * rot(0.0000 * 2.0 * PI);\ncenteredUV.x /= videoAspect;\ncenteredUV += 0.5;\ncenteredUV += (bg.rg * 2.0 - 1.0) * 0.0000;\nif(centeredUV.x < 0.0 || centeredUV.x > 1.0 || centeredUV.y < 0.0 || centeredUV.y > 1.0) {\nfragColor = bg;\nreturn;\n}\n}vec4 color = texture(uVideoTexture, centeredUV);if(0 > 0) {\ncolor.rgb = blend(0, bg.rgb, color.rgb);\n}color.rgb = mix(bg.rgb, color.rgb, 1.0000) * color.a;\ncolor.a = max(bg.a, color.a * 1.0000);\nfragColor = color;}"
 			],
 			"compiledVertexShaders": [
 				"#version 300 es\nprecision mediump float;in vec3 aVertexPosition;\nin vec2 aTextureCoord;uniform mat4 uMVMatrix;\nuniform mat4 uPMatrix;\nuniform mat4 uTextureMatrix;out vec2 vTextureCoord;\nout vec3 vVertexPosition;void main() {\ngl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);\nvTextureCoord = (uTextureMatrix * vec4(aTextureCoord, 0.0, 1.0)).xy;\n}"
@@ -78,16 +76,15 @@
 			"data": {
 				"depth": false,
 				"uniforms": {
-					"fitToCanvas": {
-						"name": "uFitToCanvas",
-						"type": "1i",
-						"value": 0
-					},
-					"scale": { "name": "uScale", "type": "1f", "value": 1 },
 					"pos": {
 						"name": "uPos",
 						"type": "2f",
 						"value": { "type": "Vec2", "_x": 0.5, "_y": 0.5 }
+					},
+					"fitToCanvas": {
+						"name": "uFitToCanvas",
+						"type": "1i",
+						"value": 0
 					}
 				},
 				"isBackground": false
@@ -125,9 +122,9 @@
 						"id": "74536fb0-8568-4a75-a5a1-be6b8c37aad8",
 						"prop": "amount",
 						"transition": {
-							"ease": "easeInOutQuart",
 							"delay": 0,
-							"duration": 1000
+							"duration": 1000,
+							"ease": "easeInOutQuart"
 						},
 						"progress": 0,
 						"rawProgress": 0,
@@ -187,9 +184,9 @@
 						"id": "8b716a0e-50ae-47d8-a444-36c1b84c812f",
 						"prop": "mix",
 						"transition": {
+							"duration": 2000,
 							"delay": 250,
-							"ease": "easeInOutQuad",
-							"duration": 2000
+							"ease": "easeInOutQuad"
 						},
 						"complete": false,
 						"progress": 0,
@@ -217,16 +214,16 @@
 		{
 			"breakpoints": [
 				{
+					"min": 992,
 					"name": "Desktop",
 					"max": null,
-					"props": { "intensity": 0.18 },
-					"min": 992
+					"props": { "intensity": 0.18 }
 				},
 				{
-					"name": "Mobile",
+					"min": 0,
 					"props": { "intensity": 0.1 },
 					"max": 575,
-					"min": 0
+					"name": "Mobile"
 				}
 			],
 			"visible": true,
@@ -262,15 +259,15 @@
 		{
 			"breakpoints": [
 				{
-					"max": null,
+					"props": { "opacity": 0 },
 					"name": "Desktop",
 					"min": 992,
-					"props": { "opacity": 0 }
+					"max": null
 				},
 				{
 					"max": 575,
-					"name": "Mobile",
 					"min": 0,
+					"name": "Mobile",
 					"props": { "opacity": 0.6 }
 				}
 			],
