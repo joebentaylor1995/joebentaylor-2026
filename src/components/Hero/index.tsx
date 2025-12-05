@@ -22,18 +22,11 @@ import * as S from './styles';
 
 // Component
 // ------------
-const Hero = ({
-	subheading,
-	title,
-	videoThumbnail,
-	video,
-	unicornScene,
-}: I.HeroProps) => {
+const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 	// Refs
 	const textRef = useRef<HTMLElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
 	const textSplitRef = useRef<SplitText | null>(null);
-	const subheadingSplitRef = useRef<SplitText | null>(null);
 	const bottomContentRef = useRef<HTMLElement>(null);
 	const modalRef = useRef<HTMLDivElement>(null);
 	const modalContentRef = useRef<HTMLDivElement>(null);
@@ -53,16 +46,16 @@ const Hero = ({
 	// Modal state
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const handleLoad = () => {
+	const handleLoad = useCallback(() => {
 		console.log('Scene loaded successfully!');
 		// Trigger animations when scene loads
 		setTimeout(() => setShouldAnimate(true), 500);
-	};
+	}, []);
 
-	const handleError = (error: Error) => {
+	const handleError = useCallback((error: Error) => {
 		console.error('Scene loading failed:', error);
 		alert(`Scene loading failed: ${error}`);
-	};
+	}, []);
 
 	// Helper to split/re-split text before animating
 	const splitAndPrepareText = useCallback(() => {
@@ -118,15 +111,17 @@ const Hero = ({
 	// Listen for window resize to reset split and play animation
 	useEffect(() => {
 		let resizeTimeout: ReturnType<typeof setTimeout>;
+		let splitTimeout: ReturnType<typeof setTimeout>;
 
 		const handleResize = () => {
 			// Debounce resize
 			clearTimeout(resizeTimeout);
+			clearTimeout(splitTimeout);
 			resizeTimeout = setTimeout(() => {
 				// Re-split the text, then trigger animation
 				splitAndPrepareText().then(() => {
 					// Small delay to ensure split is ready
-					setTimeout(() => {
+					splitTimeout = setTimeout(() => {
 						setResizeTrigger(prev => prev + 1);
 					}, 50);
 				});
@@ -136,6 +131,7 @@ const Hero = ({
 		window.addEventListener('resize', handleResize, { passive: true });
 		return () => {
 			clearTimeout(resizeTimeout);
+			clearTimeout(splitTimeout);
 			window.removeEventListener('resize', handleResize);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,11 +156,13 @@ const Hero = ({
 
 			// Prepare: move words down, hide button and star heading
 			gsap.set(textSplitRef.current.words, { yPercent: 100 });
-			if (buttonAnimationRef.current) {
-				gsap.set(buttonAnimationRef.current, { opacity: 0 });
-			}
-			if (starHeadingRef.current) {
-				gsap.set(starHeadingRef.current, { opacity: 0 });
+			// Batch opacity settings for better performance
+			const elementsToHide = [
+				buttonAnimationRef.current,
+				starHeadingRef.current,
+			].filter(Boolean) as HTMLElement[];
+			if (elementsToHide.length > 0) {
+				gsap.set(elementsToHide, { opacity: 0 });
 			}
 
 			// Small delay to ensure DOM is ready
@@ -217,17 +215,16 @@ const Hero = ({
 	useEffect(() => {
 		return () => {
 			textSplitRef.current?.revert();
-			subheadingSplitRef.current?.revert();
 		};
 	}, []);
 
 	// Handle modal open
-	const handleOpenModal = () => {
+	const handleOpenModal = useCallback(() => {
 		setIsModalOpen(true);
-	};
+	}, []);
 
 	// Handle modal close
-	const handleCloseModal = () => {
+	const handleCloseModal = useCallback(() => {
 		if (modalRef.current && modalContentRef.current) {
 			// Animate out
 			gsap.to(modalContentRef.current, {
@@ -247,7 +244,7 @@ const Hero = ({
 		} else {
 			setIsModalOpen(false);
 		}
-	};
+	}, []);
 
 	// Pause preview video when modal opens, resume when modal closes
 	useEffect(() => {
@@ -356,7 +353,7 @@ const Hero = ({
 
 		window.addEventListener('keydown', handleEscape);
 		return () => window.removeEventListener('keydown', handleEscape);
-	}, [isModalOpen]);
+	}, [isModalOpen, handleCloseModal]);
 
 	// Bottom content offset
 	const bottomheight = (bottomContentRef.current?.offsetHeight ?? 51) / 10;
