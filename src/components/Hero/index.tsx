@@ -38,6 +38,8 @@ const Hero = ({
 	const modalRef = useRef<HTMLDivElement>(null);
 	const modalContentRef = useRef<HTMLDivElement>(null);
 	const videoPreviewRef = useRef<HTMLDivElement>(null);
+	const buttonAnimationRef = useRef<HTMLElement>(null);
+	const starHeadingRef = useRef<HTMLElement>(null);
 
 	// Responsive Breakpoints
 	const { isMobile } = useResponsive();
@@ -149,25 +151,65 @@ const Hero = ({
 		if (textSplitRef.current?.words) {
 			// Kill any running animations first
 			gsap.killTweensOf(textSplitRef.current.words);
+			if (buttonAnimationRef.current) {
+				gsap.killTweensOf(buttonAnimationRef.current);
+			}
+			if (starHeadingRef.current) {
+				gsap.killTweensOf(starHeadingRef.current);
+			}
 
-			// Prepare: move words down
+			// Prepare: move words down, hide button and star heading
 			gsap.set(textSplitRef.current.words, { yPercent: 100 });
+			if (buttonAnimationRef.current) {
+				gsap.set(buttonAnimationRef.current, { opacity: 0 });
+			}
+			if (starHeadingRef.current) {
+				gsap.set(starHeadingRef.current, { opacity: 0 });
+			}
 
 			// Small delay to ensure DOM is ready
-			setTimeout(() => {
-				if (textSplitRef.current?.words) {
-					// Animate up
-					gsap.to(textSplitRef.current.words, {
-						yPercent: 0,
-						duration: 0.643,
-						ease: slowCurve,
-						stagger: {
-							each: 0.051,
-							ease: smoothCurve,
+			const timeoutId = setTimeout(() => {
+				// Fade in StarHeading first
+				if (starHeadingRef.current) {
+					gsap.to(starHeadingRef.current, {
+						opacity: 1,
+						duration: 0.6,
+						ease: 'power2.out',
+						onComplete: () => {
+							// Then animate text up after StarHeading fades in
+							if (textSplitRef.current?.words) {
+								gsap.to(textSplitRef.current.words, {
+									yPercent: 0,
+									duration: 0.643,
+									ease: slowCurve,
+									stagger: {
+										each: 0.051,
+										ease: smoothCurve,
+									},
+									onComplete: () => {
+										// Fade in button after text animation completes
+										if (buttonAnimationRef.current) {
+											gsap.to(
+												buttonAnimationRef.current,
+												{
+													opacity: 1,
+													duration: 0.5,
+													ease: 'power2.out',
+												}
+											);
+										}
+									},
+								});
+							}
 						},
 					});
 				}
 			}, 10);
+
+			// Cleanup: clear timeout if component unmounts or effect re-runs
+			return () => {
+				clearTimeout(timeoutId);
+			};
 		}
 	}, [shouldAnimate, resizeTrigger]);
 
@@ -338,9 +380,17 @@ const Hero = ({
 			<S.CenterContent $offset={bottomheight}>
 				<Grid>
 					<S.Texts $m='4/7' $l='8/12'>
-						<StarHeading text={subheading} semantic='h1' />
+						<StarHeading
+							text={subheading}
+							semantic='h1'
+							passedRef={starHeadingRef}
+						/>
 						<S.Text ref={textRef}>{title}</S.Text>
-						{isMobile && <Button href='/' label='View Profile' />}
+						{isMobile && (
+							<S.ButtonAnimation ref={buttonAnimationRef}>
+								<Button href='/' label='View Profile' />
+							</S.ButtonAnimation>
+						)}
 					</S.Texts>
 				</Grid>
 			</S.CenterContent>

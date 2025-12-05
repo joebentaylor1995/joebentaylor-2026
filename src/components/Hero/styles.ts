@@ -75,6 +75,12 @@ export const Text = styled(P)(
 	`
 );
 
+export const ButtonAnimation = styled(Div)(
+	props => css`
+		opacity: 0; /* Start hidden, will be animated in after text animation */
+	`
+);
+
 export const CenterContent = styled(Div)<{ $offset: number }>(
 	props => css`
 		--offset: calc(${props.$offset}rem / 2);

@@ -14,6 +14,7 @@ export const Jacket = styled(Div)(
 	props => css`
 		--gap: ${getGap('s')};
 
+		opacity: 0; /* Start hidden, will be animated in */
 		display: flex;
 		align-items: center;
 		gap: var(--gap);
