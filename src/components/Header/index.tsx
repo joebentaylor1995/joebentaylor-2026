@@ -2,10 +2,11 @@
 
 // Imports
 // ------------
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import Logo from '@parts/Logo';
 import Grid from '@waffl';
+import Chopsticks from '@parts/Chopsticks';
 import { useIsDesktop } from '@utils/useResponsive';
 
 // Styles + Interfaces
@@ -190,6 +191,10 @@ const Header = ({}: I.HeaderProps) => {
 							</S.Button>
 						))}
 					</S.Navigation>
+
+					<S.Hamburger>
+						<Chopsticks />
+					</S.Hamburger>
 				</S.Col>
 			</Grid>
 		</S.Jacket>

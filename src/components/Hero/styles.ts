@@ -50,6 +50,16 @@ export const Background = styled.div(
 				background: linear-gradient(270deg, ${getGlobal('black', 60)} 0%, ${getGlobal('black', 0)} 100%);
 			`}
 		}
+
+		video {
+			opacity: 0.4;
+			width: 200%;
+			height: 100%;
+			object-fit: cover;
+
+			--media-object-fit: cover;
+			--controls: none;
+		}
 	`
 );
 

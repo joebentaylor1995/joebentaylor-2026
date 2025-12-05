@@ -29,18 +29,16 @@ export const Jacket = styled(Header)(
 
 export const Navigation = styled(Nav)(
 	props => css`
-		display: flex;
+		display: none;
 		align-items: center;
 		justify-content: space-between;
 		gap: ${getGap('m')};
+
+		${bp.l` display: flex; `}
 	`
 );
 
-export const Col = styled(Div)(
-	props => css`
-		/*  */
-	`
-);
+export const Col = styled(Div)<{ $isRight?: boolean }>(props => css``);
 
 export const LogoWrapper = styled.div(
 	props => css`
@@ -119,5 +117,12 @@ export const Button = styled.button<ButtonProps>(
 				text-shadow: 0 1.32em 0 ${getGlobal('white', 60)};
 			`}
 		}
+	`
+);
+
+export const Hamburger = styled.div(
+	props => css`
+		display: flex;
+		justify-content: flex-end;
 	`
 );

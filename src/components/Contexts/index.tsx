@@ -6,14 +6,20 @@ import Lenis from 'lenis';
 import { createContext, useRef, useState } from 'react';
 import { PerformanceProvider } from './Performance';
 
+// Context Type Definition
+// ------------
+export interface GlobalContextType {
+	lenis: React.RefObject<Lenis | null>;
+	menuOpen: boolean;
+	setMenuOpen: (value: boolean) => void;
+}
+
 // Context Definition
 // ------------
-export const GlobalContext = createContext({
+export const GlobalContext = createContext<GlobalContextType>({
 	lenis: { current: null } as React.RefObject<Lenis | null>,
-	headerSize: 0,
-	setHeaderSize: (value: number) => {},
 	menuOpen: false,
-	setMenuOpen: (value: boolean) => {},
+	setMenuOpen: () => {},
 });
 
 // Component
@@ -27,13 +33,10 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 	// Create a stable reference for the lenis smooth scroll instance
 	const lenis = useRef<Lenis | null>(null);
 
-	const [headerSize, setHeaderSize] = useState<number>(0);
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
 	const contextValue = {
 		lenis,
-		headerSize, // Header size state
-		setHeaderSize, // Function to update header size
 		menuOpen,
 		setMenuOpen,
 	};

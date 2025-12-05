@@ -33,6 +33,7 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 	const videoPreviewRef = useRef<HTMLDivElement>(null);
 	const buttonAnimationRef = useRef<HTMLElement>(null);
 	const starHeadingRef = useRef<HTMLElement>(null);
+	const backgroundVideoRef = useRef<HTMLVideoElement>(null);
 
 	// Responsive Breakpoints
 	const { isMobile } = useResponsive();
@@ -361,17 +362,32 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 	return (
 		<S.Jacket ref={jacketRef}>
 			<S.Background>
-				<UnicornScene
-					jsonFilePath='/scene.json'
-					dpi={1.5}
-					fps={120}
-					lazyLoad={false}
-					production={true}
-					onLoad={handleLoad}
-					onError={handleError}
-					ariaLabel='Animated background scene'
-					altText='Interactive 3D scene'
-				/>
+				{isMobile ? (
+					<video
+						ref={backgroundVideoRef}
+						src='/video.mp4'
+						autoPlay
+						muted
+						loop
+						playsInline
+						onLoadedData={e => {
+							e.currentTarget.playbackRate = 0.5;
+							handleLoad();
+						}}
+					/>
+				) : (
+					<UnicornScene
+						jsonFilePath='/scene.json'
+						dpi={1.5}
+						fps={120}
+						lazyLoad={false}
+						production={true}
+						onLoad={handleLoad}
+						onError={handleError}
+						ariaLabel='Animated background scene'
+						altText='Interactive 3D scene'
+					/>
+				)}
 			</S.Background>
 
 			<S.CenterContent $offset={bottomheight}>
