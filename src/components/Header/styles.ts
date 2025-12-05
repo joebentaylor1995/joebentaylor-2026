@@ -124,5 +124,7 @@ export const Hamburger = styled.div(
 	props => css`
 		display: flex;
 		justify-content: flex-end;
+
+		${bp.m` display: none; `}
 	`
 );
