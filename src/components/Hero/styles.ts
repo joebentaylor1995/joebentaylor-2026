@@ -124,7 +124,7 @@ export const Copyright = styled(Div)(
 	`
 );
 
-export const VideoPreview = styled(Div)(
+export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
 	props => css`
 		width: 10.2rem;
 		aspect-ratio: 3/4;
@@ -133,14 +133,18 @@ export const VideoPreview = styled(Div)(
 		overflow: hidden;
 		border-radius: ${getRadius('s')};
 		cursor: pointer;
-		transition: transform 0.2s ease;
+		clip-path: inset(
+			${props.$isModalOpen ? '100%' : '0%'}
+				${props.$isModalOpen ? '100%' : '0%'} 0% 0% round
+				${getRadius('s')}
+		);
+		transition:
+			transform 0.35s ${getEase('bezzy3')},
+			clip-path 0.35s ${getEase('bezzy3')};
+		transform-origin: bottom left;
 
 		&:hover {
-			transform: scale(1.02);
-		}
-
-		&:active {
-			transform: scale(0.98);
+			transform: scale(1.12);
 		}
 
 		${bp.m` width: 14.4rem; `}

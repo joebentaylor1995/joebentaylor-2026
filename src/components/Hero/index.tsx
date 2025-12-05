@@ -352,6 +352,7 @@ const Hero = ({
 						$s='1/2'
 						$m='1/4'
 						$l='1/3'
+						$isModalOpen={isModalOpen}
 						data-hover
 						onClick={handleOpenModal}
 						role='button'
