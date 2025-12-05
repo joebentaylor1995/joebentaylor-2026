@@ -46,6 +46,7 @@ const Header = ({}: I.HeaderProps) => {
 					<S.Navigation>
 						{navItems.map((item, index) => (
 							<S.Button
+								data-hover
 								$isFirst={index === 0}
 								key={index}
 								onClick={(

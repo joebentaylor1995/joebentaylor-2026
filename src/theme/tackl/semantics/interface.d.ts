@@ -22,4 +22,10 @@ export interface SemanticProps extends GridProps {
     $padBottom?: boolean;
     $padTop?: boolean;
     $pad?: boolean;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLElement>) => void;
+    role?: string;
+    tabIndex?: number;
+    'aria-label'?: string;
+    'aria-hidden'?: boolean | 'true' | 'false';
 }

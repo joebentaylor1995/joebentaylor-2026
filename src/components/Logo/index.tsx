@@ -12,6 +12,7 @@ import * as S from './styles';
 const Logo = ({}) => {
 	return (
 		<S.Jacket
+			data-hover
 			width='68'
 			height='24'
 			viewBox='0 0 68 24'
