@@ -6,6 +6,7 @@ import AnimationPlugins from '@parts/AnimationPlugins';
 import Contexts from '@parts/Contexts';
 import CookieBar from '@parts/CookieBar';
 import GridExposer from '@parts/GridExposer';
+import Loader from '@parts/Loader';
 import { GlobalStyle, theme } from '@theme';
 import { sequel, ppNeueMontreal } from '@theme/fonts';
 import StyledComponentsRegistry from '@utils/registry';
@@ -65,6 +66,7 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 									options={{ autoRaf: false }}
 									ref={lenisRef}
 								/>
+								<Loader />
 								<AnimationPlugins />
 								<Cursor />
 								{children}

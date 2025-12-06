@@ -15,10 +15,6 @@ import {
 } from '@tackl';
 import { bodyL, bodyS } from '@tackl/type';
 
-// Interfaces
-// ------------
-interface CHANGE_ME {}
-
 // Exports
 // ------------
 export const Jacket = styled(Section)(
