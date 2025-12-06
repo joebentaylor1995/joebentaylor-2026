@@ -1,18 +1,6 @@
 // Imports
 // ------------
-import {
-	bp,
-	Header,
-	getGap,
-	getGlobal,
-	getEase,
-	Nav,
-	Div,
-	getBrand,
-	getFont,
-	getFontWeight,
-} from '@tackl';
-import { bodyS } from '@tackl/type';
+import { bp, Header, getGap, Div } from '@tackl';
 import styled, { css } from 'styled-components';
 
 // Exports
@@ -38,96 +26,12 @@ export const Jacket = styled(Header)(
 	`
 );
 
-export const Navigation = styled(Nav)(
-	props => css`
-		display: none;
-		align-items: center;
-		justify-content: space-between;
-		gap: ${getGap('m')};
-
-		${bp.l` display: flex; `}
-	`
-);
-
 export const Col = styled(Div)<{ $isRight?: boolean }>(props => css``);
 
 export const LogoWrapper = styled.div(
 	props => css`
 		position: relative; /* Needed for magnetic transform */
 		display: inline-block; /* Keep logo inline but allow transforms */
-	`
-);
-interface ButtonProps {
-	$isFirst?: boolean;
-	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-	'aria-label'?: string;
-}
-
-export const Button = styled.button<ButtonProps>(
-	props => css`
-		${bodyS}
-
-		display: ${props.$isFirst ? 'none' : 'block'};
-		padding-block: ${getGap('xs')};
-		position: relative; /* Needed for magnetic transform */
-
-		> span {
-			display: block;
-			overflow: clip;
-		}
-
-		@keyframes moveUp {
-			from {
-				transform: translateY(0%);
-			}
-			to {
-				transform: translateY(-100%);
-			}
-		}
-
-		@keyframes moveDown {
-			from {
-				transform: translateY(-100%);
-			}
-			to {
-				transform: translateY(0%);
-			}
-		}
-
-		@media (hover: hover) and (pointer: fine) {
-			cursor: pointer;
-
-			&:hover .letter {
-				animation: moveUp var(--speed) var(--ease) forwards;
-			}
-
-			&:not(:hover) .letter {
-				animation: moveDown var(--speed) var(--ease) forwards;
-			}
-		}
-
-		.letter {
-			--speed: 0.35s;
-			--ease: ${getEase('bezzy2')};
-
-			display: inline-block;
-			vertical-align: middle;
-			color: ${getGlobal('white')};
-			transition: transform var(--speed) var(--ease);
-
-			${[...Array(12)]
-				.map(
-					(_, i) =>
-						`&:nth-child(${i + 1}) {
-							animation-delay: ${i * 0.01}s;
-						}`
-				)
-				.join('\n')}
-
-			${bp.l`
-				text-shadow: 0 1.32em 0 ${getGlobal('white', 60)};
-			`}
-		}
 	`
 );
 
@@ -137,43 +41,5 @@ export const Hamburger = styled.div(
 		justify-content: flex-end;
 
 		${bp.m` display: none; `}
-	`
-);
-
-export const MobileMenu = styled(Nav)(
-	props => css`
-		position: fixed;
-		z-index: 998;
-		inset: 0;
-
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-
-		background: ${getBrand('bc3')};
-
-		ul {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: flex-start;
-
-			width: 100%;
-			padding-inline: ${getGap('m')};
-		}
-
-		li {
-			display: inline-block;
-		}
-
-		button {
-			font-family: ${getFont('body')};
-			font-weight: ${getFontWeight('regular')};
-
-			color: ${getGlobal('white')};
-			font-size: 6rem;
-			line-height: 1.32;
-		}
 	`
 );

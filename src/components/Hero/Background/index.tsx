@@ -20,7 +20,7 @@ const Background = ({ setShouldAnimate }: I.BackgroundProps) => {
 	const handleLoad = useCallback(() => {
 		console.log('Scene loaded successfully!');
 		// Trigger animations when scene loads
-		setTimeout(() => setShouldAnimate(true), 500);
+		setShouldAnimate(true);
 	}, []);
 
 	return (
@@ -33,7 +33,7 @@ const Background = ({ setShouldAnimate }: I.BackgroundProps) => {
 					loop
 					playsInline
 					onLoadedData={e => {
-						e.currentTarget.playbackRate = 0.5;
+						// e.currentTarget.playbackRate = 0.5;
 						handleLoad();
 					}}
 				/>

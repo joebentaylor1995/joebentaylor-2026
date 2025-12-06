@@ -1,6 +1,6 @@
 // Imports
 // ------------
-import { SocialProps } from './Social/interface';
+import { SocialProps } from './MobileMenu/Social/interface';
 
 // Exports
 // ------------

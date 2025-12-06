@@ -3,19 +3,18 @@
 // Imports
 // ------------
 import { useRef } from 'react';
-import Icon from '@parts/Icon';
-import Logo from '@parts/Logo';
 import Grid from '@waffl';
-import Social from './Social';
+import Logo from '@parts/Logo';
+import MobileMenu from './MobileMenu';
+import DesktopMenu from './DesktopMenu';
 import Chopsticks from '@parts/Chopsticks';
 import { useIsDesktop } from '@utils/useResponsive';
-import { useMagnetic, useMagneticMultiple } from '@utils/useMagnetic';
+import { useMagnetic } from '@utils/useMagnetic';
 
 // Styles + Interfaces
 // ------------
 import * as I from './interface';
 import * as S from './styles';
-import Link from 'next/link';
 
 // Constants
 // ------------
@@ -32,8 +31,7 @@ const MAGNETIC_STRENGTH = 0.4; // 0-1, how much the button moves (30% of distanc
 // Component
 // ------------
 const Header = ({ socials }: I.HeaderProps) => {
-	// Refs
-	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
+	// refs
 	const logoRef = useRef<HTMLDivElement>(null);
 
 	// Check if desktop
@@ -41,13 +39,6 @@ const Header = ({ socials }: I.HeaderProps) => {
 
 	// Apply magnetic effect to logo (desktop only)
 	useMagnetic(logoRef, {
-		radius: MAGNETIC_RADIUS,
-		strength: MAGNETIC_STRENGTH,
-		enabled: isDesktop,
-	});
-
-	// Apply magnetic effect to all buttons (desktop only)
-	useMagneticMultiple(buttonRefs, {
 		radius: MAGNETIC_RADIUS,
 		strength: MAGNETIC_STRENGTH,
 		enabled: isDesktop,
@@ -70,73 +61,30 @@ const Header = ({ socials }: I.HeaderProps) => {
 					</S.Col>
 
 					<S.Col $s='2/3' $m='4/7' $l='8/13'>
-						{isDesktop && (
-							<S.Navigation>
-								{NAV_ITEMS.map((item, index) => (
-									<S.Button
-										ref={el => {
-											buttonRefs.current[index] = el;
-										}}
-										data-hover
-										$isFirst={index === 0}
-										key={item.label}
-										onClick={e => handleClick(e)}
-										aria-label={`Navigate to ${item.label}`}
-									>
-										<span>
-											{item.label
-												.split('')
-												.map((char, idx) => (
-													<span
-														key={idx}
-														className='letter'
-													>
-														{char === ' '
-															? '\u00A0'
-															: char}
-													</span>
-												))}
-										</span>
-									</S.Button>
-								))}
-							</S.Navigation>
+						{isDesktop ? (
+							<DesktopMenu
+								magneticOptions={{
+									radius: MAGNETIC_RADIUS,
+									strength: MAGNETIC_STRENGTH,
+								}}
+								navItems={NAV_ITEMS}
+								handleClick={handleClick}
+							/>
+						) : (
+							<S.Hamburger>
+								<Chopsticks />
+							</S.Hamburger>
 						)}
-
-						<S.Hamburger>
-							<Chopsticks />
-						</S.Hamburger>
 					</S.Col>
 				</Grid>
 			</S.Jacket>
 
 			{!isDesktop && (
-				<S.MobileMenu>
-					<ul>
-						{NAV_ITEMS.map(({ label }) => (
-							<li key={label}>
-								<button onClick={e => handleClick(e)}>
-									{label}
-								</button>
-							</li>
-						))}
-					</ul>
-
-					<ul>
-						{socials?.map(
-							({ url, name, isEnabled }) =>
-								isEnabled && (
-									<li key={name}>
-										<Social
-											url={url}
-											name={name}
-											icon={name.toLowerCase()}
-											isEnabled={isEnabled}
-										/>
-									</li>
-								)
-						)}
-					</ul>
-				</S.MobileMenu>
+				<MobileMenu
+					navItems={NAV_ITEMS}
+					socials={socials}
+					handleClick={handleClick}
+				/>
 			)}
 		</>
 	);
