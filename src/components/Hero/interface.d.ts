@@ -1,6 +1,8 @@
 // Imports
 // ------------
 
+import { Video } from "react-datocms";
+
 // Exports
 // ------------
 export interface HeroProps {
@@ -10,10 +12,6 @@ export interface HeroProps {
         url: string;
         id: string;
     };
-    video: {
-        id: string;
-        url: string;
-        provider: string;
-    };
+    video: Video | null;
     unicornScene: string;
 }

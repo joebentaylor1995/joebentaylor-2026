@@ -23,7 +23,6 @@ const Page = async () => {
 	const data = await getHomeData();
 	const { home } = data;
 
-
 	// console.table(home);
 
 	return (
@@ -38,7 +37,6 @@ const Page = async () => {
 		</>
 	);
 };
-
 
 // Exports
 // ------------

@@ -33,36 +33,6 @@ export const Jacket = styled(Section)(
 	`
 );
 
-export const Background = styled.div(
-	props => css`
-		--unicorn-width: 100%;
-		--unicorn-height: 100%;
-
-		position: fixed;
-		inset: 0;
-		z-index: -1;
-
-		&:after {
-			${bp.l`
-				content: '';
-				position: absolute;
-				inset: 0 0 0 50%;
-				background: linear-gradient(270deg, ${getGlobal('black', 60)} 0%, ${getGlobal('black', 0)} 100%);
-			`}
-		}
-
-		video {
-			opacity: 0.4;
-			width: 200%;
-			height: 100%;
-			object-fit: cover;
-
-			--media-object-fit: cover;
-			--controls: none;
-		}
-	`
-);
-
 export const Texts = styled(Div)(
 	props => css`
 		position: relative;
@@ -78,6 +48,8 @@ export const Text = styled(P)(
 	props => css`
 		${bodyL}
 		color: ${getGlobal('white')};
+		overflow: hidden;
+		opacity: 0; /* Hide initially until animation is ready */
 
 		/* Fix character shifting when SplitText splits text */
 		font-kerning: none;

@@ -2,18 +2,20 @@
 
 // Imports
 // ------------
-import UnicornScene from 'unicornstudio-react/next';
+
 import Grid from '@waffl';
+import Background from './Background';
+import VideoModal from './VideoModal';
 import Button from '@parts/Button';
 import StarHeading from '@parts/StarHeading';
 import CopyrightYear from '@parts/CopyrightYear';
 import SplitText from 'gsap/SplitText';
-import { VideoPlayer } from 'react-datocms';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
 import { waitForFonts } from '@utils/waitForFonts';
 import { useResponsive } from '@utils/useResponsive';
+import { VideoPlayer } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
@@ -22,18 +24,17 @@ import * as S from './styles';
 
 // Component
 // ------------
-const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
+const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// Refs
 	const textRef = useRef<HTMLElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
 	const textSplitRef = useRef<SplitText | null>(null);
 	const bottomContentRef = useRef<HTMLElement>(null);
-	const modalRef = useRef<HTMLDivElement>(null);
+	const modalRef = useRef<HTMLElement>(null);
 	const modalContentRef = useRef<HTMLDivElement>(null);
 	const videoPreviewRef = useRef<HTMLDivElement>(null);
 	const buttonAnimationRef = useRef<HTMLElement>(null);
 	const starHeadingRef = useRef<HTMLElement>(null);
-	const backgroundVideoRef = useRef<HTMLVideoElement>(null);
 
 	// Responsive Breakpoints
 	const { isMobile } = useResponsive();
@@ -46,17 +47,6 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 
 	// Modal state
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const handleLoad = useCallback(() => {
-		console.log('Scene loaded successfully!');
-		// Trigger animations when scene loads
-		setTimeout(() => setShouldAnimate(true), 500);
-	}, []);
-
-	const handleError = useCallback((error: Error) => {
-		console.error('Scene loading failed:', error);
-		alert(`Scene loading failed: ${error}`);
-	}, []);
 
 	// Helper to split/re-split text before animating
 	const splitAndPrepareText = useCallback(() => {
@@ -73,6 +63,9 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 				textSplitRef.current = null;
 
 				if (textRef.current) {
+					// Ensure text is hidden before splitting
+					gsap.set(textRef.current, { opacity: 0 });
+
 					textSplitRef.current = SplitText.create(textRef.current, {
 						type: 'words',
 						mask: 'words',
@@ -100,7 +93,7 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 
 	// Create splits when component is first rendered
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			splitAndPrepareText();
 		},
 		{
@@ -157,6 +150,10 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 
 			// Prepare: move words down, hide button and star heading
 			gsap.set(textSplitRef.current.words, { yPercent: 100 });
+			// Show text container now that words are positioned
+			if (textRef.current) {
+				gsap.set(textRef.current, { opacity: 1 });
+			}
 			// Batch opacity settings for better performance
 			const elementsToHide = [
 				buttonAnimationRef.current,
@@ -361,34 +358,7 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 
 	return (
 		<S.Jacket ref={jacketRef}>
-			<S.Background>
-				{isMobile ? (
-					<video
-						ref={backgroundVideoRef}
-						src='/video.mp4'
-						autoPlay
-						muted
-						loop
-						playsInline
-						onLoadedData={e => {
-							e.currentTarget.playbackRate = 0.5;
-							handleLoad();
-						}}
-					/>
-				) : (
-					<UnicornScene
-						jsonFilePath='/scene.json'
-						dpi={1.5}
-						fps={120}
-						lazyLoad={false}
-						production={true}
-						onLoad={handleLoad}
-						onError={handleError}
-						ariaLabel='Animated background scene'
-						altText='Interactive 3D scene'
-					/>
-				)}
-			</S.Background>
+			<Background setShouldAnimate={setShouldAnimate} />
 
 			<S.CenterContent $offset={bottomheight}>
 				<Grid>
@@ -449,31 +419,12 @@ const Hero = ({ subheading, title, videoThumbnail }: I.HeroProps) => {
 
 			{/* Video Modal */}
 			{isModalOpen && (
-				<S.Modal ref={modalRef} onClick={handleCloseModal}>
-					<S.ModalContent
-						ref={modalContentRef}
-						onClick={(e: React.MouseEvent<HTMLDivElement>) =>
-							e.stopPropagation()
-						}
-					>
-						<S.ModalCloseButton
-							data-hover
-							onClick={handleCloseModal}
-							aria-label='Close video modal'
-						>
-							×
-						</S.ModalCloseButton>
-						<S.ModalVideo>
-							<VideoPlayer
-								data={videoThumbnail}
-								autoPlay
-								muted
-								loop
-								playsInline
-							/>
-						</S.ModalVideo>
-					</S.ModalContent>
-				</S.Modal>
+				<VideoModal
+					modalRef={modalRef}
+					modalContentRef={modalContentRef}
+					handleCloseModal={handleCloseModal}
+					video={videoThumbnail}
+				/>
 			)}
 		</S.Jacket>
 	);
