@@ -15,14 +15,13 @@ import * as S from './styles';
 const Loader = ({}: I.LoaderProps) => {
 	const { setLoaderFinished, pageLoaded } = use(GlobalContext);
 
-	if (pageLoaded) {
-		setTimeout(() => {
-			return null;
-		}, 5000);
-	}
-
 	return (
-		<S.Jacket style={{ display: pageLoaded ? 'none' : 'flex' }}>
+		<S.Jacket
+			style={{
+				opacity: pageLoaded ? '0' : '1',
+				transition: 'opacity 1s ease-in-out',
+			}}
+		>
 			{/*  */}
 			{/*  */}
 			{/*  */}
