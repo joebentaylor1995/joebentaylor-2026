@@ -20,6 +20,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const DESKTOP_BREAKPOINT = 1024;
+const MOBILE_BREAKPOINT = 699;
 
 /**
  * Object returned by {@link useResponsive}.
@@ -27,6 +28,8 @@ const DESKTOP_BREAKPOINT = 1024;
 export interface ResponsiveState {
 	/** True if the viewport is less than the desktop breakpoint. */
 	isMobile: boolean;
+	/** True if the viewport is between the mobile and desktop breakpoints. */
+	isTablet: boolean;
 	/** True if the viewport is at least the desktop breakpoint. */
 	isDesktop: boolean;
 }
@@ -73,11 +76,15 @@ export function useResponsive(): ResponsiveState {
 		return {
 			isMobile: false,
 			isDesktop: false,
+			isTablet: false,
 		};
 	}
 
 	return {
 		isMobile: windowWidth < DESKTOP_BREAKPOINT,
+		isTablet:
+			windowWidth >= MOBILE_BREAKPOINT &&
+			windowWidth < DESKTOP_BREAKPOINT,
 		isDesktop: windowWidth >= DESKTOP_BREAKPOINT,
 	};
 }
@@ -94,6 +101,20 @@ export function useResponsive(): ResponsiveState {
 export function useIsMobile(): boolean {
 	const { isMobile } = useResponsive();
 	return isMobile;
+}
+
+/**
+ * React hook to determine if the viewport is tablet.
+ *
+ * @returns {boolean} True if the viewport is between the mobile and desktop breakpoints.
+ *
+ * @example
+ * const isTablet = useIsTablet();
+ * if (isTablet) { ... }
+ */
+export function useIsTablet(): boolean {
+	const { isTablet } = useResponsive();
+	return isTablet;
 }
 
 /**

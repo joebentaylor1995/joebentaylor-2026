@@ -10,12 +10,13 @@ import { GlobalStyle, theme } from '@theme';
 import { sequel, ppNeueMontreal } from '@theme/fonts';
 import StyledComponentsRegistry from '@utils/registry';
 import { ViewTransitions } from '@utils/viewTransitions';
+import { usePageTitle } from '@utils/usePageTitle';
 import { gsap } from 'gsap';
 import type { LenisRef } from 'lenis/react';
 import { ReactLenis } from 'lenis/react';
+import Cursor from '@parts/Cursor';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
-
 
 // Component
 // ------------
@@ -26,7 +27,10 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 	// NOTE • Lenis Setup
 	const lenisRef = useRef<LenisRef>(null);
 
-	// NOTE •   Lenis + GSAP
+	// NOTE • Page Title (changes when tab is hidden/visible)
+	usePageTitle('✦ 𝗚𝗘𝗧 𝗙𝗥𝗘𝗘 𝗗𝗘𝗦𝗜𝗚𝗡 𝗪𝗢𝗥𝗞!', '𝗧𝗥𝗜𝗖𝗞𝗘𝗗 𝗬𝗔! 😃');
+
+	// NOTE •   Lenis + GSAP
 	useEffect(() => {
 		function update(time: number) {
 			lenisRef.current?.lenis?.raf(time * 1000);
@@ -41,33 +45,32 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 		<ViewTransitions>
 			<html lang='en' className={classes} suppressHydrationWarning>
 				<body>
-					<main id='page' style={{ viewTransitionName: 'page' }}>
-						<StyledComponentsRegistry>
-							<ThemeProvider theme={theme} key='themeprovider'>
-								<GlobalStyle />
+					<StyledComponentsRegistry>
+						<ThemeProvider theme={theme} key='themeprovider'>
+							<GlobalStyle />
 
-								{/* GridExposer only rendered in development environment */}
-								{process.env.NODE_ENV === 'development' && (
-									<GridExposer />
-								)}
+							{/* GridExposer only rendered in development environment */}
+							{process.env.NODE_ENV === 'development' && (
+								<GridExposer />
+							)}
 
-								{/* CookieBar only rendered in production environment */}
-								{process.env.NODE_ENV === 'production' && (
-									<CookieBar />
-								)}
+							{/* CookieBar only rendered in production environment */}
+							{process.env.NODE_ENV === 'production' && (
+								<CookieBar />
+							)}
 
-								<Contexts>
-									<ReactLenis
-										root
-										options={{ autoRaf: false }}
-										ref={lenisRef}
-									/>
-									<AnimationPlugins />
-									{children}
-								</Contexts>
-							</ThemeProvider>
-						</StyledComponentsRegistry>
-					</main>
+							<Contexts>
+								<ReactLenis
+									root
+									options={{ autoRaf: false }}
+									ref={lenisRef}
+								/>
+								<AnimationPlugins />
+								<Cursor />
+								{children}
+							</Contexts>
+						</ThemeProvider>
+					</StyledComponentsRegistry>
 				</body>
 			</html>
 		</ViewTransitions>
