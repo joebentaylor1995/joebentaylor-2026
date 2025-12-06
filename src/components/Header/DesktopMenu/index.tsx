@@ -37,6 +37,7 @@ const DesktopMenu = ({
 					}}
 					data-hover
 					$isFirst={index === 0}
+					$index={index}
 					key={item.label}
 					onClick={e => handleClick(e)}
 					aria-label={`Navigate to ${item.label}`}

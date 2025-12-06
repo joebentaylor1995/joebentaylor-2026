@@ -23,6 +23,7 @@ export const Jacket = styled(Nav)(
 
 interface ButtonProps {
 	$isFirst?: boolean;
+	$index: number;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	'aria-label'?: string;
 }
@@ -31,9 +32,8 @@ export const Button = styled.button<ButtonProps>(
 	props => css`
 		${bodyS}
 
+		position: relative;
 		display: ${props.$isFirst ? 'none' : 'block'};
-		padding-block: ${getGap('xs')};
-		position: relative; /* Needed for magnetic transform */
 
 		> span {
 			display: block;

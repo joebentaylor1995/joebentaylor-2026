@@ -38,9 +38,7 @@ export const Texts = styled(Div)(
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: ${getGap('s')};
-
-		${bp.m` gap: ${getGap('sm')}; `}
+		gap: ${getGap('sm')};
 	`
 );
 
@@ -128,7 +126,6 @@ export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
 		);
 		transition: clip-path 0.35s ${getEase('bezzy3')};
 		transform-origin: bottom left;
-		/* Transform handled by GSAP for magnetic effect */
 
 		${bp.m` width: 14.4rem; `}
 
