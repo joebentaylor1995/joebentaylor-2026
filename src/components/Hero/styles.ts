@@ -126,14 +126,9 @@ export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
 				${props.$isModalOpen ? '100%' : '0%'} 0% 0% round
 				${getRadius('s')}
 		);
-		transition:
-			transform 0.35s ${getEase('bezzy3')},
-			clip-path 0.35s ${getEase('bezzy3')};
+		transition: clip-path 0.35s ${getEase('bezzy3')};
 		transform-origin: bottom left;
-
-		&:hover {
-			transform: scale(1.12);
-		}
+		/* Transform handled by GSAP for magnetic effect */
 
 		${bp.m` width: 14.4rem; `}
 

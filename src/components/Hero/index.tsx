@@ -2,7 +2,6 @@
 
 // Imports
 // ------------
-
 import Grid from '@waffl';
 import Background from './Background';
 import VideoModal from './VideoModal';
@@ -15,6 +14,7 @@ import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
 import { waitForFonts } from '@utils/waitForFonts';
 import { useResponsive } from '@utils/useResponsive';
+import { useMagnetic } from '@utils/useMagnetic';
 import { VideoPlayer } from 'react-datocms';
 
 // Styles + Interfaces
@@ -37,7 +37,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	const starHeadingRef = useRef<HTMLElement>(null);
 
 	// Responsive Breakpoints
-	const { isMobile } = useResponsive();
+	const { isMobile, isDesktop } = useResponsive();
 
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
@@ -47,6 +47,13 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 	// Modal state
 	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	// Apply magnetic effect to video preview (desktop only)
+	useMagnetic(videoPreviewRef, {
+		radius: 120,
+		strength: 0.4,
+		enabled: isDesktop,
+	});
 
 	// Helper to split/re-split text before animating
 	const splitAndPrepareText = useCallback(() => {

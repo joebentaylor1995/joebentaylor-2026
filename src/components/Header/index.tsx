@@ -2,12 +2,12 @@
 
 // Imports
 // ------------
-import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
+import { useRef } from 'react';
 import Logo from '@parts/Logo';
 import Grid from '@waffl';
 import Chopsticks from '@parts/Chopsticks';
 import { useIsDesktop } from '@utils/useResponsive';
+import { useMagnetic, useMagneticMultiple } from '@utils/useMagnetic';
 
 // Styles + Interfaces
 // ------------
@@ -24,12 +24,23 @@ const Header = ({}: I.HeaderProps) => {
 	// Refs
 	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 	const logoRef = useRef<HTMLDivElement>(null);
-	const mousePos = useRef({ x: 0, y: 0 });
-	const animationRefs = useRef<(gsap.core.Tween | null)[]>([]);
-	const logoAnimationRef = useRef<gsap.core.Tween | null>(null);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
+
+	// Apply magnetic effect to logo
+	useMagnetic(logoRef, {
+		radius: MAGNETIC_RADIUS,
+		strength: MAGNETIC_STRENGTH,
+		enabled: isDesktop,
+	});
+
+	// Apply magnetic effect to all buttons
+	useMagneticMultiple(buttonRefs, {
+		radius: MAGNETIC_RADIUS,
+		strength: MAGNETIC_STRENGTH,
+		enabled: isDesktop,
+	});
 
 	// Event Handlers
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,110 +63,6 @@ const Header = ({}: I.HeaderProps) => {
 			label: "Let's Talk",
 		},
 	];
-
-	// Magnetic effect
-	useEffect(() => {
-		if (!isDesktop) return;
-
-		const handleMouseMove = (e: MouseEvent) => {
-			mousePos.current = { x: e.clientX, y: e.clientY };
-
-			// Handle Logo magnetic effect
-			if (logoRef.current) {
-				const rect = logoRef.current.getBoundingClientRect();
-				const logoCenterX = rect.left + rect.width / 2;
-				const logoCenterY = rect.top + rect.height / 2;
-
-				const dx = mousePos.current.x - logoCenterX;
-				const dy = mousePos.current.y - logoCenterY;
-				const distance = Math.sqrt(dx * dx + dy * dy);
-
-				if (logoAnimationRef.current) {
-					logoAnimationRef.current.kill();
-				}
-
-				if (distance < MAGNETIC_RADIUS) {
-					const pullX = dx * MAGNETIC_STRENGTH;
-					const pullY = dy * MAGNETIC_STRENGTH;
-
-					logoAnimationRef.current = gsap.to(logoRef.current, {
-						x: pullX,
-						y: pullY,
-						duration: 0.3,
-						ease: 'power2.out',
-					});
-				} else {
-					logoAnimationRef.current = gsap.to(logoRef.current, {
-						x: 0,
-						y: 0,
-						duration: 0.5,
-						ease: 'power2.out',
-					});
-				}
-			}
-
-			// Handle button magnetic effects
-			buttonRefs.current.forEach((button, index) => {
-				if (!button) return;
-
-				// Get button center position
-				const rect = button.getBoundingClientRect();
-				const buttonCenterX = rect.left + rect.width / 2;
-				const buttonCenterY = rect.top + rect.height / 2;
-
-				// Calculate distance from cursor to button center
-				const dx = mousePos.current.x - buttonCenterX;
-				const dy = mousePos.current.y - buttonCenterY;
-				const distance = Math.sqrt(dx * dx + dy * dy);
-
-				// Kill any existing animation for this button
-				if (animationRefs.current[index]) {
-					animationRefs.current[index]?.kill();
-				}
-
-				if (distance < MAGNETIC_RADIUS) {
-					// Within magnetic radius - apply pull
-					const pullX = dx * MAGNETIC_STRENGTH;
-					const pullY = dy * MAGNETIC_STRENGTH;
-
-					animationRefs.current[index] = gsap.to(button, {
-						x: pullX,
-						y: pullY,
-						duration: 0.3,
-						ease: 'power2.out',
-					});
-				} else {
-					// Outside magnetic radius - return to original position
-					animationRefs.current[index] = gsap.to(button, {
-						x: 0,
-						y: 0,
-						duration: 0.5,
-						ease: 'power2.out',
-					});
-				}
-			});
-		};
-
-		window.addEventListener('mousemove', handleMouseMove, {
-			passive: true,
-		});
-
-		return () => {
-			window.removeEventListener('mousemove', handleMouseMove);
-			// Kill logo animation and reset position
-			logoAnimationRef.current?.kill();
-			if (logoRef.current) {
-				gsap.set(logoRef.current, { x: 0, y: 0 });
-			}
-			// Kill all button animations and reset positions
-			animationRefs.current.forEach((anim, index) => {
-				anim?.kill();
-				if (buttonRefs.current[index]) {
-					gsap.set(buttonRefs.current[index], { x: 0, y: 0 });
-				}
-			});
-		};
-	}, [isDesktop]);
 
 	return (
 		<S.Jacket>
