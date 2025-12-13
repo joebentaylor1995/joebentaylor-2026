@@ -55,9 +55,9 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 							)}
 
 							{/* CookieBar only rendered in production environment */}
-							{process.env.NODE_ENV === 'production' && (
+							{/* {process.env.NODE_ENV === 'production' && (
 								<CookieBar />
-							)}
+							)} */}
 
 							<AnimationPlugins />
 
