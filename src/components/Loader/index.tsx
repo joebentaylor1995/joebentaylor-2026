@@ -6,9 +6,8 @@ import { useState, useLayoutEffect, useRef, use } from 'react';
 import { SRCImage } from 'react-datocms';
 import { useAnimation } from '@/utils/useAnimation';
 import { gsap } from 'gsap';
-import { bezzy, bezzy4, bezzy3, bezzy2 } from '@parts/AnimationPlugins/Curves';
+import { bezzy4, bezzy3 } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
-import { theme } from '@theme';
 
 // Styles + Interfaces
 // ------------
@@ -124,19 +123,6 @@ const Loader = ({ images }: I.LoaderProps) => {
 						}
 					},
 				});
-			}
-
-			// Animate jacket background from white to #121212 during counter animation
-			if (jacketRef.current) {
-				tl.to(
-					jacketRef.current,
-					{
-						backgroundColor: theme?.colors?.brand?.bc4?.[100],
-						duration: 2,
-						ease: bezzy4,
-					},
-					0 // Start at the same time as counter animation
-				);
 			}
 
 			// Animate each item individually with stagger (starts after counter completes)

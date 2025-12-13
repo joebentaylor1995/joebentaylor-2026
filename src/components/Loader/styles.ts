@@ -28,7 +28,7 @@ export const Jacket = styled(Aside)(
 	props => css`
 		${sharedContainerStyles}
 		z-index: 99;
-		background: ${getGlobal('white')};
+		background: ${getBrand('bc4')};
 
 		ul {
 			position: relative;
@@ -108,6 +108,7 @@ export const Counter = styled.div(
 
 		color: ${getGlobal('white')};
 		mix-blend-mode: difference;
+		opacity: 0.4;
 
 		span {
 			${bodyL}
