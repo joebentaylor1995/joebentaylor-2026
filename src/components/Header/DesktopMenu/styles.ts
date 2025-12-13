@@ -17,7 +17,7 @@ export const Jacket = styled(Nav)(
 		justify-content: space-between;
 		gap: ${getGap('m')};
 
-		${bp.l` display: flex; `}
+		${bp.m` display: flex; `}
 	`
 );
 

@@ -2,16 +2,17 @@
 
 // Imports
 // ------------
-import { useRef, useEffect, use } from 'react';
+import { useRef, useEffect, useLayoutEffect, use } from 'react';
 import Grid from '@waffl';
 import Logo from '@parts/Logo';
 import MobileMenu from './MobileMenu';
 import DesktopMenu from './DesktopMenu';
 import Chopsticks from '@parts/Chopsticks';
-import { useIsDesktop } from '@utils/useResponsive';
+import { useIsDesktop, useIsTablet } from '@utils/useResponsive';
 import { useMagnetic } from '@utils/useMagnetic';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
+import { bezzy2 } from '@parts/AnimationPlugins/Curves';
 
 // Styles + Interfaces
 // ------------
@@ -38,10 +39,11 @@ const Header = ({ socials }: I.HeaderProps) => {
 	const jacketRef = useRef<HTMLElement>(null);
 
 	// Context
-	const { loaderFinished } = use(GlobalContext);
+	const { loaderFinishing } = use(GlobalContext);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
+	const isTablet = useIsTablet();
 
 	// Apply magnetic effect to logo (desktop only)
 	useMagnetic(logoRef, {
@@ -50,21 +52,25 @@ const Header = ({ socials }: I.HeaderProps) => {
 		enabled: isDesktop,
 	});
 
+	// Hide header initially until loader finishes
+	useLayoutEffect(() => {
+		if (!jacketRef.current) return;
+
+		gsap.set(jacketRef.current, { autoAlpha: 0, yPercent: -100 });
+	}, []);
+
 	// Fade in Header when loader finishes
 	useEffect(() => {
-		if (!loaderFinished || !jacketRef.current) return;
-
-		// Set initial opacity
-		gsap.set(jacketRef.current, { opacity: 0 });
+		if (!loaderFinishing || !jacketRef.current) return;
 
 		// Fade in
 		gsap.to(jacketRef.current, {
-			opacity: 1,
-			duration: 0.8,
-			delay: 0.75,
-			ease: 'power2.out',
+			autoAlpha: 1,
+			yPercent: 0,
+			duration: 1,
+			ease: bezzy2,
 		});
-	}, [loaderFinished]);
+	}, [loaderFinishing]);
 
 	// Event Handlers
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -83,7 +89,7 @@ const Header = ({ socials }: I.HeaderProps) => {
 					</S.Col>
 
 					<S.Col $s='2/3' $m='4/7' $l='8/13'>
-						{isDesktop ? (
+						{isDesktop || isTablet ? (
 							<DesktopMenu
 								magneticOptions={{
 									radius: MAGNETIC_RADIUS,

@@ -27,8 +27,8 @@ const sharedContainerStyles = css`
 export const Jacket = styled(Aside)(
 	props => css`
 		${sharedContainerStyles}
-		z-index: 9998;
-		background: ${getBrand('bc4')};
+		z-index: 99;
+		background: ${getGlobal('white')};
 
 		ul {
 			position: relative;
@@ -83,13 +83,18 @@ export const ImageScale = styled.div(
 		img {
 			position: absolute;
 			top: 50%;
-			left: 50%;
+			left: 100%;
 			transform: translate(-50%, -50%) scale(0.2);
 			display: block;
-			width: 100vw !important;
+			width: 200vw !important;
 			height: 100vh !important;
 			object-fit: cover;
 			max-width: none !important;
+
+			${bp.m`
+				left: 50%;
+				width: 100vw !important;
+			`}
 		}
 	`
 );
@@ -102,11 +107,10 @@ export const Counter = styled.div(
 		transform: translate(-50%, -50%);
 
 		color: ${getGlobal('white')};
+		mix-blend-mode: difference;
 
 		span {
 			${bodyL}
-
-			font-size: 5vw !important;
 		}
 	`
 );

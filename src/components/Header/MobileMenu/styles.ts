@@ -29,7 +29,7 @@ export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
 		--closed: 0% 0% 100% 0%;
 
 		position: fixed;
-		z-index: 998;
+		z-index: 99;
 		inset: 0;
 
 		display: flex;

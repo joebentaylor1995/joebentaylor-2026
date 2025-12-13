@@ -14,6 +14,7 @@ export const Jacket = styled(Div)(
 		position: fixed;
 		inset: 0;
 		z-index: -1;
+		overflow: hidden;
 
 		&:after {
 			${bp.l`
@@ -32,6 +33,10 @@ export const Jacket = styled(Div)(
 
 			--media-object-fit: cover;
 			--controls: none;
+
+			${bp.m`
+				width: 100%;
+			`}
 		}
 	`
 );

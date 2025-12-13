@@ -4,6 +4,7 @@
 // ------------
 import { useMagneticMultiple } from '@utils/useMagnetic';
 import { useRef } from 'react';
+import { useIsDesktop } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
@@ -20,12 +21,15 @@ const DesktopMenu = ({
 	// Refs
 	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+	// Check if desktop
+	const isDesktop = useIsDesktop();
+
 	// Magnetic Effect
 	// Apply magnetic effect to all buttons (desktop only)
 	useMagneticMultiple(buttonRefs, {
 		radius: magneticOptions?.radius,
 		strength: magneticOptions?.strength,
-		enabled: true,
+		enabled: isDesktop,
 	});
 
 	return (

@@ -8,6 +8,7 @@ import { useAnimation } from '@/utils/useAnimation';
 import { gsap } from 'gsap';
 import { bezzy, bezzy4, bezzy3, bezzy2 } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
+import { theme } from '@theme';
 
 // Styles + Interfaces
 // ------------
@@ -16,9 +17,9 @@ import * as S from './styles';
 
 // Component
 // ------------
-const Loader = ({ smallImages, largeImages }: I.LoaderProps) => {
+const Loader = ({ images }: I.LoaderProps) => {
 	// Context
-	const { setLoaderFinished } = use(GlobalContext);
+	const { setLoaderFinished, setLoaderFinishing } = use(GlobalContext);
 
 	// State
 	const [shouldUnrender, setShouldUnrender] = useState(false);
@@ -95,7 +96,7 @@ const Loader = ({ smallImages, largeImages }: I.LoaderProps) => {
 						gsap.to(jacketRef.current, {
 							autoAlpha: 0,
 							duration: 0.5,
-							ease: 'power2.out',
+							ease: bezzy3,
 							onComplete: () => {
 								// Unrender after fade out completes
 								setLoaderFinished(true);
@@ -123,6 +124,19 @@ const Loader = ({ smallImages, largeImages }: I.LoaderProps) => {
 						}
 					},
 				});
+			}
+
+			// Animate jacket background from white to #121212 during counter animation
+			if (jacketRef.current) {
+				tl.to(
+					jacketRef.current,
+					{
+						backgroundColor: theme?.colors?.brand?.bc4?.[100],
+						duration: 2,
+						ease: bezzy4,
+					},
+					0 // Start at the same time as counter animation
+				);
 			}
 
 			// Animate each item individually with stagger (starts after counter completes)
@@ -213,6 +227,7 @@ const Loader = ({ smallImages, largeImages }: I.LoaderProps) => {
 							scale: 1, // Scale from 1.4 to 1
 							ease: bezzy4,
 							duration: 1.5,
+							onStart: () => setLoaderFinishing(true),
 						},
 						'<' // Start at the same time as the other animations
 					);
@@ -248,7 +263,7 @@ const Loader = ({ smallImages, largeImages }: I.LoaderProps) => {
 				</S.Counter>
 
 				<ul ref={listRef}>
-					{largeImages.map(({ responsiveImage }, i) => {
+					{images.map(({ responsiveImage }, i) => {
 						return (
 							<li
 								key={i}

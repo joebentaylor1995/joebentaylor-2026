@@ -22,6 +22,8 @@ export interface GlobalContextType {
 	requiresUnicornScene: boolean;
 	setRequiresUnicornScene: (value: boolean) => void;
 	setPageLoaded: (value: boolean) => void;
+	loaderFinishing: boolean;
+	setLoaderFinishing: (value: boolean) => void;
 	loaderFinished: boolean;
 	setLoaderFinished: (value: boolean) => void;
 }
@@ -42,6 +44,8 @@ export const GlobalContext = createContext<GlobalContextType>({
 	setRequiresUnicornScene: () => {},
 	pageLoaded: false,
 	setPageLoaded: () => {},
+	loaderFinishing: false,
+	setLoaderFinishing: () => {},
 	loaderFinished: false,
 	setLoaderFinished: () => {},
 });
@@ -65,6 +69,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 		useState<boolean>(false);
 	const [requiresUnicornScene, setRequiresUnicornScene] =
 		useState<boolean>(false);
+	const [loaderFinishing, setLoaderFinishing] = useState<boolean>(false);
 	const [loaderFinished, setLoaderFinished] = useState<boolean>(false);
 
 	// Memoize context value to prevent unnecessary re-renders
@@ -84,6 +89,8 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			setUnicornSceneLoaded,
 			requiresUnicornScene,
 			setRequiresUnicornScene,
+			loaderFinishing,
+			setLoaderFinishing,
 			loaderFinished,
 			setLoaderFinished,
 		}),
@@ -94,6 +101,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			componentsLoaded,
 			unicornSceneLoaded,
 			requiresUnicornScene,
+			loaderFinishing,
 			loaderFinished,
 			// lenis ref is stable, setState functions are stable, so they don't need to be in deps
 		]

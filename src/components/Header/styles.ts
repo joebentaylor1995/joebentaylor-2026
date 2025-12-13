@@ -8,7 +8,7 @@ import styled, { css } from 'styled-components';
 export const Jacket = styled(Header)(
 	props => css`
 		position: fixed;
-		z-index: 999;
+		z-index: 100;
 		inset: 0 0 auto 0;
 
 		display: flex;
