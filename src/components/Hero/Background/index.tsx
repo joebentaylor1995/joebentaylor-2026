@@ -3,8 +3,9 @@
 // Imports
 // ------------
 import UnicornScene from 'unicornstudio-react/next';
-import { useCallback, useRef } from 'react';
+import { use } from 'react';
 import { useResponsive } from '@utils/useResponsive';
+import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
 // ------------
@@ -13,20 +14,17 @@ import * as S from './styles';
 
 // Component
 // ------------
-const Background = ({ setShouldAnimate }: I.BackgroundProps) => {
+const Background = ({}: I.BackgroundProps) => {
 	// Responsive Breakpoints
 	const { isMobile } = useResponsive();
-	const hasLoadedRef = useRef(false);
 
-	const handleLoad = useCallback(() => {
-		if (hasLoadedRef.current) return; // Prevent double-triggering
-		hasLoadedRef.current = true;
+	// Context
+	const { setUnicornSceneLoaded } = use(GlobalContext);
 
-		console.log('Scene loaded successfully!');
-		// Trigger animations when scene loads
-		// Add small delay to ensure text split is ready
-		setTimeout(() => setShouldAnimate(true), 500);
-	}, [setShouldAnimate]);
+	// Handler to set the unicorn scene loaded state
+	const handleLoad = () => {
+		setUnicornSceneLoaded(true);
+	};
 
 	return (
 		<S.Jacket>
@@ -37,11 +35,7 @@ const Background = ({ setShouldAnimate }: I.BackgroundProps) => {
 					muted
 					loop
 					playsInline
-					onCanPlay={e => {
-						// Use onCanPlay for better Safari compatibility
-						// e.currentTarget.playbackRate = 0.5;
-						handleLoad();
-					}}
+					onCanPlay={handleLoad}
 				/>
 			) : (
 				<UnicornScene

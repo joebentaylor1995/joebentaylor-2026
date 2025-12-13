@@ -55,9 +55,11 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 							)}
 
 							{/* CookieBar only rendered in production environment */}
-							{process.env.NODE_ENV === 'production' && (
+							{/* {process.env.NODE_ENV === 'production' && (
 								<CookieBar />
-							)}
+							)} */}
+
+							<AnimationPlugins />
 
 							<Contexts>
 								<ReactLenis
@@ -65,7 +67,7 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 									options={{ autoRaf: false }}
 									ref={lenisRef}
 								/>
-								<AnimationPlugins />
+
 								<Cursor />
 								{children}
 							</Contexts>
