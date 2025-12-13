@@ -35,6 +35,7 @@ export const Texts = styled(Div)(
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('sm')};
+		user-select: none;
 	`
 );
 
@@ -75,6 +76,7 @@ export const BottomContent = styled(Footer)(
 
 		position: absolute;
 		inset: auto 0 var(--offset) 0;
+		user-select: none;
 
 		${bp.m` --offset: ${getGap('l')}; `}
 		${bp.l` --offset: ${getGap('xl')}; `}
