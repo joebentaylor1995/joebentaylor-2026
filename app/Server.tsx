@@ -1,6 +1,7 @@
 // Imports
 // ------------
 import Header from '@parts/Header';
+import Loader from '@parts/Loader';
 import { performRequest } from '@utils/datocms';
 import { GET_GLOBAL } from './queries/getGlobal';
 
@@ -24,6 +25,10 @@ const Server = async ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<>
+			<Loader
+				smallImages={data?.loader?.smallImages}
+				largeImages={data?.loader?.largeImages}
+			/>
 			<Header socials={data?.allSocialMediaLinks} />
 			{children}
 			{/* <Footer /> */}

@@ -9,13 +9,22 @@ import Button from '@parts/Button';
 import StarHeading from '@parts/StarHeading';
 import CopyrightYear from '@parts/CopyrightYear';
 import SplitText from 'gsap/SplitText';
-import { useRef, useState, useEffect, useCallback } from 'react';
+import {
+	useRef,
+	useState,
+	useEffect,
+	useLayoutEffect,
+	useCallback,
+	use,
+} from 'react';
 import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
 import { waitForFonts } from '@utils/waitForFonts';
 import { useResponsive } from '@utils/useResponsive';
 import { useMagnetic } from '@utils/useMagnetic';
 import { VideoPlayer } from 'react-datocms';
+import { slow, smooth } from '@parts/AnimationPlugins/Curves';
+import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
 // ------------
@@ -29,6 +38,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	const textRef = useRef<HTMLElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
 	const textSplitRef = useRef<SplitText | null>(null);
+	const centerContentRef = useRef<HTMLElement>(null);
 	const bottomContentRef = useRef<HTMLElement>(null);
 	const modalRef = useRef<HTMLElement>(null);
 	const modalContentRef = useRef<HTMLDivElement>(null);
@@ -39,8 +49,44 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// Responsive Breakpoints
 	const { isMobile, isDesktop } = useResponsive();
 
+	// Context
+	const { loaderFinished } = use(GlobalContext);
+
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
+
+	// Hide CenterContent and BottomContent initially until loader finishes
+	useLayoutEffect(() => {
+		const elementsToHide = [
+			centerContentRef.current,
+			bottomContentRef.current,
+		].filter(Boolean) as HTMLElement[];
+
+		if (elementsToHide.length > 0) {
+			gsap.set(elementsToHide, { autoAlpha: 0 });
+		}
+	}, []);
+
+	// Fade in CenterContent and BottomContent when loader finishes
+	useEffect(() => {
+		if (!loaderFinished) return;
+
+		const elementsToFadeIn = [
+			centerContentRef.current,
+			bottomContentRef.current,
+		].filter(Boolean) as HTMLElement[];
+
+		if (elementsToFadeIn.length > 0) {
+			// Fade in CenterContent and BottomContent
+			gsap.to(elementsToFadeIn, {
+				autoAlpha: 1, // opacity + visibility
+				duration: 0.8,
+				delay: 0.75,
+				ease: 'power2.out',
+				stagger: 0.1,
+			});
+		}
+	}, [loaderFinished]);
 
 	// Ref to help trigger animation on resize
 	const [resizeTrigger, setResizeTrigger] = useState(0);
@@ -138,12 +184,12 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [splitAndPrepareText]);
 
-	// Whenever shouldAnimate or resizeTrigger changes, animate text in
+	// Whenever loaderFinished, shouldAnimate, or resizeTrigger changes, animate text in
 	useEffect(() => {
-		if (!shouldAnimate && resizeTrigger === 0) return;
+		if (!loaderFinished && !shouldAnimate && resizeTrigger === 0) return;
 
-		const slowCurve = 'cubic-bezier(0, 0, 0, 1)';
-		const smoothCurve = 'cubic-bezier(0.8, 0, 0.2, 1)';
+		const slowCurve = slow;
+		const smoothCurve = smooth;
 
 		if (textSplitRef.current?.words) {
 			// Kill any running animations first
@@ -214,7 +260,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 				clearTimeout(timeoutId);
 			};
 		}
-	}, [shouldAnimate, resizeTrigger]);
+	}, [loaderFinished, shouldAnimate, resizeTrigger]);
 
 	// Cleanup splits on unmount
 	useEffect(() => {
@@ -367,7 +413,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		<S.Jacket ref={jacketRef}>
 			<Background setShouldAnimate={setShouldAnimate} />
 
-			<S.CenterContent $offset={bottomheight}>
+			<S.CenterContent ref={centerContentRef} $offset={bottomheight}>
 				<Grid>
 					<S.Texts $m='4/7' $l='8/12'>
 						<StarHeading

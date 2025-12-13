@@ -2,7 +2,7 @@
 
 // Imports
 // ------------
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { useIsDesktop } from '@utils/useResponsive';
 
@@ -13,6 +13,9 @@ import { Jacket } from './styles';
 // Component
 // ------------
 const Cursor = () => {
+	// State to ensure client-side only rendering
+	const [isMounted, setIsMounted] = useState(false);
+
 	// NOTE • Configuration
 	const CURSOR_SPEED = 0.25; // Lower = faster (0.1 = very fast, 1.0 = slow)
 	const STRETCH_SENSITIVITY = 400; // Higher = less sensitive to movement
@@ -30,6 +33,11 @@ const Cursor = () => {
 
 	// NOTE • Window Size
 	const isDesktop = useIsDesktop();
+
+	// Mark as mounted on client side only
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
 
 	// NOTE • Animate Jelly Blob
 	useEffect(() => {
@@ -142,8 +150,8 @@ const Cursor = () => {
 		};
 	}, [isDesktop]);
 
-	// Don't render on mobile/tablet
-	if (!isDesktop) return null;
+	// Don't render on mobile/tablet or during SSR
+	if (!isMounted || !isDesktop) return null;
 
 	return <Jacket ref={jellyRef} aria-hidden='true' />;
 };
