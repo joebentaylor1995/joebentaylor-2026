@@ -69,7 +69,7 @@ const Loader = ({ images }: I.LoaderProps) => {
 			// Set initial parallax offset for images
 			if (imageScales.length > 0) {
 				gsap.set(imageScales, {
-					yPercent: -12, // Start at -6% offset
+					yPercent: 12, // Start at -6% offset
 				});
 			}
 
@@ -156,10 +156,10 @@ const Loader = ({ images }: I.LoaderProps) => {
 					imageScales,
 					{
 						yPercent: 0, // Finish at 0% (natural position)
-						duration: 2.4,
+						duration: 2.6,
 						ease: bezzy4,
 					},
-					'<0.5' // Start 0.5s after the previous animation (list) starts
+					'0' // Start 0.5s after the previous animation (list) starts
 				);
 			}
 
