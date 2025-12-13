@@ -6,7 +6,7 @@ import {} from '@tackl/type';
 
 // Exports
 // ------------
-export const Jacket = styled(Div)(
+export const Jacket = styled(Div)<{ $isMenuOpen: boolean }>(
 	props => css`
 		--unicorn-width: 100%;
 		--unicorn-height: 100%;
@@ -26,13 +26,18 @@ export const Jacket = styled(Div)(
 		}
 
 		video {
+			--media-object-fit: cover;
+			--controls: none;
+
 			opacity: 0.4;
 			width: 200%;
 			height: 100%;
 			object-fit: cover;
 
-			--media-object-fit: cover;
-			--controls: none;
+			transform: ${props.$isMenuOpen
+				? 'translateY(25%)'
+				: 'translateY(0)'};
+			transition: transform 0.5s ${getEase('bezzy3')};
 
 			${bp.m`
 				width: 100%;
