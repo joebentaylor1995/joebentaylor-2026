@@ -27,5 +27,16 @@ export const GET_HOME = `
             }
             unicornScene
         }
+
+        profile {
+            introSubheading
+            introHeading {
+                heading
+            }
+            introText{
+                value
+            }
+            statement
+        }
     }
 `;

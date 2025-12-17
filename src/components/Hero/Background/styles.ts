@@ -6,7 +6,10 @@ import {} from '@tackl/type';
 
 // Exports
 // ------------
-export const Jacket = styled(Div)<{ $isMenuOpen: boolean }>(
+export const Jacket = styled(Div)<{
+	$isMenuOpen: boolean;
+	$isProfileOpen: boolean;
+}>(
 	props => css`
 		--unicorn-width: 100%;
 		--unicorn-height: 100%;
@@ -15,6 +18,11 @@ export const Jacket = styled(Div)<{ $isMenuOpen: boolean }>(
 		inset: 0;
 		z-index: -1;
 		overflow: hidden;
+
+		transform: ${props.$isProfileOpen
+			? 'translateX(-25%)'
+			: 'translateX(0)'};
+		transition: transform 1s ${getEase('bezzy2')};
 
 		&:after {
 			${bp.l`

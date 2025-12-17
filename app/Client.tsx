@@ -12,8 +12,7 @@ import StyledComponentsRegistry from '@utils/registry';
 import { ViewTransitions } from '@utils/viewTransitions';
 import { usePageTitle } from '@utils/usePageTitle';
 import { gsap } from 'gsap';
-import type { LenisRef } from 'lenis/react';
-import { ReactLenis } from 'lenis/react';
+import { ReactLenis, LenisRef } from 'lenis/react';
 import Cursor from '@parts/Cursor';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
@@ -62,14 +61,15 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 							<AnimationPlugins />
 
 							<Contexts>
+								<Cursor />
+
 								<ReactLenis
 									root
 									options={{ autoRaf: false }}
 									ref={lenisRef}
-								/>
-
-								<Cursor />
-								{children}
+								>
+									{children}
+								</ReactLenis>
 							</Contexts>
 						</ThemeProvider>
 					</StyledComponentsRegistry>

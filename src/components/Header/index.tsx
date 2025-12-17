@@ -39,7 +39,7 @@ const Header = ({ socials }: I.HeaderProps) => {
 	const jacketRef = useRef<HTMLElement>(null);
 
 	// Context
-	const { loaderFinishing } = use(GlobalContext);
+	const { loaderFinishing, setProfileOpen } = use(GlobalContext);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
@@ -76,6 +76,13 @@ const Header = ({ socials }: I.HeaderProps) => {
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		console.log('click');
+
+		// Use currentTarget to get the button element, not the child that was clicked
+		const button = e.currentTarget as HTMLButtonElement;
+
+		if (button?.dataset.label === 'Profile') {
+			setProfileOpen(true);
+		}
 	};
 
 	return (

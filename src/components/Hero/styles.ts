@@ -108,7 +108,12 @@ export const Copyright = styled(Div)(
 	`
 );
 
-export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
+interface VideoPreviewProps {
+	$isModalOpen: boolean;
+	$isProfileOpen: boolean;
+}
+
+export const VideoPreview = styled(Div)<VideoPreviewProps>(
 	props => css`
 		width: 10.2rem;
 		aspect-ratio: 3/4;
@@ -118,9 +123,9 @@ export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
 		border-radius: ${getRadius('s')};
 		cursor: pointer;
 		clip-path: inset(
-			${props.$isModalOpen ? '100%' : '0%'}
-				${props.$isModalOpen ? '100%' : '0%'} 0% 0% round
-				${getRadius('s')}
+			${props.$isModalOpen || props.$isProfileOpen ? '100%' : '0%'}
+				${props.$isModalOpen || props.$isProfileOpen ? '100%' : '0%'} 0%
+				0% round ${getRadius('s')}
 		);
 		transition: clip-path 0.35s ${getEase('bezzy3')};
 		transform-origin: bottom left;

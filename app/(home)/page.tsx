@@ -1,6 +1,7 @@
 // Imports
 // ------------
 import Hero from '@parts/Hero';
+import Profile from '@parts/Profile';
 import { performRequest } from '@utils/datocms';
 import { GET_HOME } from '../queries/getHome';
 
@@ -21,7 +22,7 @@ async function getHomeData() {
 // ------------
 const Page = async () => {
 	const data = await getHomeData();
-	const { home } = data;
+	const { home, profile } = data;
 
 	// console.table(home);
 
@@ -33,6 +34,13 @@ const Page = async () => {
 				videoThumbnail={home?.videoThumbnail?.video}
 				video={home?.video}
 				unicornScene={home?.unicornScene}
+			/>
+
+			<Profile
+				introSubheading={profile?.introSubheading}
+				introHeading={profile?.introHeading}
+				introText={profile?.introText}
+				statement={profile?.statement}
 			/>
 		</>
 	);
