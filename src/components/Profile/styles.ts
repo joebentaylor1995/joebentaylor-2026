@@ -88,17 +88,26 @@ export const BackgroundOverlay = styled.aside<{ $isProfileOpen: boolean }>(
 	`
 );
 
-export const MobileClose = styled.button(
+export const MobileClose = styled.button<{ $isProfileOpen: boolean }>(
 	props => css`
 		${bodyM}
 
 		position: fixed;
-		z-index: 100;
+		z-index: 101;
 		top: ${getGap('s')};
 		right: ${getGap('s')};
 
 		padding: ${getGap('s')};
 		color: ${getGlobal('white', 40)};
+
+		opacity: ${props.$isProfileOpen ? 1 : 0};
+		pointer-events: ${props.$isProfileOpen ? 'auto' : 'none'};
+		transform: ${props.$isProfileOpen
+			? 'translateX(0)'
+			: 'translateX(100%)'};
+		transition:
+			opacity 1s ${getEase('bezzy2')},
+			transform 1s ${getEase('bezzy3')};
 
 		&:active {
 			transform: scale(0.95);

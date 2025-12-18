@@ -87,6 +87,13 @@ const Profile = ({
 				onClick={handleClose}
 			/>
 
+			<S.MobileClose
+				onClick={handleMobileClose}
+				$isProfileOpen={profileOpen}
+			>
+				Close
+			</S.MobileClose>
+
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<SmoothScroll
 					wrapperRef={jacketRef}
@@ -94,10 +101,6 @@ const Profile = ({
 					isActive={profileOpen}
 				/>
 				<S.Content ref={contentRef}>
-					<S.MobileClose onClick={handleMobileClose}>
-						Close
-					</S.MobileClose>
-
 					<Introduction
 						isActive={profileOpen}
 						introSubheading={introSubheading}

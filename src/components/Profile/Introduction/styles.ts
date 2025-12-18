@@ -110,11 +110,15 @@ export const Bottom = styled(Footer)(
 export const BottomSubheading = styled(Div)(
 	props => css`
 		position: relative;
+		margin-bottom: ${getGap('m')};
 
 		> div {
-			position: sticky;
-			top: calc(100% - ${getGap('xl')});
-			left: 0;
+			${bp.l`
+				position: sticky;
+				top: calc(100% - ${getGap('xl')});
+				left: 0;
+				margin-bottom: 0;
+			`}
 		}
 	`
 );
