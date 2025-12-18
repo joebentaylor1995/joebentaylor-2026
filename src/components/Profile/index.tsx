@@ -99,6 +99,7 @@ const Profile = ({
 					</S.MobileClose>
 
 					<Introduction
+						isActive={profileOpen}
 						introSubheading={introSubheading}
 						introHeading={introHeading}
 						introText={introText}

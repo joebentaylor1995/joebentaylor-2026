@@ -4,6 +4,7 @@
 // Exports
 // ------------
 export interface IntroductionProps {
+    isActive?: boolean;
     introSubheading: string;
     introHeading: {
         heading: string;

@@ -59,9 +59,17 @@ export const Title = styled(Div)(
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('s')};
+		transform-style: preserve-3d;
+		perspective: 1000px;
 
 		span {
 			${displayL}
+			transform-style: preserve-3d;
+		}
+
+		.char {
+			display: inline-block;
+			transform-style: preserve-3d;
 		}
 	`
 );
