@@ -8,6 +8,7 @@ import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
 import { bezzy3 } from '@parts/AnimationPlugins/Curves';
+import { useIsDesktop } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
@@ -24,6 +25,9 @@ const Profile = ({
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
+
+	// Device detection
+	const isDesktop = useIsDesktop();
 
 	// Refs
 	const jacketRef = useRef<HTMLDivElement>(null);
@@ -52,8 +56,6 @@ const Profile = ({
 
 	// Animate on profileOpen change
 	useEffect(() => {
-		console.log('profileOpen', profileOpen);
-
 		if (!jacketRef.current) return;
 
 		const speed = 1;
@@ -66,8 +68,15 @@ const Profile = ({
 		});
 	}, [profileOpen]);
 
-	// Handle click anywhere to close modal
+	// Handle click anywhere to close modal (desktop only)
 	const handleClose = () => {
+		if (isDesktop) {
+			setProfileOpen(false);
+		}
+	};
+
+	// Handle close for mobile (used by MobileClose button)
+	const handleMobileClose = () => {
 		setProfileOpen(false);
 	};
 
@@ -85,6 +94,10 @@ const Profile = ({
 					isActive={profileOpen}
 				/>
 				<S.Content ref={contentRef}>
+					<S.MobileClose onClick={handleMobileClose}>
+						Close
+					</S.MobileClose>
+
 					<Introduction
 						introSubheading={introSubheading}
 						introHeading={introHeading}

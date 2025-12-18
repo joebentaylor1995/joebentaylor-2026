@@ -58,8 +58,13 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	html {
+		--grid-gutter-s: ${theme.grid.gutter.s};
+		--grid-gutter-m: ${theme.grid.gutter.m};
+		--grid-gutter-l: ${theme.grid.gutter.l};
+
 		--black: ${theme.colors.global.black[100]};
 		--white: ${theme.colors.global.white[100]};
+		
 		--bezzy: ${theme.easing.bezzy};
 		--bezzy2: ${theme.easing.bezzy2};
 		--bezzy3: ${theme.easing.bezzy3};

@@ -15,7 +15,7 @@ const StarHeading = ({ text, semantic, passedRef }: I.StarHeadingProps) => {
 	const HeadingTag = semantic || 'span';
 
 	return (
-		<S.Jacket ref={passedRef}>
+		<S.Jacket ref={passedRef} $hasAnimation={passedRef ? true : false}>
 			<Icon type='star' />
 			<HeadingTag>{text}</HeadingTag>
 		</S.Jacket>

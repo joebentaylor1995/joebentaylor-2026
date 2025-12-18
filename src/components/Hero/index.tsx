@@ -54,7 +54,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	const [resizeTrigger, setResizeTrigger] = useState(0); // Ref to help trigger animation on resize
 
 	// Context
-	const { loaderFinished, profileOpen } = use(GlobalContext);
+	const { loaderFinished, profileOpen, setProfileOpen } = use(GlobalContext);
 
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
@@ -388,7 +388,11 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 						<S.Text ref={textRef}>{title}</S.Text>
 						{isMobile && (
 							<S.ButtonAnimation ref={buttonAnimationRef}>
-								<Button href='/' label='View Profile' />
+								<Button
+									href='/'
+									label='View Profile'
+									onClick={() => setProfileOpen(true)}
+								/>
 							</S.ButtonAnimation>
 						)}
 					</S.Texts>

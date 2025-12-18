@@ -25,10 +25,31 @@ const SmoothScroll = ({
 
 	useEffect(() => {
 		if (!isActive) {
-			// Cleanup when inactive
+			// Wait for modal exit animation, then scroll to top and cleanup when inactive
 			if (profileLenis.current) {
-				profileLenis.current.destroy();
-				profileLenis.current = null;
+				// Wait 1s for modal exit animation to complete, then scroll to top instantly
+				const scrollTimeout = setTimeout(() => {
+					if (profileLenis.current) {
+						// Scroll to top instantly after 1s delay
+						profileLenis.current.scrollTo(0, {
+							immediate: true,
+						});
+						// Clean up and destroy immediately after scrolling
+						profileLenis.current.off(
+							'scroll',
+							ScrollTrigger.update
+						);
+						if (wrapperRef.current) {
+							ScrollTrigger.scrollerProxy(wrapperRef.current, {});
+						}
+						profileLenis.current.destroy();
+						profileLenis.current = null;
+						ScrollTrigger.refresh();
+					}
+				}, 1000);
+				return () => {
+					clearTimeout(scrollTimeout);
+				};
 			}
 			return;
 		}
@@ -99,6 +120,9 @@ const SmoothScroll = ({
 			if (updateFn) {
 				gsap.ticker.remove(updateFn);
 			}
+			// Only cleanup listeners - don't scroll or destroy here
+			// The !isActive block will handle scroll/destroy with the 1s delay
+			// This prevents immediate scrolling when transitioning to inactive
 			if (profileLenis.current) {
 				// Remove scroll listener
 				profileLenis.current.off('scroll', ScrollTrigger.update);
@@ -106,12 +130,8 @@ const SmoothScroll = ({
 				if (wrapperRef.current) {
 					ScrollTrigger.scrollerProxy(wrapperRef.current, {});
 				}
-				// Destroy Lenis instance
-				profileLenis.current.destroy();
-				profileLenis.current = null;
+				// Don't scroll or destroy - let !isActive block handle it with delay
 			}
-			// Refresh ScrollTrigger after cleanup
-			ScrollTrigger.refresh();
 		};
 	}, [isActive, wrapperRef, contentRef]);
 

@@ -11,7 +11,7 @@ import { GridInterface } from './interface';
 const { columns, gutter, maxSize } = theme.grid;
 
 // Base styles to reduce recalculation
-const baseGridStyles = css`
+const baseGridStyles = (props: GridInterface) => css`
 	--grid-columns: repeat(${columns?.s}, 1fr);
 	--grid-gutter: ${gutter.s};
 	--grid-margin: ${gutter.s};
@@ -32,7 +32,7 @@ const baseGridStyles = css`
 	`}
 
 	${bp.l`
-		--grid-columns: repeat(${columns?.l}, 1fr);
+		--grid-columns: repeat(${props.$lCols ?? columns?.l}, 1fr);
 		--grid-gutter: ${gutter.l};
 		--grid-margin: ${gutter.l};
 	`}
@@ -59,7 +59,7 @@ const gridVariants = {
 
 export const Grid = styled(Waffl)<GridInterface>(
 	(props: GridInterface) => css`
-		${baseGridStyles}
+		${baseGridStyles(props)}
 
 		${props.$noGutter && gridVariants.noGutter}
 		${props.$isFixed && gridVariants.isFixed}

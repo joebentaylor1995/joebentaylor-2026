@@ -19,5 +19,6 @@ interface GridInterface extends ResponsiveProps {
 	$isFullscreenTop?: boolean;
 	$isCenter?: boolean;
 	$noGutter?: boolean;
+	$lCols?: number;
 	children?: React.ReactNode;
 }
