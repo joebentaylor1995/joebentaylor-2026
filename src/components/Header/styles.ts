@@ -16,6 +16,10 @@ export const Jacket = styled(Header)(
 		align-items: center;
 		padding-block: ${getGap('m')};
 
+		/* Hide initially - GSAP will animate in */
+		opacity: 0;
+		visibility: hidden;
+
 		${bp.m`
 			padding-block: ${getGap('l')};
 		`}

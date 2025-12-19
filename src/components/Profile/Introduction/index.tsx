@@ -5,24 +5,20 @@
 import StarHeading from '@parts/StarHeading';
 import Grid from '@waffl';
 import { StructuredText } from 'react-datocms';
-import { useAnimation } from '@utils/useAnimation';
 import { useRef, useLayoutEffect, useEffect } from 'react';
-import { bezzy3 } from '@parts/AnimationPlugins/Curves';
 import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
+import { animateNeonFlicker } from '@utils/animateNeonFlicker';
 
 // Styles + Interfaces
 // ------------
 import * as I from './interface';
 import * as S from './styles';
 
-// Constants
-// ------------
-const COL_OVERRIDE = 8;
-
 // Component
 // ------------
 const Introduction = ({
+	columnOverride,
 	isActive,
 	introSubheading,
 	introHeading,
@@ -31,10 +27,10 @@ const Introduction = ({
 	// Refs
 	const jacketRef = useRef<HTMLElement>(null);
 	const topSubRef = useRef<HTMLElement>(null);
+	const splitTextRefs = useRef<(SplitText | null)[]>([]);
 	const headingRefs = useRef<(HTMLSpanElement | null)[]>(
 		new Array(introHeading.length).fill(null)
 	);
-	const splitTextRefs = useRef<(SplitText | null)[]>([]);
 
 	// Split text into characters and prepare for animation
 	useLayoutEffect(() => {
@@ -79,13 +75,10 @@ const Introduction = ({
 
 				splitTextRefs.current[index] = split;
 
-				// Set initial state for characters (from bottom with rotation for swing)
+				// Set initial state for characters (hidden, in final position)
 				if (split.chars && split.chars.length > 0) {
 					gsap.set(split.chars, {
-						y: 100,
-						rotationX: -90,
 						autoAlpha: 0,
-						transformOrigin: 'center bottom',
 					});
 				}
 
@@ -104,27 +97,21 @@ const Introduction = ({
 					delay: 0.25,
 				});
 
+				// Collect all characters from all headings
+				const allChars: Element[] = [];
 				headingRefs.current.forEach((heading, index) => {
 					const split = splitTextRefs.current[index];
-					if (!split || !split.chars || split.chars.length === 0)
-						return;
-
-					// Add animation for this heading to the timeline
-					tl.to(
-						split.chars,
-						{
-							y: 0,
-							rotationX: 0,
-							autoAlpha: 1,
-							duration: 0.5,
-							ease: 'back.out(1.7)', // Swing/bounce effect
-							stagger: {
-								amount: 0.2, // Stagger characters within each heading
-							},
-						},
-						index > 0 ? '>' : 0 // Start each heading immediately after the previous one ends
-					);
+					if (split && split.chars && split.chars.length > 0) {
+						allChars.push(...split.chars);
+					}
 				});
+
+				// Animate all characters with neon flicker effect
+				if (allChars.length > 0) {
+					animateNeonFlicker(allChars, tl, {
+						timelinePosition: 0, // All headings start at the same time
+					});
+				}
 			}, 100); // Small delay to ensure splits are ready
 
 			timeouts.push(animateTimeout);
@@ -147,7 +134,7 @@ const Introduction = ({
 	return (
 		<S.Jacket ref={jacketRef}>
 			<S.Top>
-				<Grid $lCols={COL_OVERRIDE}>
+				<Grid $lCols={columnOverride}>
 					<S.TopContent $l='1/9'>
 						<StarHeading
 							text={introSubheading}
@@ -175,7 +162,7 @@ const Introduction = ({
 			</S.Top>
 
 			<S.Bottom>
-				<Grid $lCols={COL_OVERRIDE}>
+				<Grid $lCols={columnOverride}>
 					<S.BottomSubheading $l='1/4'>
 						<StarHeading text='Introduction' semantic='h2' />
 					</S.BottomSubheading>

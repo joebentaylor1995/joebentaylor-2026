@@ -24,8 +24,6 @@ const Page = async () => {
 	const data = await getHomeData();
 	const { home, profile } = data;
 
-	// console.table(home);
-
 	return (
 		<>
 			<Hero

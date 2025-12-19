@@ -4,6 +4,7 @@
 // ------------
 import SmoothScroll from './SmoothScroll';
 import Introduction from './Introduction';
+import Statement from './Statement';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -14,6 +15,10 @@ import { useIsDesktop } from '@utils/useResponsive';
 // ------------
 import * as I from './interface';
 import * as S from './styles';
+
+// Constants
+// ------------
+const COL_OVERRIDE = 8;
 
 // Component
 // ------------
@@ -106,6 +111,14 @@ const Profile = ({
 						introSubheading={introSubheading}
 						introHeading={introHeading}
 						introText={introText}
+						columnOverride={COL_OVERRIDE}
+					/>
+
+					<Statement
+						text={statement}
+						columnOverride={COL_OVERRIDE}
+						wrapperRef={jacketRef}
+						isActive={profileOpen}
 					/>
 				</S.Content>
 			</S.Jacket>

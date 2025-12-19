@@ -56,7 +56,12 @@ const Header = ({ socials }: I.HeaderProps) => {
 	useLayoutEffect(() => {
 		if (!jacketRef.current) return;
 
-		gsap.set(jacketRef.current, { autoAlpha: 0, yPercent: -100 });
+		// Set initial state immediately (CSS already hides it, this ensures GSAP control)
+		gsap.set(jacketRef.current, {
+			autoAlpha: 0,
+			yPercent: -100,
+			immediateRender: true,
+		});
 	}, []);
 
 	// Fade in Header when loader finishes

@@ -111,6 +111,12 @@ export const BottomSubheading = styled(Div)(
 	props => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
+		display: none;
+
+		${bp.l`
+			display: block;
+			margin-bottom: ${getGap('xs')};
+		`}
 
 		> div {
 			${bp.l`

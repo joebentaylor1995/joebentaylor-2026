@@ -20,6 +20,16 @@ export const displayL: RuleSet = css`
 	`}
 `;
 
+export const titleL: RuleSet = css`
+	font-family: ${getFont('body')};
+	font-weight: ${getFontWeight('regular')};
+
+	font-size: 3.2rem;
+	line-height: 1.32;
+
+	${bp.l` font-size: 4.8rem; `}
+`;
+
 const sharedBodyStyles: RuleSet = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('regular')};

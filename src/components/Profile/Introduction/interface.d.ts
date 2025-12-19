@@ -12,5 +12,5 @@ export interface IntroductionProps {
     introText: {
         value: string;
     };
-
+    columnOverride?: number;
 }
