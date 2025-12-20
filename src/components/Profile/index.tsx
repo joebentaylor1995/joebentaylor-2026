@@ -5,6 +5,7 @@
 import SmoothScroll from './SmoothScroll';
 import Introduction from './Introduction';
 import Statement from './Statement';
+import Skills from './Skills';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -27,6 +28,7 @@ const Profile = ({
 	introHeading,
 	introText,
 	statement,
+	skills,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -108,17 +110,24 @@ const Profile = ({
 				<S.Content ref={contentRef}>
 					<Introduction
 						isActive={profileOpen}
+						columnOverride={COL_OVERRIDE}
 						introSubheading={introSubheading}
 						introHeading={introHeading}
 						introText={introText}
-						columnOverride={COL_OVERRIDE}
 					/>
 
 					<Statement
-						text={statement}
-						columnOverride={COL_OVERRIDE}
-						wrapperRef={jacketRef}
 						isActive={profileOpen}
+						wrapperRef={jacketRef}
+						columnOverride={COL_OVERRIDE}
+						text={statement}
+					/>
+
+					<Skills
+						skills={skills}
+						isActive={profileOpen}
+						wrapperRef={jacketRef}
+						columnOverride={COL_OVERRIDE}
 					/>
 				</S.Content>
 			</S.Jacket>

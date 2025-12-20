@@ -3,8 +3,8 @@
 // Imports
 // ------------
 import Grid from '@waffl';
-import { useRef } from 'react';
 import SplitText from 'gsap/SplitText';
+import { useRef } from 'react';
 import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
 
@@ -45,6 +45,7 @@ const Statement = ({
 							end: 'center 50%',
 						},
 					});
+
 					tl.from(self.chars, {
 						autoAlpha: 0.2,
 						stagger: 0.1,

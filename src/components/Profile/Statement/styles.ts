@@ -12,7 +12,7 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Section)(
 	props => css`
-		padding-bottom: ${getGap('uber')};
+		padding-block: ${getGap('uber')};
 	`
 );
 
@@ -20,5 +20,6 @@ export const Text = styled(P)(
 	props => css`
 		/*  */
 		${titleL}
+		text-wrap: pretty;
 	`
 );

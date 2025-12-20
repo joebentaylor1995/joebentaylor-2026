@@ -1,4 +1,16 @@
 export const GET_HOME = `
+    fragment Image on ResponsiveImage {
+        src
+        srcSet
+        sizes
+        width
+        height
+        alt
+        title
+        base64
+        bgColor
+    }
+
     query {
         home {
             subheading
@@ -37,6 +49,24 @@ export const GET_HOME = `
                 value
             }
             statement
+
+        }
+
+        skills: allSkills {
+            id
+            heading
+            desc: description
+            tools {
+                id
+                logoIcon {
+                    url
+                    alt
+                    mimeType
+                    responsiveImage {
+                        ...Image
+                    }
+                }
+            }
         }
     }
 `;
