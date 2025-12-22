@@ -12,7 +12,11 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Section)(
 	props => css`
-		padding-block: ${getGap('uber')};
+		padding-block: ${getGap('xl')};
+
+		${bp.l`
+			padding-block: ${getGap('uber')};
+		`}
 	`
 );
 
@@ -24,10 +28,19 @@ export const CustomLayout = styled(Div)<{
 	props => css`
 		display: grid;
 		grid-template-areas:
+			'${props.$cssAreaOne}'
+			'${props.$cssAreaTwo}'
+			'${props.$cssAreaThree}';
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+		gap: ${getGap('s')};
+
+		${bp.l`
+			grid-template-areas:
 			'${props.$cssAreaOne} ${props.$cssAreaTwo}'
 			'${props.$cssAreaThree} ${props.$cssAreaThree}';
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		gap: ${getGap('s')};
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
+		`}
 	`
 );

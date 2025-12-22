@@ -12,7 +12,7 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Div)<{ $itemCount: number }>(
 	props => css`
-		--gap: 1rem;
+		--gap: ${getGap('s')};
 		--duration: calc(2s * ${props.$itemCount});
 
 		display: flex;

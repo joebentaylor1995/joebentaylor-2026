@@ -24,9 +24,22 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 		grid-area: ${props.$cssAreaName};
 		overflow: hidden;
 
-		padding-top: ${getGap('xl')};
+		padding-top: ${getGap('m')};
 		border: 1px solid ${getBrand('bc3')};
 		border-radius: ${getRadius('s')};
+
+		aspect-ratio: 1/1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: stretch;
+		width: 100%;
+
+		${bp.l`
+			display: block;
+			padding-top: ${getGap('xl')};
+			aspect-ratio: unset;
+		`}
 	`
 );
 
@@ -34,12 +47,17 @@ export const Texts = styled(Div)<{ $isLast: boolean }>(
 	props => css`
 		position: relative;
 		display: flex;
-		flex-direction: ${props.$isLast ? 'row' : 'column'};
-		justify-content: ${props.$isLast ? 'space-between' : 'flex-start'};
+		flex-direction: column;
+		justify-content: flex-start;
 		align-items: flex-start;
 		gap: ${getGap('s')};
+		padding: ${getGap('m')};
 
-		padding: ${getGap('xl')};
+		${bp.l`
+			padding: ${getGap('xl')};
+			flex-direction: ${props.$isLast ? 'row' : 'column'};
+			justify-content: ${props.$isLast ? 'space-between' : 'flex-start'};
+		`}
 
 		h2 {
 			${bodyL}
@@ -52,8 +70,12 @@ export const Texts = styled(Div)<{ $isLast: boolean }>(
 			${bodyM}
 			color: ${getGlobal('white', 40)};
 			width: 100%;
-			max-width: ${props.$isLast ? '50%' : '100%'};
-			padding-left: ${props.$isLast ? `var(--padCalc)` : '0'};
+			text-wrap: pretty;
+
+			${bp.l`
+				padding-left: ${props.$isLast ? `var(--padCalc)` : '0'};
+				max-width: ${props.$isLast ? '50%' : '100%'};
+			`}
 		}
 	`
 );

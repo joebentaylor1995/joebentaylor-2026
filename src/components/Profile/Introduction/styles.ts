@@ -22,7 +22,11 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Section)(
 	props => css`
-		padding-bottom: ${getGap('uber')};
+		padding-bottom: ${getGap('xl')};
+
+		${bp.l`
+			padding-bottom: ${getGap('uber')};
+		`}
 	`
 );
 
@@ -103,7 +107,11 @@ export const Scroll = styled.span(
 export const Bottom = styled(Footer)(
 	props => css`
 		overflow: unset;
-		padding-top: ${getGap('uber')};
+		padding-top: ${getGap('huge')};
+
+		${bp.l`
+			padding-top: ${getGap('uber')};
+		`}
 	`
 );
 
