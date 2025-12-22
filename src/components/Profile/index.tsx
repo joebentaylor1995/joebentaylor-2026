@@ -125,11 +125,7 @@ const Profile = ({
 			</S.MobileClose>
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
-				<SmoothScroll
-					wrapperRef={jacketRef}
-					contentRef={contentRef}
-					isActive={profileOpen}
-				/>
+				<SmoothScroll {...sharedProps} contentRef={contentRef} />
 				<S.Content ref={contentRef}>
 					<Introduction
 						{...sharedProps}
