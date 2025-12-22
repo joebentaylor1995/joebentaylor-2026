@@ -147,24 +147,25 @@ Add a `pnpm.overrides` field to your `package.json` to force specific versions:
 
 ```json
 {
-  "pnpm": {
-    "overrides": {
-      "deprecated-package-name": "latest-version",
-      "another-deprecated-package": "^1.2.3"
-    }
-  }
+	"pnpm": {
+		"overrides": {
+			"deprecated-package-name": "latest-version",
+			"another-deprecated-package": "^1.2.3"
+		}
+	}
 }
 ```
 
 **Example:**
+
 ```json
 {
-  "pnpm": {
-    "overrides": {
-      "minimist": "^1.2.6",
-      "glob": "^10.0.0"
-    }
-  }
+	"pnpm": {
+		"overrides": {
+			"minimist": "^1.2.6",
+			"glob": "^10.0.0"
+		}
+	}
 }
 ```
 
@@ -184,11 +185,11 @@ If you need to temporarily suppress warnings for specific deprecated packages (w
 
 ```json
 {
-  "pnpm": {
-    "allowedDeprecatedVersions": {
-      "package-name": "version"
-    }
-  }
+	"pnpm": {
+		"allowedDeprecatedVersions": {
+			"package-name": "version"
+		}
+	}
 }
 ```
 
