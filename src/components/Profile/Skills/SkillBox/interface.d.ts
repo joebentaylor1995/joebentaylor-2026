@@ -9,5 +9,6 @@ export interface SkillBoxProps {
     description: string;
     cssAreaName: string;
     isLast: boolean;
+    isActive?: boolean;
     tools: ToolProps[];
 }

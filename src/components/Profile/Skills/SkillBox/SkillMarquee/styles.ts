@@ -46,7 +46,7 @@ export const Jacket = styled(Div)<{ $itemCount: number }>(
 	`
 );
 
-export const Content = styled.ul(
+export const Content = styled.ul<{ $isActive?: boolean }>(
 	props => css`
 		flex-shrink: 0;
 		display: flex;
@@ -54,6 +54,7 @@ export const Content = styled.ul(
 		min-width: 100%;
 		gap: var(--gap);
 		animation: scroll var(--duration) linear infinite;
+		animation-play-state: ${props.$isActive ? 'running' : 'paused'};
 
 		@keyframes scroll {
 			from {

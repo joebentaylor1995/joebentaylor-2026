@@ -12,9 +12,12 @@ import * as S from './styles';
 // Component
 // ------------
 
-const Content = ({ tools, isHidden }: I.SkillMarqueeProps) => {
+const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => {
 	return (
-		<S.Content aria-hidden={isHidden ? 'true' : 'false'}>
+		<S.Content
+			aria-hidden={isHidden ? 'true' : 'false'}
+			$isActive={isActive}
+		>
 			{tools.map(({ id, logoIcon }) => (
 				<li
 					key={id}
@@ -42,11 +45,11 @@ const Content = ({ tools, isHidden }: I.SkillMarqueeProps) => {
 	);
 };
 
-const SkillMarquee = ({ tools }: I.SkillMarqueeProps) => {
+const SkillMarquee = ({ tools, isActive }: I.SkillMarqueeProps) => {
 	return (
 		<S.Jacket $itemCount={tools.length}>
-			<Content tools={tools} />
-			<Content tools={tools} isHidden />
+			<Content tools={tools} isActive={isActive} />
+			<Content tools={tools} isHidden isActive={isActive} />
 		</S.Jacket>
 	);
 };

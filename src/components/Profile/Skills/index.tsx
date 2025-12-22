@@ -42,6 +42,7 @@ const Skills = ({
 
 						return (
 							<SkillBox
+								isActive={isActive}
 								key={skill.id}
 								cssAreaName={cssArea}
 								heading={skill.heading}
