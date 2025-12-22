@@ -26,6 +26,7 @@ export interface LogoIconProps {
 	url: string;
 	alt: string;
 	mimeType: string;
+	title: string;
 	responsiveImage: SRCImage;
 }
 export interface SmoothScrollProps {

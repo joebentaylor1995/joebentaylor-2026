@@ -19,7 +19,7 @@ const Skills = ({
 	columnOverride,
 }: I.SkillsProps) => {
 	// Strip text of spaces and return first 3 letters
-	const conversion = (text: string) => {
+	const conversion = (text: string): string => {
 		return text.toLowerCase().replace(' ', '').slice(0, 3);
 	};
 

@@ -76,8 +76,22 @@ const Profile = ({
 	}, [profileOpen]);
 
 	// Handle click anywhere to close modal (desktop only)
-	const handleClose = () => {
-		if (isDesktop) {
+	// Only closes if clicking on non-interactive elements
+	const handleClose = (e: React.MouseEvent) => {
+		if (!isDesktop) return;
+
+		const target = e.target as HTMLElement;
+
+		// Don't close if clicking on interactive elements
+		const isInteractive =
+			target.closest(
+				'button, a, [role="button"], input, select, textarea'
+			) ||
+			target.closest('[data-interactive]') ||
+			target.hasAttribute('title') || // Elements with tooltips
+			target.closest('[title]'); // Parent elements with tooltips
+
+		if (!isInteractive) {
 			setProfileOpen(false);
 		}
 	};

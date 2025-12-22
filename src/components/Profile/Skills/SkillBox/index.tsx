@@ -2,6 +2,7 @@
 
 // Imports
 // ------------
+import SkillMarquee from './SkillMarquee';
 
 // Styles + Interfaces
 // ------------
@@ -19,6 +20,8 @@ const SkillBox = ({
 }: I.SkillBoxProps) => {
 	return (
 		<S.Jacket $cssAreaName={cssAreaName}>
+			<SkillMarquee tools={tools} />
+
 			<S.Texts $isLast={isLast}>
 				<h2>{heading}</h2>
 				<p>{description}</p>

@@ -61,6 +61,7 @@ export const GET_HOME = `
                 logoIcon {
                     url
                     alt
+                    title
                     mimeType
                     responsiveImage {
                         ...Image

@@ -22,6 +22,11 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 	props => css`
 		position: relative;
 		grid-area: ${props.$cssAreaName};
+		overflow: hidden;
+
+		padding-top: ${getGap('xl')};
+		border: 1px solid ${getBrand('bc3')};
+		border-radius: ${getRadius('s')};
 	`
 );
 
@@ -34,8 +39,6 @@ export const Texts = styled(Div)<{ $isLast: boolean }>(
 		align-items: flex-start;
 		gap: ${getGap('s')};
 
-		border: 1px solid ${getBrand('bc3')};
-		border-radius: ${getRadius('s')};
 		padding: ${getGap('xl')};
 
 		h2 {
@@ -44,13 +47,13 @@ export const Texts = styled(Div)<{ $isLast: boolean }>(
 		}
 
 		p {
-			--paddCalc: calc(${getGap('xl')} + ${getGap('xs')});
+			--padCalc: calc(${getGap('xl')} + ${getGap('xs')});
 
 			${bodyM}
 			color: ${getGlobal('white', 40)};
 			width: 100%;
 			max-width: ${props.$isLast ? '50%' : '100%'};
-			padding-left: ${props.$isLast ? `var(--paddCalc)` : '0'};
+			padding-left: ${props.$isLast ? `var(--padCalc)` : '0'};
 		}
 	`
 );
