@@ -163,11 +163,11 @@ const Introduction = ({
 
 			<S.Bottom>
 				<Grid $lCols={columnOverride}>
-					<S.BottomSubheading $l='1/4'>
+					<S.BottomSubheading $m='1/3' $l='1/4'>
 						<StarHeading text='Introduction' semantic='h2' />
 					</S.BottomSubheading>
 
-					<S.BottomContent $l='4/9'>
+					<S.BottomContent $m='3/7' $l='4/9'>
 						<StructuredText data={introText} />
 					</S.BottomContent>
 				</Grid>

@@ -60,7 +60,7 @@ const Statement = ({
 	return (
 		<S.Jacket ref={jacketRef}>
 			<Grid $lCols={columnOverride}>
-				<S.Text $l='1/7' ref={textRef}>
+				<S.Text $m='1/5' $l='1/7' ref={textRef}>
 					{text}
 				</S.Text>
 			</Grid>

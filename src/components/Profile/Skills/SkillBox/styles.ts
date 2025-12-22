@@ -35,7 +35,7 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 		align-items: stretch;
 		width: 100%;
 
-		${bp.l`
+		${bp.m`
 			display: block;
 			padding-top: ${getGap('xl')};
 			aspect-ratio: unset;

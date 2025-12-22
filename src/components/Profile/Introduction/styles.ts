@@ -121,13 +121,13 @@ export const BottomSubheading = styled(Div)(
 		margin-bottom: ${getGap('m')};
 		display: none;
 
-		${bp.l`
+		${bp.m`
 			display: block;
 			margin-bottom: ${getGap('xs')};
 		`}
 
 		> div {
-			${bp.l`
+			${bp.m`
 				position: sticky;
 				top: calc(100% - ${getGap('xl')});
 				left: 0;
