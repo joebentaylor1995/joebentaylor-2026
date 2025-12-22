@@ -127,6 +127,73 @@ If you're migrating an existing project:
 
 3. Update any scripts that reference `npm` to use `pnpm` instead
 
+## Fixing Deprecated Subdependencies
+
+When you have deprecated subdependencies (packages that your dependencies depend on), you can use pnpm's `overrides` feature to force specific versions.
+
+### Step 1: Identify Deprecated Packages
+
+Check for deprecated packages during install:
+
+```bash
+pnpm install 2>&1 | grep -i deprecated
+```
+
+Or check your IDE/editor warnings for deprecated packages.
+
+### Step 2: Add Overrides to package.json
+
+Add a `pnpm.overrides` field to your `package.json` to force specific versions:
+
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "deprecated-package-name": "latest-version",
+      "another-deprecated-package": "^1.2.3"
+    }
+  }
+}
+```
+
+**Example:**
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "minimist": "^1.2.6",
+      "glob": "^10.0.0"
+    }
+  }
+}
+```
+
+### Step 3: Reinstall Dependencies
+
+After adding overrides, reinstall:
+
+```bash
+pnpm install
+```
+
+This will replace the deprecated versions with the versions you specified in overrides.
+
+### Suppressing Deprecation Warnings
+
+If you need to temporarily suppress warnings for specific deprecated packages (while you work on a fix), you can use `allowedDeprecatedVersions`:
+
+```json
+{
+  "pnpm": {
+    "allowedDeprecatedVersions": {
+      "package-name": "version"
+    }
+  }
+}
+```
+
+**Note:** This only suppresses warnings - it doesn't fix the deprecation. Use `overrides` to actually replace deprecated packages.
+
 ## Troubleshooting
 
 ### Clear pnpm store
