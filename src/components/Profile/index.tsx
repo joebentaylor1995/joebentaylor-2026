@@ -6,6 +6,7 @@ import SmoothScroll from './SmoothScroll';
 import Introduction from './Introduction';
 import Statement from './Statement';
 import Skills from './Skills';
+import Services from './Services';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -29,6 +30,7 @@ const Profile = ({
 	introText,
 	statement,
 	skills,
+	services,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -101,6 +103,13 @@ const Profile = ({
 		setProfileOpen(false);
 	};
 
+	// Shared Props
+	const sharedProps = {
+		isActive: profileOpen,
+		wrapperRef: jacketRef,
+		columnOverride: COL_OVERRIDE,
+	};
+
 	return (
 		<>
 			<S.BackgroundOverlay
@@ -123,26 +132,17 @@ const Profile = ({
 				/>
 				<S.Content ref={contentRef}>
 					<Introduction
-						isActive={profileOpen}
-						columnOverride={COL_OVERRIDE}
+						{...sharedProps}
 						introSubheading={introSubheading}
 						introHeading={introHeading}
 						introText={introText}
 					/>
 
-					<Statement
-						isActive={profileOpen}
-						wrapperRef={jacketRef}
-						columnOverride={COL_OVERRIDE}
-						text={statement}
-					/>
+					<Statement {...sharedProps} statement={statement} />
 
-					<Skills
-						skills={skills}
-						isActive={profileOpen}
-						wrapperRef={jacketRef}
-						columnOverride={COL_OVERRIDE}
-					/>
+					<Skills {...sharedProps} skills={skills} />
+
+					<Services {...sharedProps} services={services} />
 				</S.Content>
 			</S.Jacket>
 		</>

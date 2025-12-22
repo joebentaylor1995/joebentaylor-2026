@@ -22,7 +22,7 @@ async function getHomeData() {
 // ------------
 const Page = async () => {
 	const data = await getHomeData();
-	const { home, profile, skills } = data;
+	const { home, profile, skills, services } = data;
 
 	return (
 		<>
@@ -40,6 +40,7 @@ const Page = async () => {
 				introText={profile?.introText}
 				statement={profile?.statement}
 				skills={skills}
+				services={services}
 			/>
 		</>
 	);

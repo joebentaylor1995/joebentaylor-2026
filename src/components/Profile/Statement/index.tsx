@@ -16,12 +16,12 @@ import * as S from './styles';
 // Component
 // ------------
 const Statement = ({
-	text,
+	statement,
 	columnOverride,
 	wrapperRef,
 	isActive,
 }: I.StatementProps) => {
-	if (!text) return null;
+	if (!statement) return null;
 
 	// Refs
 	const textRef = useRef<HTMLElement>(null);
@@ -54,14 +54,14 @@ const Statement = ({
 				},
 			});
 		},
-		{ scope: jacketRef, dependencies: [text, wrapperRef, isActive] }
+		{ scope: jacketRef, dependencies: [statement, wrapperRef, isActive] }
 	);
 
 	return (
 		<S.Jacket ref={jacketRef}>
 			<Grid $lCols={columnOverride}>
 				<S.Text $m='1/5' $l='1/7' ref={textRef}>
-					{text}
+					{statement}
 				</S.Text>
 			</Grid>
 		</S.Jacket>
