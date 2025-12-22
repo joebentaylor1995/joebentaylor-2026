@@ -14,11 +14,35 @@ export const Jacket = styled(Div)<{ $itemCount: number }>(
 	props => css`
 		--gap: ${getGap('s')};
 		--duration: calc(2s * ${props.$itemCount});
+		--fade: ${getBrand('bc4')} 0%, transparent 100%;
 
+		position: relative;
 		display: flex;
 		overflow: hidden;
 		user-select: none;
 		gap: var(--gap);
+
+		&:before,
+		&:after {
+			content: '';
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			bottom: 0;
+			width: ${getGap('m')};
+
+			${bp.m` width: ${getGap('xl')}; `}
+		}
+
+		&:before {
+			left: 0;
+			background: linear-gradient(to right, var(--fade));
+		}
+
+		&:after {
+			right: 0;
+			background: linear-gradient(to left, var(--fade));
+		}
 	`
 );
 
