@@ -28,29 +28,39 @@ This project is built with [Next.js](https://nextjs.org/), a powerful React fram
 
 ## 🚀 Getting Started
 
-First, run the development server:
+This project uses **pnpm** as its package manager. If you don't have it installed:
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm install -g pnpm
 ```
 
-To create a production build
+First, install dependencies:
 
 ```bash
-npm run build
-# or
-yarn build
+pnpm install
 ```
 
-To serve a production build
+Then, run the development server:
 
 ```bash
-npm run serve
+pnpm run dev
+```
+
+To create a production build:
+
+```bash
+pnpm run build
+```
+
+To serve a production build:
+
+```bash
+pnpm run serve
 # you may need to install serve globally:
-npm i -g serve
+pnpm add -g serve
 ```
+
+> 💡 **Note**: This project uses pnpm for faster installs and better disk efficiency. See [docs/pnpm.md](docs/pnpm.md) for more information.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -91,7 +101,7 @@ A quick look at the top-level files and directories you'll see in a Tackl projec
     ├── .deployment_guide.md
     ├── .jsconfig.json
     ├── next.config.js
-    ├── package-lock.json
+    ├── pnpm-lock.yaml
     ├── package.json
     ├── docs
     └── README.md
@@ -110,7 +120,7 @@ A quick look at the top-level files and directories you'll see in a Tackl projec
 
 7.  **`.gitignore`**: Version control configuration file that specifies which files and directories Git should ignore, such as node_modules, build outputs, and environment files.
 
-8.  **`.npmrc`**: NPM configuration file that customizes package manager behavior for this project. In Tackl, it's primarily used for configuring GSAP Club access and other package-specific settings.
+8.  **`.npmrc`**: Package manager configuration file that customizes pnpm behavior for this project. In Tackl, it's primarily used for configuring GSAP Club access and other package-specific settings.
 
 9.  **`deployment_guide`**: Comprehensive AWS deployment documentation providing step-by-step instructions for setting up and deploying your Tackl project to production.
 
@@ -120,7 +130,7 @@ A quick look at the top-level files and directories you'll see in a Tackl projec
 
 12. **`next.config.js`**: Next.js framework configuration file where you can customize build settings, add environment variables, configure plugins, and modify webpack behavior. Essential for tailoring Next.js to your project's needs.
 
-13. **`package-lock.json`**: Automatically generated dependency lock file that ensures consistent installations across different environments by recording the exact version of each installed package. Should be committed to version control but never manually edited.
+13. **`pnpm-lock.yaml`**: Automatically generated dependency lock file that ensures consistent installations across different environments by recording the exact version of each installed package. Should be committed to version control but never manually edited. (This project uses pnpm instead of npm - see [docs/pnpm.md](docs/pnpm.md))
 
 14. **`package.json`**: Project manifest file defining your application's dependencies, scripts, metadata, and other important configurations. This is the central configuration file for your Node.js/JavaScript project.
 
