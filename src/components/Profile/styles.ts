@@ -34,9 +34,12 @@ export const Jacket = styled(Aside)(
 		width: 100%;
 		z-index: 100;
 		background: ${getBrand('bc4')};
-		overflow: hidden;
+		overflow-y: auto;
+		overflow-x: hidden;
 		height: 100dvh;
 		visibility: hidden;
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-y;
 
 		${bp.l`
 			--gutter: ${props.theme.grid.gutter.l};

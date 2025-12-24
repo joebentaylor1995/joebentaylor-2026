@@ -33,7 +33,7 @@ export const Jacket = styled(Section)(
 export const Top = styled(Header)(
 	props => css`
 		position: relative;
-		height: 100lvh;
+		height: 100svh;
 
 		> waffl-grid {
 			height: 100%;
