@@ -12,19 +12,13 @@ import * as S from './styles';
 // Component
 // ------------
 
-const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => {
-	return (
-		<S.Content
-			aria-hidden={isHidden ? 'true' : 'false'}
-			$isActive={isActive}
-		>
-			{tools.map(({ id, logoIcon }) => (
-				<li
-					key={id}
-					aria-label={
-						isHidden ? undefined : logoIcon?.title || undefined
-					}
-				>
+const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => (
+	<S.Content aria-hidden={isHidden ? 'true' : 'false'} $isActive={isActive}>
+		{tools.map(({ id, logoIcon }) => {
+			const aria = isHidden ? undefined : logoIcon?.title || undefined;
+
+			return (
+				<li key={id} aria-label={aria}>
 					<S.Picture>
 						{logoIcon.mimeType === 'image/svg+xml' ? (
 							<picture>
@@ -40,10 +34,10 @@ const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => {
 						)}
 					</S.Picture>
 				</li>
-			))}
-		</S.Content>
-	);
-};
+			);
+		})}
+	</S.Content>
+);
 
 const SkillMarquee = ({ tools, isActive }: I.SkillMarqueeProps) => {
 	return (

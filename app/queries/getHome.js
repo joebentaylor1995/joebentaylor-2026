@@ -49,7 +49,27 @@ export const GET_HOME = `
                 value
             }
             statement
+            services: servicesText {
+                value
+            }
+            aboutImage: aboutMeImage {
+                responsiveImage {
+                    ...Image
+                }
+            }
+            aboutDesc: aboutMeText {
+                value
+            }
+        }
 
+        services: allServices {
+            id
+            title: serviceTitle
+            image: serviceImage {
+                responsiveImage {
+                    ...Image
+                }
+            }
         }
 
         skills: allSkills {

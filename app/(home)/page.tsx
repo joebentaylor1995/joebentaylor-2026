@@ -40,7 +40,10 @@ const Page = async () => {
 				introText={profile?.introText}
 				statement={profile?.statement}
 				skills={skills}
+				servicesText={profile?.services}
 				services={services}
+				aboutImage={profile?.aboutImage}
+				aboutDesc={profile?.aboutDesc}
 			/>
 		</>
 	);

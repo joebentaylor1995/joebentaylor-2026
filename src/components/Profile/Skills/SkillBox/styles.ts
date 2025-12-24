@@ -24,7 +24,7 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 		grid-area: ${props.$cssAreaName};
 		overflow: hidden;
 
-		padding-top: ${getGap('m')};
+		padding-top: ${getGap('xl')};
 		border: 1px solid ${getBrand('bc3')};
 		border-radius: ${getRadius('s')};
 
@@ -37,7 +37,7 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 
 		${bp.m`
 			display: block;
-			padding-top: ${getGap('xl')};
+			
 			aspect-ratio: unset;
 		`}
 	`
