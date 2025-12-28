@@ -11,6 +11,7 @@ import About from './About';
 import Clients from './Clients';
 import Ethos from './Ethos';
 import Awards from './Awards';
+import Reviews from './Reviews';
 import AnimatedSplitter from './AnimateSplitter';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
@@ -46,6 +47,8 @@ const Profile = ({
 	ethosText,
 	awardsDesc,
 	awards,
+	reviewsDesc,
+	reviews,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -184,6 +187,12 @@ const Profile = ({
 						awardsDesc={awardsDesc}
 						awards={awards}
 						{...sharedProps}
+					/>
+
+					<Reviews
+						{...sharedProps}
+						reviewsDesc={reviewsDesc}
+						reviews={reviews}
 					/>
 
 					<div style={{ height: '100vh' }} />

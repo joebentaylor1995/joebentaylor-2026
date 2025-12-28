@@ -76,6 +76,9 @@ export const GET_HOME = `
             awardsDesc {
                 value
             }
+            reviewsDesc {
+                value
+            }
         }
 
         services: allServices {
@@ -120,6 +123,23 @@ export const GET_HOME = `
             id
             title: institution
             count: numberOfAwards
+        }
+
+        reviews: allReviews {
+            id
+            quote
+            authorName
+            authorRole
+            authorPicture {
+                responsiveImage {
+                    ...Image
+                }
+            }
+            authorCompany {
+                responsiveImage {
+                    ...Image
+                }
+            }
         }
     }
 `;

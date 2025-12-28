@@ -8,6 +8,7 @@ import { AboutProps } from './About/interface';
 import { ClientsProps } from './Clients/interface';
 import { EthosProps } from './Ethos/interface';
 import { AwardsProps } from './Awards/interface';
+import { ReviewsProps } from './Reviews/interface';
 
 // Exports
 // ------------
@@ -19,7 +20,8 @@ export interface ProfileProps extends
 	AboutProps,
 	ClientsProps,
 	EthosProps,
-	AwardsProps
+	AwardsProps,
+	ReviewsProps
 {
 }
 

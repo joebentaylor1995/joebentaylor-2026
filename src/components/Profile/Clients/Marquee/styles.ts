@@ -62,12 +62,20 @@ export const ListItem = styled(Div)(
 		border-right: 1px solid ${getBrand('bc3')};
 		overflow: hidden;
 
+		&:nth-child(-n + 4) {
+			border-bottom: 1px solid ${getBrand('bc3')};
+		}
+
+		&:nth-child(2n) {
+			border-right: none;
+
+			${bp.l`
+				border-right: 1px solid ${getBrand('bc3')};
+			`}
+		}
+
 		${bp.l`
             width: 25%;
-
-			&:nth-child(-n + 4) {
-				border-bottom: 1px solid ${getBrand('bc3')};
-			}
 
 			&:nth-child(4n) {
 				border-right: none;

@@ -11,7 +11,7 @@ import {
 	getGap,
 	getRadius,
 } from '@tackl';
-import { bodyL, displayL } from '@tackl/type';
+import { bodyL, bodyM } from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -65,7 +65,7 @@ export const Desc = styled(Div)(
 export const AwardsList = styled(Div)(
 	props => css`
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: auto;
 
 		border: 1px solid ${getBrand('bc3')};
@@ -75,6 +75,7 @@ export const AwardsList = styled(Div)(
 
 		${bp.l`
             margin-top: ${getGap('uber')};
+			grid-template-columns: repeat(3, 1fr);
         `}
 	`
 );
@@ -91,7 +92,8 @@ export const AwardItem = styled(Div)(
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: ${getGap('s')};
-		padding: ${getGap('xl')};
+
+		padding: ${getGap('m')};
 		overflow: clip;
 
 		aspect-ratio: 1 / 1;
@@ -101,13 +103,40 @@ export const AwardItem = styled(Div)(
 		border-right: 1px solid ${getBrand('bc3')};
 		border-bottom: 1px solid ${getBrand('bc3')};
 
-		&:nth-child(3n) {
+		${bp.l`
+			padding: ${getGap('xl')};
+		`}
+
+		&:nth-child(2n) {
 			border-right: none;
+
+			${bp.l`
+				border-right: 1px solid ${getBrand('bc3')};
+			`}
 		}
 
-		// Remove bottom border for the last 3 items in the grid
-		&:nth-last-child(-n + 3) {
+		&:nth-child(4n) {
+			border-right: none;
+
+			${bp.l`
+				border-right: 1px solid ${getBrand('bc3')};
+			`}
+		}
+
+		&:nth-child(3n) {
+			${bp.l`
+				border-right: none;
+			`}
+		}
+
+		&:nth-last-child(-n + 2) {
 			border-bottom: none;
+		}
+
+		&:nth-last-child(-n + 3) {
+			${bp.l`
+				border-bottom: none;
+			`}
 		}
 
 		&:before {
@@ -127,14 +156,16 @@ export const AwardItem = styled(Div)(
 			transition: transform var(--trans);
 		}
 
-		&:hover {
-			* {
-				color: ${getGlobal('white')};
-			}
+		@media (hover: hover) and (pointer: fine) {
+			&:hover {
+				* {
+					color: ${getGlobal('white')};
+				}
 
-			&:before {
-				transform: translateY(20%);
-				transition: transform 0.5s var(--ease);
+				&:before {
+					transform: translateY(20%);
+					transition: transform 0.5s var(--ease);
+				}
 			}
 		}
 	`
@@ -142,9 +173,13 @@ export const AwardItem = styled(Div)(
 
 export const AwardItemTitle = styled.h3(
 	props => css`
-		${bodyL}
+		${bodyM}
 		color: ${getGlobal('white', 40)};
 
 		transition: color var(--trans);
+
+		${bp.l`
+			${bodyL}
+		`}
 	`
 );
