@@ -6,6 +6,7 @@ import Grid from '@waffl';
 import Carousel from './Carousel';
 import StarHeading from '@parts/StarHeading';
 import { StructuredText } from 'react-datocms';
+import { useResponsive } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
@@ -21,7 +22,15 @@ const Reviews = ({
 	reviewsDesc,
 	reviews,
 }: I.ReviewsProps) => {
-	// console.log(reviews);
+	// Responsive Hook
+	const { isDesktop } = useResponsive();
+
+	// DRY Render
+	const helperRender = (isMobile: boolean) => {
+		return (
+			<S.Helper $isMobile={isMobile}>Drag + Slide to Navigate</S.Helper>
+		);
+	};
 
 	return (
 		<S.Jacket>
@@ -33,11 +42,12 @@ const Reviews = ({
 						<StructuredText data={reviewsDesc} />
 					</S.Desc>
 
-					<S.Helper>Drag + Slide to Navigate</S.Helper>
+					{isDesktop && helperRender(false)}
 				</S.Content>
 
 				<S.Carousel $l='5/9'>
 					<Carousel reviews={reviews} isActive={isActive} />
+					{!isDesktop && helperRender(true)}
 				</S.Carousel>
 			</Grid>
 		</S.Jacket>

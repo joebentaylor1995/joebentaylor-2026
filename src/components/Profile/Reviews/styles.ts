@@ -48,7 +48,7 @@ export const Desc = styled.div(
 	`
 );
 
-export const Helper = styled.span(
+export const Helper = styled.span<{ $isMobile: boolean }>(
 	props => css`
 		${bodyS}
 		color: ${getGlobal('white')};
@@ -58,7 +58,10 @@ export const Helper = styled.span(
 		position: relative;
 		overflow: hidden;
 		display: inline-block;
-		width: max-content;
+
+		text-align: ${props.$isMobile ? 'center' : 'left'};
+		width: ${props.$isMobile ? '100%' : 'max-content'};
+		margin-top: ${props.$isMobile ? getGap('m') : 'auto'};
 
 		&:after {
 			content: '';
@@ -92,5 +95,8 @@ export const Helper = styled.span(
 export const Carousel = styled(Div)(
 	props => css`
 		position: relative;
+		margin-top: ${getGap('xl')};
+
+		${bp.l` margin-top: none; `}
 	`
 );

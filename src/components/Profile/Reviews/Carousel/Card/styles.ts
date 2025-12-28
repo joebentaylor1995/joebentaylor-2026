@@ -25,14 +25,20 @@ export const Jacket = styled(Article)(
 		flex-flow: column;
 		align-items: flex-start;
 		justify-content: space-between;
-		gap: ${getGap('m')};
+		gap: ${getGap('sm')};
+		padding: ${getGap('m')};
+		width: calc(100vw - 2 * ${getGap('m')});
 
-		padding: ${getGap('xl')};
-		width: 28.9vw; // 4 Columns + 3 Gaps (CBA to work out)
 		aspect-ratio: 5/6;
 
 		background: ${getBrand('bc3')};
 		border-radius: ${getRadius('s')};
+
+		${bp.l`
+            gap: ${getGap('m')};
+            padding: ${getGap('xl')};
+            width: 28.9vw; // 4 Columns + 3 Gaps (CBA to work out)
+        `}
 
 		header {
 			blockquote {

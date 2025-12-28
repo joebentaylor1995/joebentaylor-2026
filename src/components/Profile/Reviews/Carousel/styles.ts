@@ -22,6 +22,9 @@ export const Jacket = styled(Div)(
 	props => css`
 		cursor: grab;
 		width: 100%;
+		padding-left: ${getGap('m')};
+
+		${bp.l` padding-left: none; `}
 	`
 );
 
@@ -51,6 +54,8 @@ export const List = styled.ul(
 export const ListItem = styled.li(
 	props => css`
 		flex: none;
-		margin-right: ${getGap('m')};
+		margin-right: ${getGap('s')};
+
+		${bp.l` margin-right: ${getGap('m')}; `}
 	`
 );
