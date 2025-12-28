@@ -38,7 +38,7 @@ export const Sticky = styled(Div)(
 
 		${bp.m`
 			display: block;
-			margin-bottom: ${getGap('xs')};
+			margin-bottom: ${getGap('sm')};
 		`}
 
 		> div {

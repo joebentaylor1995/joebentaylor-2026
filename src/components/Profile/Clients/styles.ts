@@ -21,12 +21,14 @@ export const Sticky = styled(Div)(
 		position: relative;
 		margin-bottom: ${getGap('m')};
 
+		${bp.l` margin-bottom: ${getGap('xs')};`}
+
 		> div {
 			${bp.m`
 				position: sticky;
 				top: calc(100% - ${getGap('xl')});
 				left: 0;
-				margin-bottom: 0;
+				
 			`}
 		}
 	`

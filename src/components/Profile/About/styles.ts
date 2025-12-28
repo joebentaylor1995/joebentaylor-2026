@@ -69,6 +69,8 @@ export const Sticky = styled(Div)(
 		position: relative;
 		margin-bottom: ${getGap('m')};
 
+		${bp.l` margin-bottom: ${getGap('xs')};`}
+
 		> div {
 			${bp.m`
 				position: sticky;
