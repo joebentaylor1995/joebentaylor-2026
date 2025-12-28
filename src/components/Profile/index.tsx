@@ -9,6 +9,9 @@ import Skills from './Skills';
 import Services from './Services';
 import About from './About';
 import Clients from './Clients';
+import Ethos from './Ethos';
+import Awards from './Awards';
+import AnimatedSplitter from './AnimateSplitter';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -39,6 +42,10 @@ const Profile = ({
 	aboutMarquee,
 	clientsDesc,
 	clients,
+	ethosHeading,
+	ethosText,
+	awardsDesc,
+	awards,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -163,6 +170,20 @@ const Profile = ({
 						{...sharedProps}
 						clientsDesc={clientsDesc}
 						clients={clients}
+					/>
+
+					<Ethos
+						{...sharedProps}
+						ethosHeading={ethosHeading}
+						ethosText={ethosText}
+					/>
+
+					<AnimatedSplitter {...sharedProps} />
+
+					<Awards
+						awardsDesc={awardsDesc}
+						awards={awards}
+						{...sharedProps}
 					/>
 
 					<div style={{ height: '100vh' }} />

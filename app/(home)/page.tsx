@@ -22,7 +22,7 @@ async function getHomeData() {
 // ------------
 const Page = async () => {
 	const data = await getHomeData();
-	const { home, profile, skills, services, clients } = data;
+	const { home, profile, skills, services, clients, awards } = data;
 
 	return (
 		<>
@@ -47,6 +47,10 @@ const Page = async () => {
 				aboutMarquee={profile?.aboutMarquee}
 				clientsDesc={profile?.clientsDesc}
 				clients={clients}
+				ethosHeading={profile?.ethosHeading}
+				ethosText={profile?.ethosText}
+				awardsDesc={profile?.awardsDesc}
+				awards={awards}
 			/>
 		</>
 	);

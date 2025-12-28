@@ -69,6 +69,13 @@ export const GET_HOME = `
             clientsDesc {
                 value
             }
+            ethosHeading
+            ethosText {
+                value
+            }
+            awardsDesc {
+                value
+            }
         }
 
         services: allServices {
@@ -107,6 +114,12 @@ export const GET_HOME = `
                     ...Image
                 }
             }
+        }
+
+        awards: allAwards {
+            id
+            title: institution
+            count: numberOfAwards
         }
     }
 `;

@@ -12,7 +12,13 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Section)(
 	props => css`
-		/*  */
+		position: relative;
+		padding-bottom: ${getGap('xl')};
+		overflow: clip;
+
+		${bp.l`
+			padding-bottom: ${getGap('uber')};
+		`}
 	`
 );
 

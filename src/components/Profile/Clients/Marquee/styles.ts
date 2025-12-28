@@ -1,7 +1,15 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+import {
+	bp,
+	Div,
+	getBrand,
+	getGlobal,
+	getEase,
+	getGap,
+	getRadius,
+} from '@tackl';
 import {} from '@tackl/type';
 
 // Interfaces
@@ -42,8 +50,8 @@ export const List = styled(Div)(
 	props => css`
 		display: flex;
 		flex-flow: wrap;
-		border-top: 1px solid ${getBrand('bc3')};
-		border-left: 1px solid ${getBrand('bc3')};
+		border: 1px solid ${getBrand('bc3')};
+		border-radius: ${getRadius('s')};
 	`
 );
 
@@ -52,11 +60,18 @@ export const ListItem = styled(Div)(
 		width: 50%;
 		position: relative;
 		border-right: 1px solid ${getBrand('bc3')};
-		border-bottom: 1px solid ${getBrand('bc3')};
 		overflow: hidden;
 
 		${bp.l`
             width: 25%;
+
+			&:nth-child(-n + 4) {
+				border-bottom: 1px solid ${getBrand('bc3')};
+			}
+
+			&:nth-child(4n) {
+				border-right: none;
+			}
         `}
 	`
 );
