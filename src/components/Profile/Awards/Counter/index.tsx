@@ -5,6 +5,8 @@
 import { useRef } from 'react';
 import { useAnimation } from '@utils/useAnimation';
 import gsap from 'gsap';
+import SplitText from 'gsap/SplitText';
+import { animateNeonFlicker } from '@utils/animateNeonFlicker';
 
 // Styles + Interfaces
 // ------------
@@ -22,36 +24,88 @@ const Counter = ({
 }: I.CounterProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLParagraphElement | null>(null);
+	const splitTextRef = useRef<SplitText | null>(null);
 
 	// Animation
 	useAnimation(
 		({ isDesktop }) => {
 			if (!jacketRef.current || !parentRef || !isActive) return;
 
-			// Set element's textContent to target count (gsap.from animates FROM 0 TO this value)
-			jacketRef.current.textContent = String(count);
+			const element = jacketRef.current;
+			const targetText = count < 10 ? `0${count}` : `${count}`;
 
-			gsap.from(jacketRef.current, {
-				textContent: 0,
-				duration: 1.2,
-				ease: 'power2.out',
-				snap: { textContent: 1 },
-				immediateRender: false,
+			// Revert any previous split
+			if (splitTextRef.current) {
+				splitTextRef.current.revert();
+				splitTextRef.current = null;
+			}
+
+			// Set initial text for splitting
+			element.textContent = '00';
+
+			// Split the text into characters before animation
+			splitTextRef.current = SplitText.create(element, {
+				type: 'chars',
+				charsClass: 'char++',
+			});
+
+			if (
+				!splitTextRef.current.chars ||
+				splitTextRef.current.chars.length === 0
+			) {
+				return;
+			}
+
+			// Set initial state - characters visible
+			gsap.set(splitTextRef.current.chars, { autoAlpha: 1 });
+
+			// Create timeline with ScrollTrigger
+			const tl = gsap.timeline({
 				scrollTrigger: {
 					scroller: wrapperRef?.current || undefined,
 					trigger: parentRef,
-					start: 'top 90%', // when top of trigger hits 90% of viewport
-					toggleActions: 'play none none reverse',
-				},
-				onUpdate: function () {
-					const textContent = (this.targets()[0] as HTMLElement)
-						.textContent;
-					const val = Math.ceil(Number(textContent) || 0);
-					const formattedCount = val < 10 ? `0${val}` : `${val}`;
-					(this.targets()[0] as HTMLElement).textContent =
-						formattedCount;
+					start: 'top 90%',
+					toggleActions: 'play reverse play reverse',
 				},
 			});
+
+			// Start neon flicker animation immediately
+			animateNeonFlicker(splitTextRef.current.chars, tl);
+
+			// Counting animation - update characters' textContent during counting
+			const countObj = { value: 0 };
+			tl.to(
+				countObj,
+				{
+					value: count,
+					duration: 1.2,
+					ease: 'power2.out',
+					snap: { value: 1 },
+					onUpdate: function () {
+						const currentVal = Math.ceil(countObj.value);
+						const formattedCount =
+							currentVal < 10
+								? `0${currentVal}`
+								: `${currentVal}`;
+
+						// Update each character's textContent
+						splitTextRef.current?.chars?.forEach((char, index) => {
+							if (char) {
+								char.textContent = formattedCount[index] || '';
+							}
+						});
+					},
+					onComplete: function () {
+						// Ensure final text is set
+						splitTextRef.current?.chars?.forEach((char, index) => {
+							if (char) {
+								char.textContent = targetText[index] || '';
+							}
+						});
+					},
+				},
+				0 // Start at the same time as flicker
+			);
 		},
 		{
 			scope: jacketRef,

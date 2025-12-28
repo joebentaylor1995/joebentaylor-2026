@@ -81,8 +81,8 @@ export const AwardsList = styled(Div)(
 
 export const AwardItem = styled(Div)(
 	props => css`
-		--speed: 0.3s;
-		--ease: ${getEase('bezzy2')};
+		--speed: 0.8s;
+		--ease: ${getEase('bezzy3')};
 		--trans: var(--speed) var(--ease);
 
 		position: relative;
@@ -134,6 +134,7 @@ export const AwardItem = styled(Div)(
 
 			&:before {
 				transform: translateY(20%);
+				transition: transform 0.5s var(--ease);
 			}
 		}
 	`
