@@ -89,9 +89,9 @@ export const Scroll = styled.span(
 			bottom: ${getGap('xl')};
 			right: ${getGap('xl')};
 
-			animation: shine 0.5s linear infinite;
+			animation: intro-shine 0.5s linear infinite;
 
-			@keyframes shine {
+			@keyframes intro-shine {
 				0%,
 				100% {
 					opacity: 0.4;

@@ -97,6 +97,6 @@ export const Carousel = styled(Div)(
 		position: relative;
 		margin-top: ${getGap('xl')};
 
-		${bp.l` margin-top: none; `}
+		${bp.l` margin-top: 0; `}
 	`
 );
