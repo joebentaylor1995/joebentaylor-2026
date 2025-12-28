@@ -12,7 +12,9 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Section)(
 	props => css`
+		position: relative;
 		padding-bottom: ${getGap('xl')};
+		overflow: clip;
 
 		${bp.l`
 			padding-bottom: ${getGap('uber')};
@@ -27,15 +29,7 @@ export const Background = styled(Div)(
 		left: 0;
 		width: 100%;
 		height: 100lvh;
-		mix-blend-mode: screen;
 		background: ${getBrand('bc4')};
-
-		mask-image: linear-gradient(
-			to bottom,
-			rgba(255, 255, 255, 0) 0%,
-			rgba(255, 255, 255, 1) 5%,
-			rgba(255, 255, 255, 0) 100%
-		);
 	`
 );
 
@@ -44,14 +38,23 @@ export const BackgroundImage = styled(Div)(
 		width: 100%;
 		height: 120%;
 		background: ${getBrand('bc4')};
+		filter: grayscale(100%);
 
-		${bp.l`
-            
-        `}
+		&:after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			background: linear-gradient(
+				to top,
+				${getBrand('bc4')} 0%,
+				${getBrand('bc4', 0)} 100%
+			);
+		}
 
 		img {
 			object-fit: cover;
-			object-position: center;
+			object-position: top center;
 			user-select: none;
 			pointer-events: none;
 			width: 100% !important;
@@ -88,5 +91,18 @@ export const Desc = styled(Div)(
 			color: ${getGlobal('white', 40)};
 			text-wrap: pretty;
 		}
+	`
+);
+
+export const Marquees = styled(Div)(
+	props => css`
+		display: flex;
+		flex-direction: column;
+		gap: ${getGap('s')};
+		margin-top: ${getGap('xl')};
+
+		${bp.l`
+			margin-top: ${getGap('uber')};
+		`}
 	`
 );

@@ -8,6 +8,7 @@ import Statement from './Statement';
 import Skills from './Skills';
 import Services from './Services';
 import About from './About';
+import Clients from './Clients';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -35,6 +36,9 @@ const Profile = ({
 	servicesText,
 	aboutImage,
 	aboutDesc,
+	aboutMarquee,
+	clientsDesc,
+	clients,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -152,7 +156,16 @@ const Profile = ({
 						{...sharedProps}
 						aboutImage={aboutImage}
 						aboutDesc={aboutDesc}
+						aboutMarquee={aboutMarquee}
 					/>
+
+					<Clients
+						{...sharedProps}
+						clientsDesc={clientsDesc}
+						clients={clients}
+					/>
+
+					<div style={{ height: '100vh' }} />
 				</S.Content>
 			</S.Jacket>
 		</>

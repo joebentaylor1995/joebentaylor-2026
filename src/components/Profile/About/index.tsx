@@ -3,6 +3,7 @@
 // Imports
 // ------------
 import Grid from '@waffl';
+import Marquee from './Marquee';
 import StarHeading from '@parts/StarHeading';
 import { StructuredText, SRCImage } from 'react-datocms';
 import { useRef } from 'react';
@@ -19,12 +20,15 @@ import * as S from './styles';
 const About = ({
 	aboutImage,
 	aboutDesc,
+	aboutMarquee,
 	isActive,
 	wrapperRef,
 	columnOverride,
 }: I.AboutProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLElement>(null);
+	const backgroundRef = useRef<HTMLElement>(null);
+	const contentRef = useRef<HTMLElement>(null);
 	const imageRef = useRef<HTMLElement>(null);
 
 	// Animation
@@ -34,10 +38,10 @@ const About = ({
 
 			const tl = gsap.timeline({
 				scrollTrigger: {
-					trigger: jacketRef.current,
+					trigger: contentRef.current,
 					scroller: wrapperRef?.current,
-					start: 'top 0%',
-					end: 'bottom 0%',
+					start: '0% bottom',
+					end: '100% top',
 					scrub: 0.5,
 					markers: false,
 				},
@@ -45,6 +49,7 @@ const About = ({
 
 			tl.to(imageRef.current, {
 				yPercent: -20,
+				autoAlpha: 0,
 				ease: 'none',
 			});
 		},
@@ -52,27 +57,38 @@ const About = ({
 	);
 
 	return (
-		<>
-			<S.Jacket ref={jacketRef}>
-				<S.Background>
-					<S.BackgroundImage ref={imageRef}>
-						<SRCImage data={aboutImage?.responsiveImage} />
-					</S.BackgroundImage>
-				</S.Background>
+		<S.Jacket ref={jacketRef}>
+			<S.Background ref={backgroundRef}>
+				<S.BackgroundImage ref={imageRef}>
+					<SRCImage data={aboutImage?.responsiveImage} />
+				</S.BackgroundImage>
+			</S.Background>
 
-				<Grid $lCols={columnOverride}>
-					<S.Sticky $m='1/3' $l='1/4'>
-						<StarHeading text='About Me' semantic='h2' />
-					</S.Sticky>
+			<Grid $lCols={columnOverride} ref={contentRef}>
+				<S.Sticky $m='1/3' $l='1/4'>
+					<StarHeading text='About Me' semantic='h2' />
+				</S.Sticky>
 
-					<S.Desc $m='3/7' $l='4/9'>
-						<StructuredText data={aboutDesc} />
-					</S.Desc>
-				</Grid>
-			</S.Jacket>
+				<S.Desc $m='3/7' $l='4/9'>
+					<StructuredText data={aboutDesc} />
+				</S.Desc>
+			</Grid>
 
-			<div style={{ height: '100dvh' }} />
-		</>
+			<S.Marquees>
+				<Marquee
+					images={aboutMarquee.slice(
+						0,
+						Math.ceil(aboutMarquee.length / 2)
+					)}
+				/>
+				<Marquee
+					images={aboutMarquee.slice(
+						Math.ceil(aboutMarquee.length / 2)
+					)}
+					isRight
+				/>
+			</S.Marquees>
+		</S.Jacket>
 	);
 };
 

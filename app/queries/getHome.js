@@ -60,6 +60,15 @@ export const GET_HOME = `
             aboutDesc: aboutMeText {
                 value
             }
+            aboutMarquee: aboutMeMarquee {
+                id
+                responsiveImage {
+                    ...Image
+                }
+            }
+            clientsDesc {
+                value
+            }
         }
 
         services: allServices {
@@ -86,6 +95,16 @@ export const GET_HOME = `
                     responsiveImage {
                         ...Image
                     }
+                }
+            }
+        }
+
+        clients: allClients {
+            id
+            name
+            logo {
+                responsiveImage {
+                    ...Image
                 }
             }
         }

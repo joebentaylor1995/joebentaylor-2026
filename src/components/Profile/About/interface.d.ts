@@ -12,4 +12,8 @@ export interface AboutProps {
         responsiveImage: SRCImage;
     };
     aboutDesc: StructuredText;
+    aboutMarquee: {
+        id: string;
+        responsiveImage: SRCImage;
+    }[];
 }
