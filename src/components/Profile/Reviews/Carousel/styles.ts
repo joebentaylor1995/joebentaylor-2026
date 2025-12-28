@@ -24,7 +24,7 @@ export const Jacket = styled(Div)(
 		width: 100%;
 		padding-left: ${getGap('m')};
 
-		${bp.l` padding-left: none; `}
+		${bp.l` padding-left: 0; `}
 	`
 );
 
