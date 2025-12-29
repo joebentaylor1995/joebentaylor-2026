@@ -9,6 +9,7 @@ import { ClientsProps } from './Clients/interface';
 import { EthosProps } from './Ethos/interface';
 import { AwardsProps } from './Awards/interface';
 import { ReviewsProps } from './Reviews/interface';
+import { SocialsProps } from './Footer/Socials/interface';
 
 // Exports
 // ------------
@@ -21,7 +22,8 @@ export interface ProfileProps extends
 	ClientsProps,
 	EthosProps,
 	AwardsProps,
-	ReviewsProps
+	ReviewsProps,
+	SocialsProps
 {
 }
 

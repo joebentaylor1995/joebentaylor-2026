@@ -173,6 +173,7 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 			data-duration='20'
 			data-multiplier='35'
 			data-sensitivity='0.01'
+			data-hover
 		>
 			<S.Collection
 				ref={collectionRef}

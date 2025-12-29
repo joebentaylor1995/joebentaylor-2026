@@ -13,6 +13,7 @@ import Ethos from './Ethos';
 import Awards from './Awards';
 import Reviews from './Reviews';
 import AnimatedSplitter from './AnimateSplitter';
+import Footer from './Footer';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -49,6 +50,7 @@ const Profile = ({
 	awards,
 	reviewsDesc,
 	reviews,
+	socials,
 }: I.ProfileProps) => {
 	// Context
 	const { lenis, profileOpen, setProfileOpen } = use(GlobalContext);
@@ -195,7 +197,11 @@ const Profile = ({
 						reviews={reviews}
 					/>
 
-					<div style={{ height: '100vh' }} />
+					<Footer
+						{...sharedProps}
+						dribbbleUsername='joebentaylor'
+						socials={socials}
+					/>
 				</S.Content>
 			</S.Jacket>
 		</>

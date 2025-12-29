@@ -62,7 +62,6 @@ const Reviews = ({
 
 			tl.from(carouselRef.current, {
 				x: '100%',
-				scale: 1.2,
 				autoAlpha: 0,
 				ease: 'none',
 			});

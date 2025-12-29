@@ -20,7 +20,7 @@ const Card = ({
 	authorCompany,
 }: I.CardProps) => {
 	return (
-		<S.Jacket>
+		<S.Jacket data-hover>
 			<header>
 				<blockquote>
 					<p>&ldquo;{quote}&rdquo;</p>

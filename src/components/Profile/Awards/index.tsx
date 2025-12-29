@@ -29,11 +29,11 @@ const Awards = ({
 		// Refs
 		<S.Jacket>
 			<Grid $lCols={columnOverride}>
-				<S.Sticky $m='1/3' $l='1/3'>
+				<S.Sticky $m='1/3' $l='1/4'>
 					<StarHeading text='Awards' semantic='h2' />
 				</S.Sticky>
 
-				<S.Desc $m='3/7' $l='3/9'>
+				<S.Desc $m='3/7' $l='4/9'>
 					<StructuredText data={awardsDesc} />
 				</S.Desc>
 			</Grid>
