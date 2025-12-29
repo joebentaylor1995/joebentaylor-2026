@@ -67,12 +67,6 @@ export async function fetchDribbbleShots(
 		});
 
 		if (!response.ok) {
-			const errorText = await response.text();
-			console.error('Dribbble API error response:', {
-				status: response.status,
-				statusText: response.statusText,
-				body: errorText,
-			});
 			if (response.status === 401) {
 				throw new Error('Invalid Dribbble access token');
 			}
@@ -83,11 +77,6 @@ export async function fetchDribbbleShots(
 		}
 
 		const data = await response.json();
-		console.log('Dribbble API raw response:', {
-			dataLength: Array.isArray(data) ? data.length : 'not an array',
-			dataType: typeof data,
-			firstItem: Array.isArray(data) && data.length > 0 ? data[0] : null,
-		});
 		return data as DribbbleShot[];
 	} catch (error) {
 		console.error('Error fetching Dribbble shots:', error);

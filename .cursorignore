@@ -1,14 +1,1 @@
-# Files to ignore for AI context
-node_modules/
-.next/
-out/
-.storybook/
-coverage/
-*.log
-.env.local
-.env*.local
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
-
 

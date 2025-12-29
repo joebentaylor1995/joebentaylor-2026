@@ -19,6 +19,7 @@ import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
 import { bezzy3 } from '@parts/AnimationPlugins/Curves';
 import { useIsDesktop } from '@utils/useResponsive';
+import ProgressiveBlur from '@parts/ProgressiveBlur';
 
 // Styles + Interfaces
 // ------------

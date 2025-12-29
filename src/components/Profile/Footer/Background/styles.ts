@@ -1,7 +1,7 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { getGap } from '@tackl';
+import { getGap, getGlobal } from '@tackl';
 
 // Exports
 // ------------
@@ -11,6 +11,7 @@ export const Jacket = styled.aside(
 		z-index: -2;
 		inset: 0;
 		overflow: hidden;
+		background: ${getGlobal('black')};
 	`
 );
 

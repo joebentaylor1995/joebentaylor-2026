@@ -35,7 +35,7 @@ const Page = async () => {
 	const { home, profile, skills, services, clients, awards, reviews } = data;
 
 	const globalData = await getGlobalData();
-	const { allSocialMediaLinks } = globalData;
+	const allSocialMediaLinks = globalData?.allSocialMediaLinks || [];
 
 	return (
 		<>

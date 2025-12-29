@@ -25,11 +25,11 @@ export const Jacket = styled(Section)(
 			content: '';
 			position: absolute;
 			z-index: -1;
-			inset: 25% 0 0 0;
+			inset: 30% 0 0 0;
 			background: linear-gradient(
 				to bottom,
-				${getBrand('bc1', 0)} 0%,
-				${getBrand('bc1')} 90%
+				${getBrand('bc2', 0)} 0%,
+				${getBrand('bc2')} 90%
 			);
 		}
 	`
