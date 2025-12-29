@@ -85,7 +85,7 @@ export const RowItemImgWrapper = styled.div(
 		img {
 			user-select: none;
 			filter: grayscale(100%);
-			opacity: 0.5;
+			opacity: 0.2;
 		}
 	`
 );

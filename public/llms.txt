@@ -1,0 +1,26 @@
+# Joe Ben Taylor - Logo Designer, Web Designer & Developer
+
+> Professional web designer and developer based in Doncaster, United Kingdom. Specializing in modern, performant websites built with Next.js, React, and cutting-edge animation techniques. Offering custom web design, development, and digital solutions.
+
+## Services
+
+- Web Design: Custom, modern website design tailored to your brand and goals
+- Web Development: High-performance websites built with Next.js, React, and TypeScript
+- Animation & Interactions: Advanced GSAP animations and smooth user experiences
+- Portfolio Websites: Beautiful, showcase-ready portfolio sites for creatives and professionals
+- E-commerce Solutions: Custom online stores and shopping experiences
+
+## About
+
+- Location: Doncaster, United Kingdom
+- Expertise: Next.js, React, TypeScript, GSAP animations, DatoCMS
+- Specialization: Modern, performant web experiences with attention to detail
+
+## Portfolio
+
+View recent work and projects showcasing modern web design and development capabilities.
+
+## Contact
+
+Get in touch for web design and development projects. Available for freelance and agency work.
+

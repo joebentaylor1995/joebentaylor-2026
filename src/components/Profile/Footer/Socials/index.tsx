@@ -14,7 +14,7 @@ import * as S from './styles';
 const Socials = ({ socials }: I.SocialsProps) => {
 	return (
 		<S.Jacket data-interactive>
-			{socials.map(({ name, url, isEnabled }) => {
+			{socials?.map(({ name, url, isEnabled }) => {
 				if (!isEnabled) return null;
 
 				return (

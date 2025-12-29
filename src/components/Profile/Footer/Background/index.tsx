@@ -9,8 +9,22 @@ import Image from 'next/image';
 import * as I from './interface';
 import * as S from './styles';
 
-// Component
-// ------------
+/**
+ * Background Component
+ *
+ * Renders an animated grid of Dribbble portfolio shots.
+ * Displays images in a 7x7 grid with mouse-responsive animations.
+ *
+ * @component
+ * @param {BackgroundProps} props - Component props
+ * @param {string[]} props.imageUrls - Array of image URLs to display
+ * @param {number} props.rows - Number of rows in the grid
+ * @param {number} props.itemsPerRow - Number of items per row
+ * @param {React.MutableRefObject<(HTMLDivElement | null)[]>} props.rowRefs - Refs for each row (for animations)
+ * @param {React.RefObject<HTMLDivElement | null>} props.gridRef - Ref to grid container
+ * @param {boolean} [props.isActive] - Whether animations are active
+ * @returns {JSX.Element} Background grid component
+ */
 const Background = ({
 	imageUrls,
 	rows,
