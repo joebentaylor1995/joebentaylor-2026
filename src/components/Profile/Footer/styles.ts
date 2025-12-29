@@ -62,6 +62,10 @@ export const Content = styled(Div)(
 			${bp.l`
 				padding-bottom: ${getGap('xl')};
 			`}
+
+			> waffl-grid {
+				gap: ${getGap('xl')};
+			}
 		}
 	`
 );

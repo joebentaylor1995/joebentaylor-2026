@@ -1,7 +1,7 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { getGap, getGlobal } from '@tackl';
+import { bp, getGap, getGlobal } from '@tackl';
 
 // Exports
 // ------------
@@ -29,7 +29,7 @@ export const IntroSection = styled.section(
 
 export const GridMotionContainer = styled.div(
 	props => css`
-		gap: ${getGap('m')};
+		gap: ${getGap('s')};
 		flex: none;
 		position: relative;
 		width: 150%;
@@ -39,15 +39,19 @@ export const GridMotionContainer = styled.div(
 		transform: rotate(-15deg);
 		transform-origin: center center;
 		z-index: 2;
+
+		${bp.l` gap: ${getGap('m')}; `}
 	`
 );
 
 export const Row = styled.div(
 	props => css`
 		display: grid;
-		gap: ${getGap('m')};
+		gap: ${getGap('s')};
 		grid-template-columns: repeat(7, 1fr);
 		will-change: transform, filter;
+
+		${bp.l` gap: ${getGap('m')}; `}
 	`
 );
 
@@ -60,14 +64,16 @@ export const RowItem = styled.div(
 export const RowItemInner = styled.div(
 	props => css`
 		position: relative;
-		width: 24rem;
 		aspect-ratio: 4 / 3;
+		width: 40vw;
 		overflow: hidden;
 		border-radius: 10px;
 		background-color: black;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+
+		${bp.l` width: 13.9vw; `}
 	`
 );
 
