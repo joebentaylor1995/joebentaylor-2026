@@ -37,6 +37,7 @@ const Footer = ({
 	const splitTextRef = useRef<SplitText | null>(null);
 	const flickerTimelineRef = useRef<gsap.core.Timeline | null>(null);
 	const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+	const gradientRef = useRef<HTMLDivElement>(null);
 	const mouseXRef = useRef<number>(
 		typeof window !== 'undefined' ? window.innerWidth / 2 : 0
 	);
@@ -156,6 +157,7 @@ const Footer = ({
 		{ scope: jacketRef, dependencies: [isActive] }
 	);
 
+	// Jacket animation
 	useAnimation(
 		({ isDesktop }) => {
 			if (!isActive || !wrapperRef?.current || !jacketRef.current) return;
@@ -175,14 +177,24 @@ const Footer = ({
 				clipPath: `inset(0rem ${isDesktop ? 4.8 : 2.4}rem round 1.2rem)`,
 			});
 
+			gsap.set(gradientRef.current, {
+				scaleY: 1.2,
+			});
+
 			tl.to(jacketRef.current, {
 				clipPath: 'inset(0rem 0rem round 0rem)',
+				ease: 'none',
+			});
+
+			tl.to(gradientRef.current, {
+				scaleY: 1,
 				ease: 'none',
 			});
 		},
 		{ scope: jacketRef, dependencies: [isActive, wrapperRef] }
 	);
 
+	// Intro section animation
 	useAnimation(
 		({ isDesktop }) => {
 			if (!isActive || !wrapperRef?.current || !jacketRef.current) return;
@@ -302,6 +314,8 @@ const Footer = ({
 
 	return (
 		<S.Jacket ref={jacketRef}>
+			<S.Gradient ref={gradientRef} />
+
 			<Background
 				imageUrls={imageUrls}
 				rows={7}

@@ -14,24 +14,37 @@ export const Jacket = styled(Section)(
 		position: relative;
 		margin-top: ${getGap('xl')};
 		height: 100lvh;
+		overflow: clip;
 
 		${bp.l`
 			margin-top: ${getGap('uber')};
 		`}
 
 		&:before {
-			pointer-events: none;
-			user-select: none;
-			content: '';
-			position: absolute;
-			z-index: -1;
-			inset: 30% 0 0 0;
-			background: linear-gradient(
-				to bottom,
-				${getBrand('bc2', 0)} 0%,
-				${getBrand('bc2')} 90%
-			);
 		}
+	`
+);
+
+export const Gradient = styled.aside(
+	props => css`
+		--offset: -2.4rem;
+
+		pointer-events: none;
+		user-select: none;
+		position: absolute;
+		z-index: -1;
+		inset: 30% var(--offset) var(--offset) var(--offset);
+		transform-origin: bottom;
+		filter: blur(calc(var(--offset) * -1));
+		background: linear-gradient(
+			to bottom,
+			${getBrand('bc2', 0)} 0%,
+			${getBrand('bc2')} 90%
+		);
+
+		${bp.l`
+			--offset: -6rem;
+		`}
 	`
 );
 
