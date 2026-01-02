@@ -20,13 +20,19 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Div)(
 	props => css`
-		cursor: grab;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
 		flex: none;
 		width: 100%;
 		overflow: hidden;
+		pointer-events: none;
+		user-select: none;
+
+		${bp.l`
+			cursor: grab;
+			pointer-events: auto;
+		`}
 	`
 );
 
