@@ -14,6 +14,9 @@ import { bodyM } from '@tackl/type';
 
 // Interfaces
 // ------------
+interface ProfileInterface {
+	$isProfileOpen: boolean;
+}
 
 // Exports
 // ------------
@@ -69,31 +72,35 @@ export const Content = styled.div(
 	`
 );
 
-export const BackgroundOverlay = styled.aside<{ $isProfileOpen: boolean }>(
-	props => css`
+export const BackgroundOverlay = styled.aside<ProfileInterface>(
+	({ $isProfileOpen }) => css`
 		${sharedStyles}
+
+		--cursor-url: url('/close-cursor.svg');
+		--cursor-size: 12 12;
+		cursor:
+			var(--cursor-url) var(--cursor-size),
+			auto;
 
 		inset: 0;
 		z-index: 98;
 
 		background: ${getGlobal('black', 60)};
-		opacity: ${props.$isProfileOpen ? 1 : 0};
-		pointer-events: ${props.$isProfileOpen ? 'auto' : 'none'};
-		backdrop-filter: ${props.$isProfileOpen ? 'blur(6px)' : 'none'};
+		opacity: ${$isProfileOpen ? 1 : 0};
+		pointer-events: ${$isProfileOpen ? 'auto' : 'none'};
+		backdrop-filter: blur(${$isProfileOpen ? 6 : 0}px);
 
 		transition:
 			background 1s ${getEase('bezzy3')},
 			backdrop-filter 1s ${getEase('bezzy3')};
-
-		cursor:
-			url('/close-cursor.svg') 12 12,
-			auto;
 	`
 );
 
-export const MobileClose = styled.button<{ $isProfileOpen: boolean }>(
-	props => css`
+export const MobileClose = styled.button<ProfileInterface>(
+	({ $isProfileOpen }) => css`
 		${bodyM}
+
+		--time: 1s;
 
 		user-select: none;
 		position: fixed;
@@ -103,15 +110,12 @@ export const MobileClose = styled.button<{ $isProfileOpen: boolean }>(
 
 		padding: ${getGap('s')};
 		color: ${getGlobal('white', 40)};
-
-		opacity: ${props.$isProfileOpen ? 1 : 0};
-		pointer-events: ${props.$isProfileOpen ? 'auto' : 'none'};
-		transform: ${props.$isProfileOpen
-			? 'translateX(0)'
-			: 'translateX(100%)'};
+		opacity: ${$isProfileOpen ? 1 : 0};
+		pointer-events: ${$isProfileOpen ? 'auto' : 'none'};
+		transform: translateX(${$isProfileOpen ? 0 : 100}%);
 		transition:
-			opacity 1s ${getEase('bezzy2')},
-			transform 1s ${getEase('bezzy3')};
+			opacity var(--time) ${getEase('bezzy2')},
+			transform var(--time) ${getEase('bezzy3')};
 
 		&:active {
 			transform: scale(0.95);
