@@ -20,7 +20,9 @@ interface CHANGE_ME {}
 // ------------
 export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 	props => css`
-		position: relative;
+		position: sticky;
+		top: ${getGap('huge')};
+		left: 0;
 		grid-area: ${props.$cssAreaName};
 		overflow: hidden;
 
@@ -34,12 +36,15 @@ export const Jacket = styled(Div)<{ $cssAreaName: string }>(
 		justify-content: space-between;
 		align-items: stretch;
 		width: 100%;
+		background: ${getBrand('bc4')};
 
 		${bp.m`
 			display: block;
 			
 			aspect-ratio: unset;
 		`}
+
+		${bp.l` top: ${getGap('xl')}; `}
 	`
 );
 
