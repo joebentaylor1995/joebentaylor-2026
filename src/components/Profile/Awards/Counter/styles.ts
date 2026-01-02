@@ -1,12 +1,8 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+import { getGlobal } from '@tackl';
 import { displayL } from '@tackl/type';
-
-// Interfaces
-// ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------

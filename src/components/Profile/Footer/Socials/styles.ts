@@ -1,13 +1,9 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+import { bp, getGlobal, getEase, getGap } from '@tackl';
 import { bodyL } from '@tackl/type';
 import Link from 'next/link';
-
-// Interfaces
-// ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
@@ -25,7 +21,7 @@ export const Social = styled.li(
 );
 
 export const SocialLink = styled(Link)<{ $isResume?: boolean }>(
-	props => css`
+	({ $isResume }) => css`
 		--speed: 0.35s;
 		--ease: ${getEase('bezzy2')};
 
@@ -112,8 +108,8 @@ export const SocialLink = styled(Link)<{ $isResume?: boolean }>(
 
 			width: var(--size);
 			height: var(--size);
-			fill: ${props.$isResume ? 'none' : getGlobal('white')};
-			stroke: ${props.$isResume ? getGlobal('white') : 'none'};
+			fill: ${$isResume ? 'none' : getGlobal('white')};
+			stroke: ${$isResume ? getGlobal('white') : 'none'};
 		}
 	`
 );

@@ -15,7 +15,7 @@ import { bodyM } from '@tackl/type';
 // Interfaces
 // ------------
 interface ProfileInterface {
-	$isProfileOpen: boolean;
+	$isProfileOpen?: boolean;
 }
 
 // Exports
@@ -30,7 +30,7 @@ const sharedStyles = css`
 `;
 
 export const Jacket = styled(Aside)(
-	props => css`
+	({ theme }) => css`
 		${sharedStyles}
 		inset: 0 0 auto auto;
 
@@ -45,9 +45,9 @@ export const Jacket = styled(Aside)(
 		touch-action: pan-y;
 
 		${bp.l`
-			--gutter: ${props.theme.grid.gutter.l};
-			--margin: ${props.theme.grid.gutter.l};
-			--total-cols: ${props.theme.grid.columns.l};
+			--gutter: ${theme.grid.gutter.l};
+			--margin: ${theme.grid.gutter.l};
+			--total-cols: ${theme.grid.columns.l};
 			--cols: 8;
 
 			--final-calc: calc(

@@ -44,7 +44,6 @@ export const Top = styled(Header)(
 export const TopContent = styled(Div)(
 	props => css`
 		align-self: flex-end;
-
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('sm')};
@@ -84,10 +83,9 @@ export const Scroll = styled.span(
 
 		${bp.l`
 			${bodyM}
-			color: ${getGlobal('white', 100)};
+			color: ${getGlobal('white')};
 			position: absolute;
-			bottom: ${getGap('xl')};
-			right: ${getGap('xl')};
+			inset: auto ${getGap('xl')} ${getGap('xl')} auto;
 
 			animation: intro-shine 0.5s linear infinite;
 

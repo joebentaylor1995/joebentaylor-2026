@@ -6,17 +6,12 @@ import {
 	Section,
 	getRadius,
 	getGlobal,
-	getEase,
 	getGap,
 	Div,
 	List,
 	ListItem,
 } from '@tackl';
 import { bodyL, titleL } from '@tackl/type';
-
-// Interfaces
-// ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
@@ -54,13 +49,13 @@ export const Sticky = styled(Div)(
 
 export const Text = styled(Div)(
 	props => css`
-		/*  */
+		/*  Purely for Grid positioning purposes */
 	`
 );
 
 export const Desc = styled(Div)(
 	props => css`
-		/*  */
+		/*  Purely for Grid positioning purposes */
 
 		p {
 			${bodyL}

@@ -13,10 +13,6 @@ import {
 } from '@tackl';
 import { bodyL, bodyM } from '@tackl/type';
 
-// Interfaces
-// ------------
-interface CHANGE_ME {}
-
 // Exports
 // ------------
 export const Jacket = styled(Section)(
@@ -42,7 +38,6 @@ export const Sticky = styled(Div)(
 				position: sticky;
 				top: calc(100% - ${getGap('xl')});
 				left: 0;
-				
 			`}
 		}
 	`

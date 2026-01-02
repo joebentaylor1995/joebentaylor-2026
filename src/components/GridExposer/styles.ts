@@ -20,18 +20,18 @@ interface JacketProps {
 // Exports
 // ------
 export const Col = styled(Div)<ColProps>(
-	props => css`
+	({ $isMobile, $isTablet, $altColor }) => css`
 		height: 100%;
 		display: none;
 
-		${props.$isMobile &&
+		${$isMobile &&
 		css`
 			display: block;
 		`}
 
 		${bp.m`
             ${
-				props.$isTablet &&
+				$isTablet &&
 				css`
 					display: block;
 				`
@@ -47,7 +47,7 @@ export const Col = styled(Div)<ColProps>(
 			display: block;
 
 			border-inline-style: dashed;
-			border-inline-width: ${!props.$altColor ? 0 : 1}px;
+			border-inline-width: ${$altColor ? 0 : 1}px;
 			border-inline-color: ${getFeedback('negative')};
 
 			width: var(--max);
@@ -56,12 +56,12 @@ export const Col = styled(Div)<ColProps>(
 
 			&:after {
 				content: '';
-				opacity: ${!props.$altColor ? 0.5 : 0.2};
+				opacity: ${$altColor ? 0.5 : 0.2};
 				display: block;
 				width: var(--max);
 				height: var(--max);
 				transition: all 0.25s linear;
-				background-color: ${!props.$altColor
+				background-color: ${$altColor
 					? getFeedback('negative')
 					: 'transparent'};
 			}
@@ -70,13 +70,13 @@ export const Col = styled(Div)<ColProps>(
 );
 
 export const Jacket = styled(Aside)<JacketProps>(
-	props => css`
+	({ $showGrid }) => css`
 		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 9999;
 		width: 100%;
-		height: ${props.$showGrid ? `100%` : `0%`};
+		height: ${$showGrid ? 100 : 0}%;
 		pointer-events: none;
 		transition: all 1s ${getEase('bezzy')};
 

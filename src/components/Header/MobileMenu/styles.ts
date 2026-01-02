@@ -22,7 +22,7 @@ interface CHANGE_ME {}
 // Exports
 // ------------
 export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
-	props => css`
+	({ $isOpen }) => css`
 		--ease: ${getEase('bezzy2')};
 		--speed: 0.5s;
 		--open: 0% 0% 0% 0%;
@@ -39,13 +39,13 @@ export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
 
 		background: ${getBrand('bc3')};
 
-		clip-path: inset(${props.$isOpen ? 'var(--open)' : 'var(--closed)'});
+		clip-path: inset(${$isOpen ? 'var(--open)' : 'var(--closed)'});
 		transform: translateZ(0); /* Force GPU acceleration */
 		transition: clip-path var(--speed) var(--ease);
-		pointer-events: ${props.$isOpen ? 'auto' : 'none'};
+		pointer-events: ${$isOpen ? 'auto' : 'none'};
 
 		/* Only use will-change during animation to avoid constant repaints */
-		${props.$isOpen &&
+		${$isOpen &&
 		css`
 			will-change: clip-path;
 		`}
@@ -53,7 +53,7 @@ export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
 );
 
 export const UL = styled(List)<{ $isSocial?: boolean }>(
-	props => css`
+	({ $isSocial }) => css`
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -62,7 +62,7 @@ export const UL = styled(List)<{ $isSocial?: boolean }>(
 		width: 100%;
 		padding-inline: ${getGap('m')};
 
-		${props.$isSocial &&
+		${$isSocial &&
 		css`
 			position: absolute;
 			inset: auto 0 ${getGap('m')} 0;

@@ -1,12 +1,8 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Section, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+import { bp, Section, Div, getBrand, getGlobal, getGap } from '@tackl';
 import { bodyL, bodyS } from '@tackl/type';
-
-// Interfaces
-// ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
@@ -49,7 +45,7 @@ export const Desc = styled.div(
 );
 
 export const Helper = styled.span<{ $isMobile: boolean }>(
-	props => css`
+	({ $isMobile }) => css`
 		${bodyS}
 		color: ${getGlobal('white')};
 		margin-top: auto;
@@ -59,9 +55,9 @@ export const Helper = styled.span<{ $isMobile: boolean }>(
 		overflow: hidden;
 		display: inline-block;
 
-		text-align: ${props.$isMobile ? 'center' : 'left'};
-		width: ${props.$isMobile ? '100%' : 'max-content'};
-		margin-top: ${props.$isMobile ? getGap('m') : 'auto'};
+		text-align: ${$isMobile ? 'center' : 'left'};
+		width: ${$isMobile ? '100%' : 'max-content'};
+		margin-top: ${$isMobile ? getGap('m') : 'auto'};
 
 		&:after {
 			content: '';

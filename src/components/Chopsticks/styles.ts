@@ -1,13 +1,12 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import {} from '@tackl/type';
+import { getGlobal, getEase } from '@tackl';
 
 // Exports
 // ------------
 export const Jacket = styled.button<{ $isOpen: boolean }>(
-	props => css`
+	({ $isOpen }) => css`
 		--height: 2.4rem;
 		--width: 3.6rem;
 		--ease: ${getEase('bezzy')};
@@ -40,36 +39,35 @@ export const Jacket = styled.button<{ $isOpen: boolean }>(
 			&:after {
 				left: 0;
 				width: 100%;
-
-				opacity: ${props.$isOpen ? '0' : '1'};
+				opacity: ${$isOpen ? 0 : 1};
 
 				transition:
 					opacity var(--speed-out) var(--ease),
 					transform var(--speed-out) var(--ease);
 
-				transition-delay: ${props.$isOpen ? '0s' : '0.1s'};
+				transition-delay: ${$isOpen ? 0 : 0.1}s;
 			}
 
 			&:before {
 				top: var(--offset);
-				transform: translateX(${props.$isOpen ? '100%' : '0%'});
+				transform: translateX(${$isOpen ? 100 : 0}%);
 			}
 
 			&:after {
 				bottom: var(--offset);
-				transform: translateX(${props.$isOpen ? '-100%' : '0%'});
+				transform: translateX(${$isOpen ? -100 : 0}%);
 			}
 		}
 
 		.close {
-			transform: translateX(${props.$isOpen ? '0.8rem' : '0'});
+			transform: translateX(${$isOpen ? 0.8 : 0}rem);
 			transition: transform var(--speed-out) var(--ease);
 
 			&:before,
 			&:after {
 				left: 50%;
 				width: 2.4rem;
-				opacity: ${props.$isOpen ? '1' : '0'};
+				opacity: ${$isOpen ? 1 : 0};
 
 				transition:
 					opacity var(--speed-out) var(--ease),
@@ -79,13 +77,13 @@ export const Jacket = styled.button<{ $isOpen: boolean }>(
 			&:before {
 				top: 50%;
 				transform: translateX(-50%) rotate(45deg)
-					translate(${props.$isOpen ? '0%' : '-50%'});
+					translate(${$isOpen ? 0 : -50}%);
 			}
 
 			&:after {
 				top: 50%;
 				transform: translateX(-50%) rotate(-45deg)
-					translate(${props.$isOpen ? '0%' : '-50%'});
+					translate(${$isOpen ? 0 : -50}%);
 				transition-delay: 0.1s;
 			}
 		}

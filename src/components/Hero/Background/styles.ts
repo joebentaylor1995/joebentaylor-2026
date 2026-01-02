@@ -1,16 +1,18 @@
 // Imports
 // ------------
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import {} from '@tackl/type';
+import { bp, Div, getGlobal, getEase } from '@tackl';
+
+// Interfaces
+interface JacketInterface {
+	$isMenuOpen?: boolean;
+	$isProfileOpen?: boolean;
+}
 
 // Exports
 // ------------
-export const Jacket = styled(Div)<{
-	$isMenuOpen: boolean;
-	$isProfileOpen: boolean;
-}>(
-	props => css`
+export const Jacket = styled(Div)<JacketInterface>(
+	({ $isMenuOpen, $isProfileOpen }) => css`
 		--unicorn-width: 100%;
 		--unicorn-height: 100%;
 
@@ -19,9 +21,7 @@ export const Jacket = styled(Div)<{
 		z-index: -1;
 		overflow: hidden;
 
-		transform: ${props.$isProfileOpen
-			? 'translateX(-25%)'
-			: 'translateX(0)'};
+		transform: translateX(${$isProfileOpen ? -25 : 0}%);
 		transition: transform 1s ${getEase('bezzy2')};
 
 		&:after {
@@ -42,9 +42,7 @@ export const Jacket = styled(Div)<{
 			height: 100%;
 			object-fit: cover;
 
-			transform: ${props.$isMenuOpen
-				? 'translateY(25%)'
-				: 'translateY(0)'};
+			transform: translateY(${$isMenuOpen ? 25 : 0}%);
 			transition: transform 0.5s ${getEase('bezzy3')};
 
 			${bp.m`

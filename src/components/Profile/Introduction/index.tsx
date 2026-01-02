@@ -7,6 +7,7 @@ import Grid from '@waffl';
 import { StructuredText } from 'react-datocms';
 import { useRef, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
 import { animateNeonFlicker } from '@utils/animateNeonFlicker';
 
@@ -20,6 +21,7 @@ import * as S from './styles';
 const Introduction = ({
 	columnOverride,
 	isActive,
+	wrapperRef,
 	introSubheading,
 	introHeading,
 	introText,
@@ -31,6 +33,8 @@ const Introduction = ({
 	const headingRefs = useRef<(HTMLSpanElement | null)[]>(
 		new Array(introHeading.length).fill(null)
 	);
+	const intervalRef = useRef<NodeJS.Timeout | null>(null);
+	const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
 	// Split text into characters and prepare for animation
 	useLayoutEffect(() => {
@@ -86,18 +90,8 @@ const Introduction = ({
 				gsap.set(heading, { autoAlpha: 1 });
 			});
 
-			// Animate after splits are created
-			const animateTimeout = setTimeout(() => {
-				// Create a timeline to sequence the animations
-				const tl = gsap.timeline({ delay: 0.5 }); // Initial 0.5s delay
-
-				tl.to(topSubRef.current, {
-					autoAlpha: 1,
-					duration: 0.5,
-					delay: 0.25,
-				});
-
-				// Collect all characters from all headings
+			// Collect all characters from all headings
+			const getAllChars = (): Element[] => {
 				const allChars: Element[] = [];
 				headingRefs.current.forEach((heading, index) => {
 					const split = splitTextRefs.current[index];
@@ -105,24 +99,164 @@ const Introduction = ({
 						allChars.push(...split.chars);
 					}
 				});
+				return allChars;
+			};
+
+			// Function to trigger flicker animation
+			const triggerFlicker = (resetFirst = false) => {
+				const allChars = getAllChars();
+				if (allChars.length === 0) return;
+
+				// Create a timeline for the flicker
+				const tl = gsap.timeline();
+
+				// Reset characters to hidden if needed
+				if (resetFirst) {
+					gsap.set(allChars, { autoAlpha: 0 });
+				}
 
 				// Animate all characters with neon flicker effect
-				if (allChars.length > 0) {
-					animateNeonFlicker(allChars, tl, {
-						timelinePosition: 0, // All headings start at the same time
-					});
-				}
-			}, 100); // Small delay to ensure splits are ready
+				animateNeonFlicker(allChars, tl);
+			};
 
-			timeouts.push(animateTimeout);
+			// Set up ScrollTrigger to control interval based on visibility
+			if (wrapperRef?.current && jacketRef.current) {
+				let initialAnimationComplete = false;
+
+				const scrollTrigger = ScrollTrigger.create({
+					scroller: wrapperRef.current,
+					trigger: jacketRef.current,
+					start: 'top bottom',
+					end: 'bottom top',
+					onEnter: () => {
+						// Only start interval after initial animation completes
+						if (initialAnimationComplete) {
+							// Clear any existing interval
+							if (intervalRef.current) {
+								clearInterval(intervalRef.current);
+							}
+							// Start interval to replay flicker every 4 seconds
+							intervalRef.current = setInterval(() => {
+								triggerFlicker(true);
+							}, 4000);
+						}
+					},
+					onEnterBack: () => {
+						// Only start interval after initial animation completes
+						if (initialAnimationComplete) {
+							// Clear any existing interval
+							if (intervalRef.current) {
+								clearInterval(intervalRef.current);
+							}
+							// Start interval to replay flicker every 4 seconds
+							intervalRef.current = setInterval(() => {
+								triggerFlicker(true);
+							}, 4000);
+						}
+					},
+					onLeave: () => {
+						// Stop interval when scrolled out of view
+						if (intervalRef.current) {
+							clearInterval(intervalRef.current);
+							intervalRef.current = null;
+						}
+					},
+					onLeaveBack: () => {
+						// Stop interval when scrolled out of view
+						if (intervalRef.current) {
+							clearInterval(intervalRef.current);
+							intervalRef.current = null;
+						}
+					},
+				});
+
+				scrollTriggerRef.current = scrollTrigger;
+
+				// Animate after splits are created
+				const animateTimeout = setTimeout(() => {
+					// Create a timeline to sequence the animations
+					const tl = gsap.timeline({ delay: 0.5 }); // Initial 0.5s delay
+
+					tl.to(topSubRef.current, {
+						autoAlpha: 1,
+						duration: 0.5,
+						delay: 0.25,
+					});
+
+					const allChars = getAllChars();
+
+					// Animate all characters with neon flicker effect
+					if (allChars.length > 0) {
+						animateNeonFlicker(allChars, tl, {
+							timelinePosition: 0, // All headings start at the same time
+						});
+
+						// Wait for initial animation to complete (estimate ~2 seconds)
+						const initialDelay = setTimeout(() => {
+							initialAnimationComplete = true;
+
+							// Check if trigger is currently active (in view)
+							if (scrollTrigger.isActive) {
+								// Clear any existing interval
+								if (intervalRef.current) {
+									clearInterval(intervalRef.current);
+								}
+								// Start interval to replay flicker every 4 seconds
+								intervalRef.current = setInterval(() => {
+									triggerFlicker(true);
+								}, 4000);
+							}
+						}, 2000); // Wait 2 seconds for initial animation to complete
+
+						timeouts.push(initialDelay);
+					}
+				}, 100); // Small delay to ensure splits are ready
+
+				timeouts.push(animateTimeout);
+			}
+
+			// If no wrapperRef, still run initial animation but without interval replay
+			if (!wrapperRef?.current || !jacketRef.current) {
+				const fallbackTimeout = setTimeout(() => {
+					// Create a timeline to sequence the animations
+					const tl = gsap.timeline({ delay: 0.5 }); // Initial 0.5s delay
+
+					tl.to(topSubRef.current, {
+						autoAlpha: 1,
+						duration: 0.5,
+						delay: 0.25,
+					});
+
+					const allChars = getAllChars();
+
+					// Animate all characters with neon flicker effect
+					if (allChars.length > 0) {
+						animateNeonFlicker(allChars, tl, {
+							timelinePosition: 0, // All headings start at the same time
+						});
+					}
+				}, 100); // Small delay to ensure splits are ready
+
+				timeouts.push(fallbackTimeout);
+			}
 		}, 0);
 
 		timeouts.push(timeoutId);
 
 		return () => {
 			timeouts.forEach(timeout => clearTimeout(timeout));
+			// Clear interval
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current);
+				intervalRef.current = null;
+			}
+			// Kill scroll trigger
+			if (scrollTriggerRef.current) {
+				scrollTriggerRef.current.kill();
+				scrollTriggerRef.current = null;
+			}
 		};
-	}, [isActive, introHeading.length]);
+	}, [isActive, introHeading.length, wrapperRef]);
 
 	// Cleanup on unmount
 	useEffect(() => {
