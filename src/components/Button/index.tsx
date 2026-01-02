@@ -25,7 +25,7 @@ const Button = ({
 	variant,
 }: I.ButtonProps) => {
 	return (
-		<S.Jacket>
+		<S.Jacket onClick={onClick}>
 			<span>
 				{label.split('').map((char, idx) => (
 					<span

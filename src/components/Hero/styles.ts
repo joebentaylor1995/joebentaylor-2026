@@ -59,8 +59,8 @@ export const ButtonAnimation = styled(Div)(
 );
 
 export const CenterContent = styled(Div)<{ $offset: number }>(
-	props => css`
-		--offset: calc(${props.$offset}rem / 2);
+	({ $offset }) => css`
+		--offset: calc(${$offset}rem / 2);
 
 		position: relative;
 		height: 100%;
@@ -108,8 +108,13 @@ export const Copyright = styled(Div)(
 	`
 );
 
-export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
-	props => css`
+interface VideoPreviewProps {
+	$isModalOpen: boolean;
+	$isProfileOpen: boolean;
+}
+
+export const VideoPreview = styled(Div)<VideoPreviewProps>(
+	({ $isModalOpen, $isProfileOpen }) => css`
 		width: 10.2rem;
 		aspect-ratio: 3/4;
 		height: 100%;
@@ -118,8 +123,8 @@ export const VideoPreview = styled(Div)<{ $isModalOpen: boolean }>(
 		border-radius: ${getRadius('s')};
 		cursor: pointer;
 		clip-path: inset(
-			${props.$isModalOpen ? '100%' : '0%'}
-				${props.$isModalOpen ? '100%' : '0%'} 0% 0% round
+			${$isModalOpen || $isProfileOpen ? '100%' : '0%'}
+				${$isModalOpen || $isProfileOpen ? '100%' : '0%'} 0% 0% round
 				${getRadius('s')}
 		);
 		transition: clip-path 0.35s ${getEase('bezzy3')};

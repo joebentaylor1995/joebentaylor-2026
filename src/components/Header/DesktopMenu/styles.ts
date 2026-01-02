@@ -29,11 +29,11 @@ interface ButtonProps {
 }
 
 export const Button = styled.button<ButtonProps>(
-	props => css`
+	({ $isFirst }) => css`
 		${bodyS}
 
 		position: relative;
-		display: ${props.$isFirst ? 'none' : 'block'};
+		display: ${$isFirst ? 'none' : 'block'};
 
 		> span {
 			display: block;

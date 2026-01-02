@@ -6,7 +6,7 @@ import { useState, useLayoutEffect, useRef, use } from 'react';
 import { SRCImage } from 'react-datocms';
 import { useAnimation } from '@/utils/useAnimation';
 import { gsap } from 'gsap';
-import { bezzy4, bezzy3 } from '@parts/AnimationPlugins/Curves';
+import { bezzy4, bezzy3, bezzy2 } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
@@ -22,7 +22,7 @@ const LIST_DURATION = 2;
 const PARALLAX_DURATION = 2.6;
 const SCALE_DURATION = 1.5;
 const FADE_DURATION = 1;
-const FADE_OUT_DURATION = 0.5;
+const FADE_OUT_DURATION = 0.75;
 const STAGGER_DELAY = 0.05;
 const INITIAL_PARALLAX_OFFSET = 12;
 const FULLSCREEN_SCALE = 5;
@@ -102,8 +102,9 @@ const Loader = ({ images }: I.LoaderProps) => {
 				if (jacketRef.current) {
 					gsap.to(jacketRef.current, {
 						autoAlpha: 0,
+						scale: 1.2,
 						duration: FADE_OUT_DURATION,
-						ease: bezzy3,
+						ease: bezzy2,
 						onComplete: () => {
 							setLoaderFinished(true);
 							setShouldUnrender(true);

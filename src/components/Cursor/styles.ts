@@ -16,7 +16,7 @@ export const Jacket = styled(Div)(
 
 		display: none;
 		position: fixed;
-		z-index: 99;
+		z-index: 101;
 		top: calc(var(--size) / 2 * -1);
 		left: calc(var(--size) / 2 * -1);
 

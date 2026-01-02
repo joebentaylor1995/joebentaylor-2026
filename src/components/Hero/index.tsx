@@ -49,8 +49,12 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// Responsive Breakpoints
 	const { isMobile, isDesktop } = useResponsive();
 
+	// States
+	const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+	const [resizeTrigger, setResizeTrigger] = useState(0); // Ref to help trigger animation on resize
+
 	// Context
-	const { loaderFinished } = use(GlobalContext);
+	const { loaderFinished, profileOpen, setProfileOpen } = use(GlobalContext);
 
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
@@ -87,12 +91,6 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 			});
 		}
 	}, [loaderFinished]);
-
-	// Ref to help trigger animation on resize
-	const [resizeTrigger, setResizeTrigger] = useState(0);
-
-	// Modal state
-	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	// Apply magnetic effect to video preview (desktop only)
 	useMagnetic(videoPreviewRef, {
@@ -329,40 +327,6 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		}
 	}, [isModalOpen]);
 
-	// Suppress known library warnings on mount
-	useEffect(() => {
-		// Suppress harmless warnings from third-party libraries
-		const originalWarn = console.warn;
-		const originalLog = console.log;
-
-		console.warn = (...args: any[]) => {
-			if (
-				typeof args[0] === 'string' &&
-				args[0].includes('Media Chrome: No style sheet found')
-			) {
-				return; // Suppress Media Chrome warning
-			}
-			originalWarn.apply(console, args);
-		};
-
-		console.log = (...args: any[]) => {
-			if (
-				typeof args[0] === 'string' &&
-				args[0].includes(
-					'Scene already initialized with this configuration, skipping...'
-				)
-			) {
-				return; // Suppress UnicornScene duplicate initialization log
-			}
-			originalLog.apply(console, args);
-		};
-
-		return () => {
-			console.warn = originalWarn;
-			console.log = originalLog;
-		};
-	}, []);
-
 	// Animate modal in when opened
 	useEffect(() => {
 		if (!isModalOpen || !modalRef.current || !modalContentRef.current)
@@ -424,7 +388,11 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 						<S.Text ref={textRef}>{title}</S.Text>
 						{isMobile && (
 							<S.ButtonAnimation ref={buttonAnimationRef}>
-								<Button href='/' label='View Profile' />
+								<Button
+									href='/'
+									label='View Profile'
+									onClick={() => setProfileOpen(true)}
+								/>
 							</S.ButtonAnimation>
 						)}
 					</S.Texts>
@@ -439,11 +407,12 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 						$m='1/4'
 						$l='1/3'
 						$isModalOpen={isModalOpen}
+						$isProfileOpen={profileOpen}
 						data-hover
 						onClick={handleOpenModal}
 						role='button'
 						tabIndex={0}
-						onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
+						onKeyDown={e => {
 							if (e.key === 'Enter' || e.key === ' ') {
 								e.preventDefault();
 								handleOpenModal();

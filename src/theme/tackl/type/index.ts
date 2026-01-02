@@ -5,6 +5,31 @@ import { theme } from '@theme';
 import { css, RuleSet } from 'styled-components';
 import { getFont, getFontWeight } from '@tackl';
 
+export const displayL: RuleSet = css`
+	font-family: ${getFont('body')};
+	font-weight: ${getFontWeight('light')};
+
+	display: block;
+	font-style: normal;
+	font-size: 7.2rem;
+	line-height: 1.12;
+	letter-spacing: 2px;
+
+	${bp.l`
+		font-size: 12rem;
+	`}
+`;
+
+export const titleL: RuleSet = css`
+	font-family: ${getFont('body')};
+	font-weight: ${getFontWeight('regular')};
+
+	font-size: 3.2rem;
+	line-height: 1.32;
+
+	${bp.l` font-size: 4.8rem; `}
+`;
+
 const sharedBodyStyles: RuleSet = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('regular')};

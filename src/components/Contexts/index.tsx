@@ -10,44 +10,68 @@ import { PerformanceProvider } from './Performance';
 // ------------
 export interface GlobalContextType {
 	lenis: React.RefObject<Lenis | null>;
+	profileLenis: React.RefObject<Lenis | null>;
+
 	menuOpen: boolean;
 	setMenuOpen: (value: boolean) => void;
+
 	imagesLoaded: boolean;
 	setImagesLoaded: (value: boolean) => void;
+
 	componentsLoaded: boolean;
 	setComponentsLoaded: (value: boolean) => void;
+
 	pageLoaded: boolean;
+	setPageLoaded: (value: boolean) => void;
+
 	unicornSceneLoaded: boolean;
 	setUnicornSceneLoaded: (value: boolean) => void;
+
 	requiresUnicornScene: boolean;
 	setRequiresUnicornScene: (value: boolean) => void;
-	setPageLoaded: (value: boolean) => void;
+
 	loaderFinishing: boolean;
 	setLoaderFinishing: (value: boolean) => void;
+
 	loaderFinished: boolean;
 	setLoaderFinished: (value: boolean) => void;
+
+	profileOpen: boolean;
+	setProfileOpen: (value: boolean) => void;
 }
 
 // Context Definition
 // ------------
 export const GlobalContext = createContext<GlobalContextType>({
 	lenis: { current: null } as React.RefObject<Lenis | null>,
+	profileLenis: { current: null } as React.RefObject<Lenis | null>,
+
 	menuOpen: false,
 	setMenuOpen: () => {},
+
 	imagesLoaded: false,
 	setImagesLoaded: () => {},
+
 	componentsLoaded: false,
 	setComponentsLoaded: () => {},
+
 	unicornSceneLoaded: false,
 	setUnicornSceneLoaded: () => {},
+
 	requiresUnicornScene: false,
 	setRequiresUnicornScene: () => {},
+
 	pageLoaded: false,
 	setPageLoaded: () => {},
+
 	loaderFinishing: false,
 	setLoaderFinishing: () => {},
+
 	loaderFinished: false,
 	setLoaderFinished: () => {},
+
+	profileOpen: false,
+	setProfileOpen: () => {},
 });
 
 // Component
@@ -60,6 +84,7 @@ export const GlobalContext = createContext<GlobalContextType>({
 const Contexts = ({ children }: { children: React.ReactNode }) => {
 	// Create a stable reference for the lenis smooth scroll instance
 	const lenis = useRef<Lenis | null>(null);
+	const profileLenis = useRef<Lenis | null>(null);
 
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 	const [pageLoaded, setPageLoaded] = useState<boolean>(false);
@@ -71,12 +96,14 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 		useState<boolean>(false);
 	const [loaderFinishing, setLoaderFinishing] = useState<boolean>(false);
 	const [loaderFinished, setLoaderFinished] = useState<boolean>(false);
+	const [profileOpen, setProfileOpen] = useState<boolean>(false);
 
 	// Memoize context value to prevent unnecessary re-renders
 	// Only recreate when actual state values change
 	const contextValue = useMemo(
 		() => ({
 			lenis,
+			profileLenis,
 			menuOpen,
 			setMenuOpen,
 			imagesLoaded,
@@ -93,6 +120,8 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			setLoaderFinishing,
 			loaderFinished,
 			setLoaderFinished,
+			profileOpen,
+			setProfileOpen,
 		}),
 		[
 			menuOpen,
@@ -103,6 +132,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			requiresUnicornScene,
 			loaderFinishing,
 			loaderFinished,
+			profileOpen,
 			// lenis ref is stable, setState functions are stable, so they don't need to be in deps
 		]
 	);

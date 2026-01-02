@@ -10,11 +10,11 @@ interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Div)(
+export const Jacket = styled(Div)<{ $hasAnimation: boolean }>(
 	props => css`
 		--gap: ${getGap('s')};
 
-		opacity: 0; /* Start hidden, will be animated in */
+		opacity: ${props.$hasAnimation ? 0 : 1};
 		display: flex;
 		align-items: center;
 		gap: var(--gap);

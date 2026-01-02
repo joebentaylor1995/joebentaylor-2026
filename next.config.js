@@ -22,6 +22,14 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'placehold.it',
 			},
+			{
+				protocol: 'https',
+				hostname: 'cdn.dribbble.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'd13yacurqjgara.cloudfront.net',
+			},
 		],
 	},
 	transpilePackages: ['next-image-export-optimizer'],

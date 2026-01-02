@@ -57,6 +57,8 @@ export const Image = styled.div(
 		width: 20vw;
 		height: 20dvh;
 		overflow: hidden;
+		pointer-events: none;
+		user-select: none;
 	`
 );
 
@@ -109,6 +111,8 @@ export const Counter = styled.div(
 		color: ${getGlobal('white')};
 		mix-blend-mode: difference;
 		opacity: 0.4;
+		pointer-events: none;
+		user-select: none;
 
 		span {
 			${bodyL}

@@ -40,6 +40,7 @@ const DesktopMenu = ({
 						buttonRefs.current[index] = el;
 					}}
 					data-hover
+					data-label={item.label}
 					$isFirst={index === 0}
 					$index={index}
 					key={item.label}
