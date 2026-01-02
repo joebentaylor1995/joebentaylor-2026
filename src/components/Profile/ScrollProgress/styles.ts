@@ -13,8 +13,8 @@ export const Jacket = styled.div(
 		--offset: 4.8rem;
 
 		position: fixed;
+		z-index: 98;
 		inset: 3.6rem auto auto 2.4rem;
-		z-index: 102;
 		height: 2px;
 
 		background: ${getBrand('bc3')};
