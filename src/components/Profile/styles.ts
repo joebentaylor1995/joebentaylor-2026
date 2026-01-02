@@ -95,6 +95,7 @@ export const MobileClose = styled.button<{ $isProfileOpen: boolean }>(
 	props => css`
 		${bodyM}
 
+		user-select: none;
 		position: fixed;
 		z-index: 101;
 		top: ${getGap('s')};
