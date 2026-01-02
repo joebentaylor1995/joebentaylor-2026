@@ -19,9 +19,6 @@ export const Jacket = styled(Section)(
 		${bp.l`
 			margin-top: ${getGap('uber')};
 		`}
-
-		&:before {
-		}
 	`
 );
 

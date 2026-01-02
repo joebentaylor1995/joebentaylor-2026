@@ -3,6 +3,7 @@
 // Imports
 // ------------
 import SmoothScroll from './SmoothScroll';
+import ScrollProgress from './ScrollProgress';
 import Introduction from './Introduction';
 import Statement from './Statement';
 import Skills from './Skills';
@@ -19,7 +20,6 @@ import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
 import { bezzy3 } from '@parts/AnimationPlugins/Curves';
 import { useIsDesktop } from '@utils/useResponsive';
-import ProgressiveBlur from '@parts/ProgressiveBlur';
 
 // Styles + Interfaces
 // ------------
@@ -137,6 +137,8 @@ const Profile = ({
 				$isProfileOpen={profileOpen}
 				onClick={handleClose}
 			/>
+
+			<ScrollProgress isActive={profileOpen} wrapperRef={jacketRef} />
 
 			<S.MobileClose
 				onClick={handleMobileClose}

@@ -30,7 +30,7 @@ const sharedStyles = css`
 `;
 
 export const Jacket = styled(Aside)(
-	({ theme }) => css`
+	({}) => css`
 		${sharedStyles}
 		inset: 0 0 auto auto;
 
@@ -45,20 +45,7 @@ export const Jacket = styled(Aside)(
 		touch-action: pan-y;
 
 		${bp.l`
-			--gutter: ${theme.grid.gutter.l};
-			--margin: ${theme.grid.gutter.l};
-			--total-cols: ${theme.grid.columns.l};
-			--cols: 8;
-
-			--final-calc: calc(
-				(var(--cols) * 100vw / var(--total-cols)) +
-					(
-						(var(--total-cols) - var(--cols)) / var(--total-cols) *
-							(2 * var(--margin) - var(--gutter))
-					)
-			);
-
-			width: var(--final-calc);
+			width: 68vw;
 			border-radius: ${getRadius('s')} 0 0 ${getRadius('s')};
 		`}
 	`
