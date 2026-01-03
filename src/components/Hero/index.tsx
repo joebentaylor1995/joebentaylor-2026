@@ -54,7 +54,8 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	const [resizeTrigger, setResizeTrigger] = useState(0); // Ref to help trigger animation on resize
 
 	// Context
-	const { loaderFinished, profileOpen, setProfileOpen } = use(GlobalContext);
+	const { loaderFinished, profileOpen, setProfileOpen, contactOpen } =
+		use(GlobalContext);
 
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
@@ -406,8 +407,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 						$s='1/2'
 						$m='1/4'
 						$l='1/3'
-						$isModalOpen={isModalOpen}
-						$isProfileOpen={profileOpen}
+						$isModalOpen={profileOpen || contactOpen}
 						data-hover
 						onClick={handleOpenModal}
 						role='button'

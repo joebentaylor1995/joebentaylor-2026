@@ -119,11 +119,6 @@ const Profile = ({
 		}
 	};
 
-	// Handle close for mobile (used by MobileClose button)
-	const handleMobileClose = () => {
-		setProfileOpen(false);
-	};
-
 	// Shared Props
 	const sharedProps = {
 		isActive: profileOpen,
@@ -133,16 +128,13 @@ const Profile = ({
 
 	return (
 		<>
-			<S.BackgroundOverlay
-				$isProfileOpen={profileOpen}
-				onClick={handleClose}
-			/>
+			<S.BackgroundOverlay $isOpen={profileOpen} onClick={handleClose} />
 
 			<ScrollProgress isActive={profileOpen} wrapperRef={jacketRef} />
 
 			<S.MobileClose
-				onClick={handleMobileClose}
-				$isProfileOpen={profileOpen}
+				onClick={() => setProfileOpen(false)}
+				$isOpen={profileOpen}
 			>
 				Close
 			</S.MobileClose>

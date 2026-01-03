@@ -4,7 +4,8 @@
 // ------------
 import AnimationPlugins from '@parts/AnimationPlugins';
 import Contexts from '@parts/Contexts';
-import CookieBar from '@parts/CookieBar';
+import Contact from '@parts/Contact';
+// import CookieBar from '@parts/CookieBar';
 import GridExposer from '@parts/GridExposer';
 import { GlobalStyle, theme } from '@theme';
 import { sequel, ppNeueMontreal } from '@theme/fonts';
@@ -69,6 +70,7 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 									ref={lenisRef}
 								>
 									{children}
+									<Contact />
 								</ReactLenis>
 							</Contexts>
 						</ThemeProvider>
