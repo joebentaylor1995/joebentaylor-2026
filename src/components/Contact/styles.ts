@@ -14,7 +14,7 @@ import { bodyM } from '@tackl/type';
 
 // Interfaces
 // ------------
-interface ProfileInterface {
+interface ContactInterface {
 	$isOpen?: boolean;
 }
 
@@ -59,7 +59,7 @@ export const Content = styled.div(
 	`
 );
 
-export const BackgroundOverlay = styled.aside<ProfileInterface>(
+export const BackgroundOverlay = styled.aside<ContactInterface>(
 	({ $isOpen }) => css`
 		${sharedStyles}
 
@@ -83,7 +83,7 @@ export const BackgroundOverlay = styled.aside<ProfileInterface>(
 	`
 );
 
-export const MobileClose = styled.button<ProfileInterface>(
+export const MobileClose = styled.button<ContactInterface>(
 	({ $isOpen }) => css`
 		${bodyM}
 

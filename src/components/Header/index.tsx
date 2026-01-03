@@ -39,7 +39,8 @@ const Header = ({ socials }: I.HeaderProps) => {
 	const jacketRef = useRef<HTMLElement>(null);
 
 	// Context
-	const { loaderFinishing, setProfileOpen } = use(GlobalContext);
+	const { loaderFinishing, setProfileOpen, setContactOpen } =
+		use(GlobalContext);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
@@ -87,6 +88,10 @@ const Header = ({ socials }: I.HeaderProps) => {
 
 		if (button?.dataset.label === 'Profile') {
 			setProfileOpen(true);
+		}
+
+		if (button?.dataset.label === "Let's Talk") {
+			setContactOpen(true);
 		}
 	};
 

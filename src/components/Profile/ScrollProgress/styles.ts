@@ -23,7 +23,7 @@ export const Jacket = styled.div(
 		transform-origin: left center;
 		width: 25vw;
 
-		${bp.l`
+		${bp.l` 
             inset: auto auto var(--offset) var(--offset);
             width: calc(28.45vw - var(--offset));
         `}
@@ -33,10 +33,7 @@ export const Jacket = styled.div(
 export const Progress = styled.div(
 	props => css`
 		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		inset: 0;
 		background: ${getGlobal('white')};
 		transform-origin: left center;
 		transform: scaleX(0);
