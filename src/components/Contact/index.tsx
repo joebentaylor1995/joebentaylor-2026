@@ -77,9 +77,6 @@ const Contact = ({}: I.ContactProps) => {
 		}
 	};
 
-	// Handle close for mobile (used by MobileClose button)
-	const handleMobileClose = () => setContactOpen(false);
-
 	// Create Shared Props
 	const sharedProps = {
 		isActive: contactOpen,
@@ -90,6 +87,13 @@ const Contact = ({}: I.ContactProps) => {
 	return (
 		<>
 			<S.BackgroundOverlay $isOpen={contactOpen} onClick={handleClose} />
+
+			<S.MobileClose
+				onClick={() => setContactOpen(false)}
+				$isOpen={contactOpen}
+			>
+				Close
+			</S.MobileClose>
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<SmoothScroll {...sharedProps} contentRef={contentRef} />
