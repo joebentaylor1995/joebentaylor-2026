@@ -2,6 +2,7 @@
 
 // Imports
 // ------------
+import MobileModalClose from '@parts/MobileModalClose';
 import SmoothScroll from './SmoothScroll';
 import ScrollProgress from './ScrollProgress';
 import Introduction from './Introduction';
@@ -132,12 +133,10 @@ const Profile = ({
 
 			<ScrollProgress isActive={profileOpen} wrapperRef={jacketRef} />
 
-			<S.MobileClose
+			<MobileModalClose
 				onClick={() => setProfileOpen(false)}
-				$isOpen={profileOpen}
-			>
-				Close
-			</S.MobileClose>
+				isOpen={profileOpen}
+			/>
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<SmoothScroll {...sharedProps} contentRef={contentRef} />

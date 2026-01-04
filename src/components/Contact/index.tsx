@@ -2,7 +2,8 @@
 
 // Imports
 // ------------
-import SmoothScroll from './SmoothScroll';
+import StarHeading from '@parts/StarHeading';
+import MobileModalClose from '@parts/MobileModalClose';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
 import { gsap } from 'gsap';
@@ -30,6 +31,7 @@ const Contact = ({}: I.ContactProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
+	const titlesRef = useRef<HTMLDivElement>(null);
 
 	// Handle main Lenis Provider when modal is open/closed
 	useLayoutEffect(() => {
@@ -77,31 +79,26 @@ const Contact = ({}: I.ContactProps) => {
 		}
 	};
 
-	// Create Shared Props
-	const sharedProps = {
-		isActive: contactOpen,
-		wrapperRef: jacketRef,
-		columnOverride: COL_OVERRIDE,
-	};
-
 	return (
 		<>
 			<S.BackgroundOverlay $isOpen={contactOpen} onClick={handleClose} />
 
-			<S.MobileClose
+			<MobileModalClose
 				onClick={() => setContactOpen(false)}
-				$isOpen={contactOpen}
-			>
-				Close
-			</S.MobileClose>
+				isOpen={contactOpen}
+			/>
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
-				<SmoothScroll {...sharedProps} contentRef={contentRef} />
-
 				<S.Content ref={contentRef}>
-					{/*  */}
-					{/*  */}
-					{/*  */}
+					<S.Titles ref={titlesRef}>
+						<StarHeading
+							text="let's Talk"
+							semantic='h2'
+							iconOverride='chat'
+							hasRotation={false}
+						/>
+						<S.Title>Hello</S.Title>
+					</S.Titles>
 				</S.Content>
 			</S.Jacket>
 		</>

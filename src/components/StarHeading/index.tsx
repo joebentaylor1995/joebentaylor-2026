@@ -11,16 +11,23 @@ import * as S from './styles';
 
 // Component
 // ------------
-const StarHeading = ({ text, semantic, passedRef }: I.StarHeadingProps) => {
+const StarHeading = ({
+	text,
+	semantic,
+	passedRef,
+	iconOverride,
+	hasRotation = true,
+}: I.StarHeadingProps) => {
 	const HeadingTag = semantic || 'span';
 
 	return (
 		<S.Jacket
 			ref={passedRef}
+			$hasRotation={hasRotation}
 			$hasAnimation={passedRef ? true : false}
 			className='star-heading'
 		>
-			<Icon type='star' />
+			<Icon type={iconOverride ?? 'star'} />
 			<HeadingTag>{text}</HeadingTag>
 		</S.Jacket>
 	);

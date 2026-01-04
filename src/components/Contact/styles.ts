@@ -10,7 +10,7 @@ import {
 	getGap,
 	getRadius,
 } from '@tackl';
-import { bodyM } from '@tackl/type';
+import { bodyM, displayL } from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -53,9 +53,16 @@ export const Jacket = styled(Aside)(
 
 export const Content = styled.div(
 	props => css`
+		--offset: ${getGap('m')};
+
 		width: 100%;
 		height: auto;
 		min-height: 100%;
+		padding: var(--offset);
+
+		${bp.l`
+			--offset: ${getGap('xl')};
+		`}
 	`
 );
 
@@ -110,5 +117,30 @@ export const MobileClose = styled.button<ContactInterface>(
 		}
 
 		${bp.l` display: none; `}
+	`
+);
+
+export const Titles = styled.header(
+	({}) => css`
+		--gap: ${getGap('sm')};
+		--offset: ${getGap('m')};
+
+		position: absolute;
+		inset: var(--offset) auto auto var(--offset);
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--gap);
+
+		${bp.l`
+			--gap: ${getGap('m')};
+			--offset: ${getGap('xl')};
+		`};
+	`
+);
+
+export const Title = styled.h3(
+	({}) => css`
+		${displayL}
 	`
 );
