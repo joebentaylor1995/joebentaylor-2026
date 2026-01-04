@@ -3,6 +3,7 @@
 // Imports
 // ------------
 import StarHeading from '@parts/StarHeading';
+import WelcomeTitle from './WelcomeTItle';
 import MobileModalClose from '@parts/MobileModalClose';
 import { use, useRef, useLayoutEffect, useEffect } from 'react';
 import { GlobalContext } from '@parts/Contexts';
@@ -35,13 +36,24 @@ const Contact = ({}: I.ContactProps) => {
 
 	// Handle main Lenis Provider when modal is open/closed
 	useLayoutEffect(() => {
-		// Stop root lenis when profile modal is open
+		// Stop root lenis when contact modal is open
 		if (contactOpen) {
 			lenis?.current?.stop();
 		} else {
 			lenis?.current?.start();
 		}
 	}, [contactOpen, lenis]);
+
+	// Set initial position
+	useLayoutEffect(() => {
+		if (!jacketRef.current) return;
+
+		// Set initial position offscreen and hidden
+		gsap.set(jacketRef.current, {
+			xPercent: 100,
+			immediateRender: true,
+		});
+	}, []);
 
 	// Animate on contactOpen change
 	useEffect(() => {
@@ -50,8 +62,11 @@ const Contact = ({}: I.ContactProps) => {
 		const speed = 1;
 		const ease = bezzy3;
 
-		gsap.to(jacketRef.current, {
+		gsap.set(jacketRef.current, {
 			autoAlpha: 1,
+		});
+
+		gsap.to(jacketRef.current, {
 			xPercent: contactOpen ? 0 : 100,
 			duration: speed,
 			ease: ease,
@@ -97,7 +112,10 @@ const Contact = ({}: I.ContactProps) => {
 							iconOverride='chat'
 							hasRotation={false}
 						/>
-						<S.Title>Hello</S.Title>
+						<WelcomeTitle
+							text='Hello'
+							shouldAnimate={contactOpen}
+						/>
 					</S.Titles>
 				</S.Content>
 			</S.Jacket>

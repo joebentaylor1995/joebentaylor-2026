@@ -10,7 +10,7 @@ import {
 	getGap,
 	getRadius,
 } from '@tackl';
-import { bodyM, displayL } from '@tackl/type';
+import { bodyM } from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -136,11 +136,5 @@ export const Titles = styled.header(
 			--gap: ${getGap('m')};
 			--offset: ${getGap('xl')};
 		`};
-	`
-);
-
-export const Title = styled.h3(
-	({}) => css`
-		${displayL}
 	`
 );
