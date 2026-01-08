@@ -19,7 +19,6 @@ import {
 } from 'react';
 import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
-import { waitForFonts } from '@utils/waitForFonts';
 import { useResponsive } from '@utils/useResponsive';
 import { useMagnetic } from '@utils/useMagnetic';
 import { VideoPlayer } from 'react-datocms';
@@ -51,7 +50,6 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 	// States
 	const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-	const [resizeTrigger, setResizeTrigger] = useState(0); // Ref to help trigger animation on resize
 
 	// Context
 	const {
@@ -62,37 +60,48 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		loaderFinishing,
 	} = use(GlobalContext);
 
-	// State to control when animations trigger
-	const [shouldAnimate, setShouldAnimate] = useState(false);
+	useEffect(() => {
+		console.log('loaderFinishing', loaderFinishing);
+	}, [loaderFinishing]);
 
-	// Hide CenterContent and BottomContent initially until loader finishes
+	// On Mount Set all initial animation elements
 	useLayoutEffect(() => {
-		const elements = [
-			centerContentRef.current,
-			bottomContentRef.current,
-		].filter(Boolean) as HTMLElement[];
-		if (elements.length > 0) {
-			gsap.set(elements, { autoAlpha: 0 });
-		}
+		// Bottom Content
+		gsap.set(bottomContentRef.current, { autoAlpha: 0 });
+
+		textSplitRef.current = SplitText.create(textRef.current, {
+			type: 'words',
+			mask: 'words',
+			wordsClass: 'word++',
+			autoSplit: true, // Keep for reflow handling
+			reduceWhiteSpace: true, // Fix Safari spacing issues
+			onSplit: self => {
+				// Capture the split instance for later animation
+				textSplitRef.current = self;
+
+				gsap.set(self.words, {
+					yPercent: 100,
+				});
+			},
+		});
 	}, []);
 
-	// Fade in CenterContent and BottomContent when loader finishes
-	useEffect(() => {
-		if (!loaderFinished) return;
+	useAnimation(
+		() => {
+			if (!loaderFinished) return;
 
-		const elements = [
-			centerContentRef.current,
-			bottomContentRef.current,
-		].filter(Boolean) as HTMLElement[];
-		if (elements.length > 0) {
-			gsap.to(elements, {
+			gsap.to(bottomContentRef.current, {
 				autoAlpha: 1,
 				duration: 0.8,
 				ease: 'power2.out',
 				stagger: 0.1,
 			});
+		},
+		{
+			scope: jacketRef,
+			dependencies: [loaderFinished],
 		}
-	}, [loaderFinished]);
+	);
 
 	// Apply magnetic effect to video preview (desktop only)
 	useMagnetic(videoPreviewRef, {
@@ -101,169 +110,56 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		enabled: isDesktop,
 	});
 
-	// Helper to split/re-split text before animating
-	const splitAndPrepareText = useCallback(() => {
-		return new Promise<void>(resolve => {
-			// Wait for fonts to load before splitting to prevent layout shifts
-			waitForFonts().then(() => {
-				// Kill any running animations
-				if (textSplitRef.current?.words) {
-					gsap.killTweensOf(textSplitRef.current.words);
-				}
-
-				// Revert any previous split
-				textSplitRef.current?.revert?.();
-				textSplitRef.current = null;
-
-				if (textRef.current) {
-					// Ensure text is hidden before splitting
-					gsap.set(textRef.current, { autoAlpha: 0 });
-
-					textSplitRef.current = SplitText.create(textRef.current, {
-						type: 'words',
-						mask: 'words',
-						wordsClass: 'word++',
-						autoSplit: true, // Keep for reflow handling
-						reduceWhiteSpace: true, // Fix Safari spacing issues
-						onSplit: self => {
-							// Capture the split instance for later animation
-							textSplitRef.current = self;
-
-							gsap.set(self.words, {
-								yPercent: 100,
-							});
-
-							// Resolve when split is complete
-							resolve();
-						},
-					});
-				} else {
-					resolve();
-				}
-			});
-		});
-	}, []);
-
-	// Create splits when component is first rendered
 	useAnimation(
 		() => {
-			splitAndPrepareText();
+			if (!loaderFinished || !textSplitRef.current) return;
+
+			// Use timeline instead of nested callbacks - much cleaner!
+			const tl = gsap.timeline();
+
+			// Fade in StarHeading
+			if (starHeadingRef.current) {
+				tl.to(starHeadingRef.current, {
+					autoAlpha: 1,
+					duration: 0.6,
+					ease: 'power2.out',
+				});
+			}
+
+			// Start text animation slightly before StarHeading completes for smoother transition
+
+			tl.to(
+				textSplitRef.current.words,
+				{
+					yPercent: 0,
+					duration: 0.643,
+					ease: slow,
+					stagger: {
+						each: 0.051,
+						ease: smooth,
+					},
+				},
+				'-=0.3'
+			); // Start 0.3s into StarHeading animation for overlap
+
+			// Fade in button after text animation
+			if (buttonAnimationRef.current) {
+				tl.to(
+					buttonAnimationRef.current,
+					{
+						autoAlpha: 1,
+						duration: 0.5,
+						ease: 'power2.out',
+					},
+					'-=0.2'
+				); // Start slightly before text animation ends
+			}
 		},
 		{
 			scope: jacketRef,
-			dependencies: [textRef], // Split on mount/re-render
+			dependencies: [loaderFinished, textSplitRef],
 		}
 	);
-
-	// Listen for window resize to reset split and play animation
-	useEffect(() => {
-		let resizeTimeout: ReturnType<typeof setTimeout>;
-		let splitTimeout: ReturnType<typeof setTimeout>;
-
-		const handleResize = () => {
-			// Debounce resize
-			clearTimeout(resizeTimeout);
-			clearTimeout(splitTimeout);
-			resizeTimeout = setTimeout(() => {
-				// Re-split the text, then trigger animation
-				splitAndPrepareText().then(() => {
-					// Small delay to ensure split is ready
-					splitTimeout = setTimeout(() => {
-						setResizeTrigger(prev => prev + 1);
-					}, 50);
-				});
-			}, 150);
-		};
-
-		window.addEventListener('resize', handleResize, { passive: true });
-		return () => {
-			clearTimeout(resizeTimeout);
-			clearTimeout(splitTimeout);
-			window.removeEventListener('resize', handleResize);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [splitAndPrepareText]);
-
-	// Whenever loaderFinished, shouldAnimate, or resizeTrigger changes, animate text in
-	useEffect(() => {
-		if (!loaderFinished && !shouldAnimate && resizeTrigger === 0) return;
-		if (!textSplitRef.current?.words || !starHeadingRef.current) return;
-
-		const slowCurve = slow;
-		const smoothCurve = smooth;
-
-		// Only kill animations if this is a resize (not initial mount)
-		if (resizeTrigger > 0) {
-			gsap.killTweensOf(
-				[
-					textSplitRef.current.words,
-					buttonAnimationRef.current,
-					starHeadingRef.current,
-				].filter(Boolean)
-			);
-		}
-
-		// Show text container (words already positioned by splitAndPrepareText)
-		if (textRef.current) {
-			gsap.set(textRef.current, { autoAlpha: 1 });
-		}
-
-		// Ensure starHeading and button start hidden on initial mount
-		if (resizeTrigger === 0) {
-			const elementsToHide = [
-				buttonAnimationRef.current,
-				starHeadingRef.current,
-			].filter(Boolean) as HTMLElement[];
-			if (elementsToHide.length > 0) {
-				gsap.set(elementsToHide, { autoAlpha: 0 });
-			}
-		}
-
-		// Use timeline instead of nested callbacks - much cleaner!
-		const tl = gsap.timeline();
-
-		// Fade in StarHeading
-		tl.to(starHeadingRef.current, {
-			autoAlpha: 1,
-			duration: 0.6,
-			ease: 'power2.out',
-		});
-
-		// Start text animation slightly before StarHeading completes for smoother transition
-		tl.to(
-			textSplitRef.current.words,
-			{
-				yPercent: 0,
-				duration: 0.643,
-				ease: slowCurve,
-				stagger: {
-					each: 0.051,
-					ease: smoothCurve,
-				},
-			},
-			'-=0.3'
-		); // Start 0.3s into StarHeading animation for overlap
-
-		// Fade in button after text animation
-		if (buttonAnimationRef.current) {
-			tl.to(
-				buttonAnimationRef.current,
-				{
-					autoAlpha: 1,
-					duration: 0.5,
-					ease: 'power2.out',
-				},
-				'-=0.2'
-			); // Start slightly before text animation ends
-		}
-	}, [loaderFinished, shouldAnimate, resizeTrigger]);
-
-	// Cleanup splits on unmount
-	useEffect(() => {
-		return () => {
-			textSplitRef.current?.revert();
-		};
-	}, []);
 
 	// Handle modal open
 	const handleOpenModal = useCallback(() => {
@@ -379,7 +275,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 	return (
 		<S.Jacket ref={jacketRef}>
-			<Background setShouldAnimate={setShouldAnimate} />
+			<Background />
 
 			<S.CenterContent ref={centerContentRef} $offset={bottomheight}>
 				<Grid>

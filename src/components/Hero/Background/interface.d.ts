@@ -4,5 +4,5 @@
 // Exports
 // ------------
 export interface BackgroundProps {
-    setShouldAnimate: (shouldAnimate: boolean) => void;
+    setShouldAnimate?: (shouldAnimate: boolean) => void;
 }

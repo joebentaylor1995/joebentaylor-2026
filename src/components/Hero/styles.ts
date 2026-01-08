@@ -44,7 +44,6 @@ export const Text = styled(P)(
 		${bodyL}
 		color: ${getGlobal('white')};
 		overflow: hidden;
-		opacity: 0; /* Hide initially until animation is ready */
 
 		/* Fix character shifting when SplitText splits text */
 		font-kerning: none;
