@@ -46,41 +46,11 @@ export interface GlobalContextType {
 
 // Context Definition
 // ------------
-export const GlobalContext = createContext<GlobalContextType>({
-	lenis: { current: null } as React.RefObject<Lenis | null>,
-	profileLenis: { current: null } as React.RefObject<Lenis | null>,
-	contactLenis: { current: null } as React.RefObject<Lenis | null>,
-
-	menuOpen: false,
-	setMenuOpen: () => {},
-
-	imagesLoaded: false,
-	setImagesLoaded: () => {},
-
-	componentsLoaded: false,
-	setComponentsLoaded: () => {},
-
-	unicornSceneLoaded: false,
-	setUnicornSceneLoaded: () => {},
-
-	requiresUnicornScene: false,
-	setRequiresUnicornScene: () => {},
-
-	pageLoaded: false,
-	setPageLoaded: () => {},
-
-	loaderFinishing: false,
-	setLoaderFinishing: () => {},
-
-	loaderFinished: false,
-	setLoaderFinished: () => {},
-
-	profileOpen: false,
-	setProfileOpen: () => {},
-
-	contactOpen: false,
-	setContactOpen: () => {},
-});
+// Default values are never used at runtime (all components are wrapped in Provider)
+// They're only required for TypeScript type checking
+export const GlobalContext = createContext<GlobalContextType>(
+	{} as GlobalContextType
+);
 
 // Component
 // ------------
