@@ -2,7 +2,7 @@
 
 // Imports
 // ------------
-import AnimationPlugins from '@parts/AnimationPlugins';
+import '@parts/AnimationPlugins';
 import Contexts from '@parts/Contexts';
 import Contact from '@parts/Contact';
 // import CookieBar from '@parts/CookieBar';
@@ -58,8 +58,6 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 							{/* {process.env.NODE_ENV === 'production' && (
 								<CookieBar />
 							)} */}
-
-							<AnimationPlugins />
 
 							<Contexts>
 								<Cursor />
