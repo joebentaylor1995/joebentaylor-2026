@@ -54,21 +54,25 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	const [resizeTrigger, setResizeTrigger] = useState(0); // Ref to help trigger animation on resize
 
 	// Context
-	const { loaderFinished, profileOpen, setProfileOpen, contactOpen } =
-		use(GlobalContext);
+	const {
+		loaderFinished,
+		profileOpen,
+		setProfileOpen,
+		contactOpen,
+		loaderFinishing,
+	} = use(GlobalContext);
 
 	// State to control when animations trigger
 	const [shouldAnimate, setShouldAnimate] = useState(false);
 
 	// Hide CenterContent and BottomContent initially until loader finishes
 	useLayoutEffect(() => {
-		const elementsToHide = [
+		const elements = [
 			centerContentRef.current,
 			bottomContentRef.current,
 		].filter(Boolean) as HTMLElement[];
-
-		if (elementsToHide.length > 0) {
-			gsap.set(elementsToHide, { autoAlpha: 0 });
+		if (elements.length > 0) {
+			gsap.set(elements, { autoAlpha: 0 });
 		}
 	}, []);
 
@@ -76,15 +80,13 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	useEffect(() => {
 		if (!loaderFinished) return;
 
-		const elementsToFadeIn = [
+		const elements = [
 			centerContentRef.current,
 			bottomContentRef.current,
 		].filter(Boolean) as HTMLElement[];
-
-		if (elementsToFadeIn.length > 0) {
-			// Fade in CenterContent and BottomContent
-			gsap.to(elementsToFadeIn, {
-				autoAlpha: 1, // opacity + visibility
+		if (elements.length > 0) {
+			gsap.to(elements, {
+				autoAlpha: 1,
 				duration: 0.8,
 				ease: 'power2.out',
 				stagger: 0.1,
@@ -270,25 +272,31 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 	// Handle modal close
 	const handleCloseModal = useCallback(() => {
-		if (modalRef.current && modalContentRef.current) {
-			// Animate out
-			gsap.to(modalContentRef.current, {
-				opacity: 0,
-				scale: 0.9,
-				duration: 0.2,
-				ease: 'power2.in',
-			});
-			gsap.to(modalRef.current, {
-				opacity: 0,
-				duration: 0.2,
-				ease: 'power2.in',
-				onComplete: () => {
-					setIsModalOpen(false);
-				},
-			});
-		} else {
+		if (!modalRef.current || !modalContentRef.current) {
 			setIsModalOpen(false);
+			return;
 		}
+
+		// Use timeline for coordinated animations
+		const tl = gsap.timeline({
+			onComplete: () => setIsModalOpen(false),
+		});
+
+		tl.to(modalContentRef.current, {
+			opacity: 0,
+			scale: 0.9,
+			duration: 0.2,
+			ease: 'power2.in',
+		});
+		tl.to(
+			modalRef.current,
+			{
+				opacity: 0,
+				duration: 0.2,
+				ease: 'power2.in',
+			},
+			'<' // Start at same time as modalContent
+		);
 	}, []);
 
 	// Pause preview video when modal opens, resume when modal closes
@@ -298,28 +306,19 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		const muxPlayerElement = videoPreviewRef.current.querySelector(
 			'mux-player'
 		) as any;
+		if (!muxPlayerElement) return;
 
-		if (muxPlayerElement) {
-			// mux-player is a web component, access the underlying media element
-			const mediaElement =
-				muxPlayerElement.media ||
-				(muxPlayerElement as HTMLMediaElement);
+		// mux-player is a web component, access the underlying media element
+		const mediaElement =
+			muxPlayerElement.media || (muxPlayerElement as HTMLMediaElement);
+		if (!mediaElement) return;
 
-			if (mediaElement) {
-				if (isModalOpen) {
-					// Pause when modal opens
-					if (typeof mediaElement.pause === 'function') {
-						mediaElement.pause();
-					}
-				} else {
-					// Resume when modal closes
-					if (typeof mediaElement.play === 'function') {
-						mediaElement.play().catch(() => {
-							// Ignore play() errors (e.g., if video hasn't loaded yet)
-						});
-					}
-				}
-			}
+		if (isModalOpen) {
+			mediaElement.pause?.();
+		} else {
+			mediaElement.play?.().catch(() => {
+				// Ignore play() errors (e.g., if video hasn't loaded yet)
+			});
 		}
 	}, [isModalOpen]);
 
@@ -331,21 +330,30 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		// Prevent body scroll
 		document.body.style.overflow = 'hidden';
 
-		// Animate in
-		gsap.set(modalRef.current, { opacity: 0 });
-		gsap.set(modalContentRef.current, { opacity: 0, scale: 0.9 });
+		// Set initial state
+		gsap.set([modalRef.current, modalContentRef.current], {
+			opacity: 0,
+		});
+		gsap.set(modalContentRef.current, { scale: 0.9 });
 
-		gsap.to(modalRef.current, {
+		// Use timeline for coordinated animations
+		const tl = gsap.timeline();
+
+		tl.to(modalRef.current, {
 			opacity: 1,
 			duration: 0.3,
 			ease: 'power2.out',
 		});
-		gsap.to(modalContentRef.current, {
-			opacity: 1,
-			scale: 1,
-			duration: 0.3,
-			ease: 'power2.out',
-		});
+		tl.to(
+			modalContentRef.current,
+			{
+				opacity: 1,
+				scale: 1,
+				duration: 0.3,
+				ease: 'power2.out',
+			},
+			'<' // Start at same time as modalRef
+		);
 
 		return () => {
 			document.body.style.overflow = '';
