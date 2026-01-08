@@ -10,5 +10,6 @@ export interface SkillBoxProps {
     cssAreaName: string;
     isLast: boolean;
     isActive?: boolean;
+    wrapperRef?: React.RefObject<HTMLElement | null>;
     tools: ToolProps[];
 }
