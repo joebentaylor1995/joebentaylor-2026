@@ -86,7 +86,6 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 			gsap.to(elementsToFadeIn, {
 				autoAlpha: 1, // opacity + visibility
 				duration: 0.8,
-				delay: 0.75,
 				ease: 'power2.out',
 				stagger: 0.1,
 			});
@@ -116,7 +115,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 				if (textRef.current) {
 					// Ensure text is hidden before splitting
-					gsap.set(textRef.current, { opacity: 0 });
+					gsap.set(textRef.current, { autoAlpha: 0 });
 
 					textSplitRef.current = SplitText.create(textRef.current, {
 						type: 'words',
@@ -186,78 +185,74 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// Whenever loaderFinished, shouldAnimate, or resizeTrigger changes, animate text in
 	useEffect(() => {
 		if (!loaderFinished && !shouldAnimate && resizeTrigger === 0) return;
+		if (!textSplitRef.current?.words || !starHeadingRef.current) return;
 
 		const slowCurve = slow;
 		const smoothCurve = smooth;
 
-		if (textSplitRef.current?.words) {
-			// Kill any running animations first
-			gsap.killTweensOf(textSplitRef.current.words);
-			if (buttonAnimationRef.current) {
-				gsap.killTweensOf(buttonAnimationRef.current);
-			}
-			if (starHeadingRef.current) {
-				gsap.killTweensOf(starHeadingRef.current);
-			}
+		// Only kill animations if this is a resize (not initial mount)
+		if (resizeTrigger > 0) {
+			gsap.killTweensOf(
+				[
+					textSplitRef.current.words,
+					buttonAnimationRef.current,
+					starHeadingRef.current,
+				].filter(Boolean)
+			);
+		}
 
-			// Prepare: move words down, hide button and star heading
-			gsap.set(textSplitRef.current.words, { yPercent: 100 });
-			// Show text container now that words are positioned
-			if (textRef.current) {
-				gsap.set(textRef.current, { opacity: 1 });
-			}
-			// Batch opacity settings for better performance
+		// Show text container (words already positioned by splitAndPrepareText)
+		if (textRef.current) {
+			gsap.set(textRef.current, { autoAlpha: 1 });
+		}
+
+		// Ensure starHeading and button start hidden on initial mount
+		if (resizeTrigger === 0) {
 			const elementsToHide = [
 				buttonAnimationRef.current,
 				starHeadingRef.current,
 			].filter(Boolean) as HTMLElement[];
 			if (elementsToHide.length > 0) {
-				gsap.set(elementsToHide, { opacity: 0 });
+				gsap.set(elementsToHide, { autoAlpha: 0 });
 			}
+		}
 
-			// Small delay to ensure DOM is ready
-			const timeoutId = setTimeout(() => {
-				// Fade in StarHeading first
-				if (starHeadingRef.current) {
-					gsap.to(starHeadingRef.current, {
-						opacity: 1,
-						duration: 0.6,
-						ease: 'power2.out',
-						onComplete: () => {
-							// Then animate text up after StarHeading fades in
-							if (textSplitRef.current?.words) {
-								gsap.to(textSplitRef.current.words, {
-									yPercent: 0,
-									duration: 0.643,
-									ease: slowCurve,
-									stagger: {
-										each: 0.051,
-										ease: smoothCurve,
-									},
-									onComplete: () => {
-										// Fade in button after text animation completes
-										if (buttonAnimationRef.current) {
-											gsap.to(
-												buttonAnimationRef.current,
-												{
-													opacity: 1,
-													duration: 0.5,
-													ease: 'power2.out',
-												}
-											);
-										}
-									},
-								});
-							}
-						},
-					});
-				}
-			}, 10);
+		// Use timeline instead of nested callbacks - much cleaner!
+		const tl = gsap.timeline();
 
-			// Cleanup: clear timeout if component unmounts or effect re-runs
-			return () => {
-				clearTimeout(timeoutId);
-			};
+		// Fade in StarHeading
+		tl.to(starHeadingRef.current, {
+			autoAlpha: 1,
+			duration: 0.6,
+			ease: 'power2.out',
+		});
+
+		// Start text animation slightly before StarHeading completes for smoother transition
+		tl.to(
+			textSplitRef.current.words,
+			{
+				yPercent: 0,
+				duration: 0.643,
+				ease: slowCurve,
+				stagger: {
+					each: 0.051,
+					ease: smoothCurve,
+				},
+			},
+			'-=0.3'
+		); // Start 0.3s into StarHeading animation for overlap
+
+		// Fade in button after text animation
+		if (buttonAnimationRef.current) {
+			tl.to(
+				buttonAnimationRef.current,
+				{
+					autoAlpha: 1,
+					duration: 0.5,
+					ease: 'power2.out',
+				},
+				'-=0.2'
+			); // Start slightly before text animation ends
 		}
 	}, [loaderFinished, shouldAnimate, resizeTrigger]);
 

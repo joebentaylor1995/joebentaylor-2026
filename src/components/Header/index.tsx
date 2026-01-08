@@ -81,7 +81,6 @@ const Header = ({ socials }: I.HeaderProps) => {
 	// Event Handlers
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		console.log('click');
 
 		// Use currentTarget to get the button element, not the child that was clicked
 		const button = e.currentTarget as HTMLButtonElement;
