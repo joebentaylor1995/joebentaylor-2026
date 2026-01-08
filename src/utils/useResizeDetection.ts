@@ -39,6 +39,9 @@ export type ResizeCallback = (
  * that trigger resize events due to address bar hiding/showing.
  *
  * @param callback Optional callback to be called on significant resize.
+ *                  IMPORTANT: Should be memoized with useCallback to prevent
+ *                  unnecessary effect re-runs. If not memoized, the effect will
+ *                  re-run on every render when the callback changes.
  * @param options Optional configuration for debounce and mobile scroll handling.
  * @returns The current window dimensions.
  */

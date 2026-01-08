@@ -1,7 +1,7 @@
 // Imports
 // ------
 import { Grid } from '@/theme/tackl/waffl';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 
 // Styles
 // ------
@@ -47,18 +47,22 @@ const GridExposer = () => {
 		return () => window.removeEventListener('keydown', handleKeyDown);
 	}, [toggleGrid, toggleColor]);
 
-	// No memoization: gridColumns is created on each render
-	const gridColumns = Array.from({ length: GRID_SIZE }, (_, i) => (
-		<Col
-			key={i}
-			$isMobile={i < MOBILE_COLUMNS}
-			$isTablet={i < TABLET_COLUMNS}
-			$altColor={useAltColor}
-			style={{ gridColumn: i + 1 }}
-		>
-			<span />
-		</Col>
-	));
+	// Memoize gridColumns to prevent unnecessary re-renders
+	const gridColumns = useMemo(
+		() =>
+			Array.from({ length: GRID_SIZE }, (_, i) => (
+				<Col
+					key={i}
+					$isMobile={i < MOBILE_COLUMNS}
+					$isTablet={i < TABLET_COLUMNS}
+					$altColor={useAltColor}
+					style={{ gridColumn: i + 1 }}
+				>
+					<span />
+				</Col>
+			)),
+		[useAltColor]
+	);
 
 	return (
 		<Jacket $showGrid={isGridVisible} $altColor={useAltColor}>

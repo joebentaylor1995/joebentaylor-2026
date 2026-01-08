@@ -56,8 +56,7 @@ export const Content = styled.div(
 		--offset: ${getGap('m')};
 
 		width: 100%;
-		height: auto;
-		min-height: 100%;
+		height: 100%;
 		padding: var(--offset);
 
 		${bp.l`

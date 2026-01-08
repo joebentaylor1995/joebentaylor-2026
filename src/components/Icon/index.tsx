@@ -82,6 +82,23 @@ const ICON_MAP: Record<string, { viewBox: string; path: React.ReactNode }> = {
 			</>
 		),
 	},
+	'arrow-up': {
+		viewBox: '0 0 18 18',
+		path: (
+			<>
+				<path
+					d='M9.25 15.5V2V2.375'
+					strokeMiterlimit='10'
+					strokeLinecap='round'
+				/>
+				<path
+					d='M14.5 7.25L9.25 2L4 7.25'
+					strokeMiterlimit='10'
+					strokeLinecap='round'
+				/>
+			</>
+		),
+	},
 	'arrow-right': {
 		viewBox: '0 0 18 18',
 		path: (
