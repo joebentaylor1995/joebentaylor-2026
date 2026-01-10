@@ -44,7 +44,6 @@ export const bodyL: ReturnType<typeof css> = css`
 	font-size: 2.2rem;
 
 	${bp.sm` font-size: 2.4rem; `}
-
 	${bp.l` font-size: 2.6rem; `}
 `;
 
