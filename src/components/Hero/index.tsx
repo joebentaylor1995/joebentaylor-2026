@@ -22,7 +22,7 @@ import { useAnimation } from '@utils/useAnimation';
 import { useResponsive } from '@utils/useResponsive';
 import { useMagnetic } from '@utils/useMagnetic';
 import { VideoPlayer } from 'react-datocms';
-import { slow, smooth } from '@parts/AnimationPlugins/Curves';
+import { bezzy3, slow, smooth } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
@@ -67,7 +67,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// On Mount Set all initial animation elements
 	useLayoutEffect(() => {
 		// Bottom Content
-		gsap.set(bottomContentRef.current, { autoAlpha: 0 });
+		gsap.set(bottomContentRef.current, { autoAlpha: 0, yPercent: 100 });
 
 		textSplitRef.current = SplitText.create(textRef.current, {
 			type: 'words',
@@ -92,9 +92,9 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 			gsap.to(bottomContentRef.current, {
 				autoAlpha: 1,
+				yPercent: 0,
 				duration: 0.8,
-				ease: 'power2.out',
-				stagger: 0.1,
+				ease: bezzy3,
 			});
 		},
 		{
@@ -311,7 +311,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 						onClick={handleOpenModal}
 						role='button'
 						tabIndex={0}
-						onKeyDown={e => {
+						onKeyDown={(e: KeyboardEvent) => {
 							if (e.key === 'Enter' || e.key === ' ') {
 								e.preventDefault();
 								handleOpenModal();

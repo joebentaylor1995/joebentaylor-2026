@@ -82,17 +82,37 @@ pnpm run format
 pnpm run type-check
 ```
 
+### Checking for Updates
+
+```bash
+# Check which packages are outdated
+pnpm outdated
+
+# Check for outdated packages with more details
+pnpm outdated --long
+
+# Check for outdated packages in JSON format
+pnpm outdated --json
+```
+
 ### Updating Dependencies
 
 ```bash
-# Update all dependencies
+# Update all dependencies (respects semver ranges in package.json)
 pnpm update
 
-# Update a specific package
+# Update all dependencies to latest (ignoring semver)
+pnpm update --latest
+
+# Update a specific package (respects semver)
 pnpm update <package-name>
 
-# Update to latest version (ignoring semver)
+# Update a specific package to latest version (ignoring semver)
 pnpm update <package-name> --latest
+
+# Update all packages interactively (lets you choose which to update)
+pnpm update --interactive
+pnpm update -i
 ```
 
 ## Lock File
