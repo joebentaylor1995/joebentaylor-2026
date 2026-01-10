@@ -24,6 +24,8 @@ interface StyleInterface {
 // ------------
 export const Jacket = styled(Section)(
 	({}) => css`
+		position: relative;
+		z-index: 0;
 		width: 100%;
 		height: 100dvh;
 
