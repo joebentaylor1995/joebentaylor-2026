@@ -6,15 +6,18 @@ import { captionL } from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
+interface JacketInterface {
+	$hasAnimation?: boolean;
+	$hasRotation?: boolean;
+}
 
 // Exports
 // ------------
-export const Jacket = styled(Div)<{ $hasAnimation: boolean }>(
-	props => css`
+export const Jacket = styled(Div)<JacketInterface>(
+	({ $hasRotation, $hasAnimation }) => css`
 		--gap: ${getGap('s')};
 
-		opacity: ${props.$hasAnimation ? 0 : 1};
+		opacity: ${$hasAnimation ? 0 : 1};
 		display: flex;
 		align-items: center;
 		gap: var(--gap);
@@ -31,7 +34,11 @@ export const Jacket = styled(Div)<{ $hasAnimation: boolean }>(
 			width: var(--size);
 			height: var(--size);
 			fill: ${getGlobal('white')};
-			animation: spin 3s ${getEase('bezzy3')} infinite;
+
+			${$hasRotation &&
+			css`
+				animation: spin 3s ${getEase('bezzy3')} infinite;
+			`}
 
 			${bp.l`
                 --size: 1.2rem;

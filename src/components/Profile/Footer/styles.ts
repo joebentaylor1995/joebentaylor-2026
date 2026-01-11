@@ -16,6 +16,9 @@ export const Jacket = styled(Section)(
 		height: 100lvh;
 		overflow: clip;
 
+		content-visibility: auto;
+		contain-intrinsic-size: 100lvh;
+
 		${bp.l`
 			margin-top: ${getGap('uber')};
 		`}

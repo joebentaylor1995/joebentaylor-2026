@@ -51,7 +51,7 @@ const Ethos = ({
 					});
 
 					tl.from(self.chars, {
-						autoAlpha: 0.2,
+						autoAlpha: 0,
 						stagger: 0.1,
 						ease: 'linear',
 					});
@@ -71,13 +71,12 @@ const Ethos = ({
 							scrub: true,
 							trigger: descRef.current,
 							scroller: wrapperRef?.current,
-							start: 'top 80%',
-							end: 'center 50%',
+							start: 'top 70%',
+							end: 'center 40%',
 						},
 					});
 
 					tl.from(self.chars, {
-						yPercent: -50,
 						autoAlpha: 0,
 						stagger: 0.1,
 						ease: 'linear',

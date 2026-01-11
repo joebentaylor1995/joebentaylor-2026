@@ -6,13 +6,13 @@ import { bp, Div, getGlobal, getEase } from '@tackl';
 // Interfaces
 interface JacketInterface {
 	$isMenuOpen?: boolean;
-	$isProfileOpen?: boolean;
+	$isModalOpen?: boolean;
 }
 
 // Exports
 // ------------
 export const Jacket = styled(Div)<JacketInterface>(
-	({ $isMenuOpen, $isProfileOpen }) => css`
+	({ $isMenuOpen, $isModalOpen }) => css`
 		--unicorn-width: 100%;
 		--unicorn-height: 100%;
 
@@ -21,7 +21,7 @@ export const Jacket = styled(Div)<JacketInterface>(
 		z-index: -1;
 		overflow: hidden;
 
-		transform: translateX(${$isProfileOpen ? -25 : 0}%);
+		transform: translateX(${$isModalOpen ? -25 : 0}%);
 		transition: transform 1s ${getEase('bezzy2')};
 
 		&:after {

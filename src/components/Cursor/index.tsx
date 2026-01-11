@@ -67,6 +67,39 @@ const Cursor = () => {
 			});
 		};
 
+		// Handle hover over elements with data-hover attribute
+		const handleHoverEnter = () => {
+			if (isHoveringRef.current) return; // Already hovering
+			isHoveringRef.current = true;
+			// Kill any existing scale animation
+			if (scaleAnimationRef.current) {
+				scaleAnimationRef.current.kill();
+			}
+			// Animate scale up
+			scaleAnimationRef.current = gsap.to(hoverScaleRef.current, {
+				value: HOVER_SCALE,
+				duration: 0.3,
+				ease: 'power2.out',
+				onUpdate: updateJellyBlob,
+			});
+		};
+
+		const handleHoverLeave = () => {
+			if (!isHoveringRef.current) return; // Already not hovering
+			isHoveringRef.current = false;
+			// Kill any existing scale animation
+			if (scaleAnimationRef.current) {
+				scaleAnimationRef.current.kill();
+			}
+			// Animate scale down
+			scaleAnimationRef.current = gsap.to(hoverScaleRef.current, {
+				value: 1,
+				duration: 0.3,
+				ease: 'power2.out',
+				onUpdate: updateJellyBlob,
+			});
+		};
+
 		const handleMouseMove = (e: MouseEvent) => {
 			const newX = e.clientX;
 			const newY = e.clientY;
@@ -89,48 +122,20 @@ const Cursor = () => {
 				ease: 'power3.out',
 				onUpdate: updateVelocity,
 			});
+
+			// Check hover state using event delegation for dynamically added elements
+			const target = e.target as HTMLElement;
+			const hoverElement = target.closest('[data-hover]');
+
+			if (hoverElement && !isHoveringRef.current) {
+				handleHoverEnter();
+			} else if (!hoverElement && isHoveringRef.current) {
+				handleHoverLeave();
+			}
 		};
 
 		window.addEventListener('mousemove', handleMouseMove, {
 			passive: true,
-		});
-
-		// Handle hover over elements with data-hover attribute
-		const handleHoverEnter = () => {
-			isHoveringRef.current = true;
-			// Kill any existing scale animation
-			if (scaleAnimationRef.current) {
-				scaleAnimationRef.current.kill();
-			}
-			// Animate scale up
-			scaleAnimationRef.current = gsap.to(hoverScaleRef.current, {
-				value: HOVER_SCALE,
-				duration: 0.3,
-				ease: 'power2.out',
-				onUpdate: updateJellyBlob,
-			});
-		};
-
-		const handleHoverLeave = () => {
-			isHoveringRef.current = false;
-			// Kill any existing scale animation
-			if (scaleAnimationRef.current) {
-				scaleAnimationRef.current.kill();
-			}
-			// Animate scale down
-			scaleAnimationRef.current = gsap.to(hoverScaleRef.current, {
-				value: 1,
-				duration: 0.3,
-				ease: 'power2.out',
-				onUpdate: updateJellyBlob,
-			});
-		};
-
-		// Find all elements with data-hover attribute
-		const hoverElements = document.querySelectorAll('[data-hover]');
-		hoverElements.forEach(element => {
-			element.addEventListener('mouseenter', handleHoverEnter);
-			element.addEventListener('mouseleave', handleHoverLeave);
 		});
 
 		return () => {
@@ -142,11 +147,6 @@ const Cursor = () => {
 			if (scaleAnimationRef.current) {
 				scaleAnimationRef.current.kill();
 			}
-			// Remove hover event listeners
-			hoverElements.forEach(element => {
-				element.removeEventListener('mouseenter', handleHoverEnter);
-				element.removeEventListener('mouseleave', handleHoverLeave);
-			});
 		};
 	}, [isDesktop]);
 

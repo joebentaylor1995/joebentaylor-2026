@@ -57,7 +57,9 @@ const gridVariants = {
 	`,
 };
 
-export const Grid = styled(Waffl)<GridInterface>(
+export const Grid = styled(Waffl).withConfig({
+	shouldForwardProp: prop => !prop.startsWith('$'),
+})<GridInterface>(
 	(props: GridInterface) => css`
 		${baseGridStyles(props)}
 

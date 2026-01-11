@@ -22,7 +22,13 @@ const MobileMenu = ({ navItems, socials, handleClick }: I.MobileMenuProps) => {
 			<S.UL>
 				{navItems.map(({ label }) => (
 					<li key={label}>
-						<button onClick={e => handleClick(e)}>{label}</button>
+						<button
+							onClick={e => handleClick(e)}
+							data-label={label}
+							aria-label={`Navigate to ${label}`}
+						>
+							{label}
+						</button>
 					</li>
 				))}
 			</S.UL>

@@ -43,7 +43,6 @@ const About = ({
 					start: '0% bottom',
 					end: '100% top',
 					scrub: 0.5,
-					markers: false,
 				},
 			});
 

@@ -6,14 +6,17 @@ import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
+interface StylesInterface {
+	$itemCount?: number;
+	$isActive?: boolean;
+}
 
 // Exports
 // ------------
-export const Jacket = styled(Div)<{ $itemCount: number }>(
-	props => css`
+export const Jacket = styled(Div)<StylesInterface>(
+	({ $itemCount }) => css`
 		--gap: ${getGap('s')};
-		--duration: calc(2s * ${props.$itemCount});
+		--duration: calc(2s * ${$itemCount});
 		--fade: ${getBrand('bc4')} 0%, transparent 100%;
 
 		position: relative;
@@ -46,15 +49,17 @@ export const Jacket = styled(Div)<{ $itemCount: number }>(
 	`
 );
 
-export const Content = styled.ul<{ $isActive?: boolean }>(
-	props => css`
+export const Content = styled.ul<StylesInterface>(
+	({ $isActive }) => css`
+		--is-playing: ${$isActive ? 'running' : 'paused'};
+
 		flex-shrink: 0;
 		display: flex;
 		justify-content: space-around;
 		min-width: 100%;
 		gap: var(--gap);
 		animation: scroll var(--duration) linear infinite;
-		animation-play-state: ${props.$isActive ? 'running' : 'paused'};
+		animation-play-state: var(--is-playing);
 
 		@keyframes scroll {
 			from {

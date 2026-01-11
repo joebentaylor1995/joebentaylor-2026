@@ -15,10 +15,17 @@ import {
 } from '@tackl';
 import { bodyL, bodyS } from '@tackl/type';
 
+interface StyleInterface {
+	$isModalOpen?: boolean;
+	$offset?: number;
+}
+
 // Exports
 // ------------
 export const Jacket = styled(Section)(
-	props => css`
+	({}) => css`
+		position: relative;
+		z-index: 0;
 		width: 100%;
 		height: 100dvh;
 
@@ -30,7 +37,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Texts = styled(Div)(
-	props => css`
+	({}) => css`
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -40,11 +47,10 @@ export const Texts = styled(Div)(
 );
 
 export const Text = styled(P)(
-	props => css`
+	({}) => css`
 		${bodyL}
 		color: ${getGlobal('white')};
 		overflow: hidden;
-		opacity: 0; /* Hide initially until animation is ready */
 
 		/* Fix character shifting when SplitText splits text */
 		font-kerning: none;
@@ -53,12 +59,12 @@ export const Text = styled(P)(
 );
 
 export const ButtonAnimation = styled(Div)(
-	props => css`
+	({}) => css`
 		opacity: 0; /* Start hidden, will be animated in after text animation */
 	`
 );
 
-export const CenterContent = styled(Div)<{ $offset: number }>(
+export const CenterContent = styled(Div)<StyleInterface>(
 	({ $offset }) => css`
 		--offset: calc(${$offset}rem / 2);
 
@@ -71,7 +77,7 @@ export const CenterContent = styled(Div)<{ $offset: number }>(
 );
 
 export const BottomContent = styled(Footer)(
-	props => css`
+	({}) => css`
 		--offset: ${getGap('m')};
 
 		position: absolute;
@@ -88,7 +94,7 @@ export const BottomContent = styled(Footer)(
 );
 
 export const Copyright = styled(Div)(
-	props => css`
+	({}) => css`
 		${bodyS}
 		color: ${getGlobal('white', 40)};
 
@@ -108,13 +114,8 @@ export const Copyright = styled(Div)(
 	`
 );
 
-interface VideoPreviewProps {
-	$isModalOpen: boolean;
-	$isProfileOpen: boolean;
-}
-
-export const VideoPreview = styled(Div)<VideoPreviewProps>(
-	({ $isModalOpen, $isProfileOpen }) => css`
+export const VideoPreview = styled(Div)<StyleInterface>(
+	({ $isModalOpen }) => css`
 		width: 10.2rem;
 		aspect-ratio: 3/4;
 		height: 100%;
@@ -123,9 +124,8 @@ export const VideoPreview = styled(Div)<VideoPreviewProps>(
 		border-radius: ${getRadius('s')};
 		cursor: pointer;
 		clip-path: inset(
-			${$isModalOpen || $isProfileOpen ? '100%' : '0%'}
-				${$isModalOpen || $isProfileOpen ? '100%' : '0%'} 0% 0% round
-				${getRadius('s')}
+			${$isModalOpen ? '100%' : '0%'} ${$isModalOpen ? '100%' : '0%'} 0%
+				0% round ${getRadius('s')}
 		);
 		transition: clip-path 0.35s ${getEase('bezzy3')};
 		transform-origin: bottom left;
@@ -143,7 +143,7 @@ export const VideoPreview = styled(Div)<VideoPreviewProps>(
 );
 
 export const Modal = styled.div(
-	props => css`
+	({}) => css`
 		position: fixed;
 		inset: 0;
 		z-index: 9998;
@@ -160,7 +160,7 @@ export const Modal = styled.div(
 );
 
 export const ModalContent = styled.div(
-	props => css`
+	({}) => css`
 		position: relative;
 		width: 100%;
 		max-width: 90rem;
@@ -172,7 +172,7 @@ export const ModalContent = styled.div(
 );
 
 export const ModalCloseButton = styled.button(
-	props => css`
+	({}) => css`
 		position: absolute;
 		top: ${getGap('s')};
 		right: ${getGap('s')};
@@ -214,7 +214,7 @@ export const ModalCloseButton = styled.button(
 );
 
 export const ModalVideo = styled.div(
-	props => css`
+	({}) => css`
 		width: 100%;
 		aspect-ratio: 16/9;
 		position: relative;

@@ -2,10 +2,10 @@
 // ------
 import { breakpointUp as bp } from '@/theme/tackl/breakpoints';
 import { theme } from '@theme';
-import { css, RuleSet } from 'styled-components';
+import { css } from 'styled-components';
 import { getFont, getFontWeight } from '@tackl';
 
-export const displayL: RuleSet = css`
+export const displayL: ReturnType<typeof css> = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('light')};
 
@@ -20,7 +20,7 @@ export const displayL: RuleSet = css`
 	`}
 `;
 
-export const titleL: RuleSet = css`
+export const titleL: ReturnType<typeof css> = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('regular')};
 
@@ -30,7 +30,7 @@ export const titleL: RuleSet = css`
 	${bp.l` font-size: 4.8rem; `}
 `;
 
-const sharedBodyStyles: RuleSet = css`
+const sharedBodyStyles: ReturnType<typeof css> = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('regular')};
 
@@ -39,16 +39,15 @@ const sharedBodyStyles: RuleSet = css`
 	line-height: 1.32;
 `;
 
-export const bodyL: RuleSet = css`
+export const bodyL: ReturnType<typeof css> = css`
 	${sharedBodyStyles}
 	font-size: 2.2rem;
 
 	${bp.sm` font-size: 2.4rem; `}
-
 	${bp.l` font-size: 2.6rem; `}
 `;
 
-export const bodyM: RuleSet = css`
+export const bodyM: ReturnType<typeof css> = css`
 	${sharedBodyStyles}
 
 	font-size: 1.6rem;
@@ -58,7 +57,7 @@ export const bodyM: RuleSet = css`
 	${bp.l` font-size: 1.8rem; `}
 `;
 
-export const bodyS: RuleSet = css`
+export const bodyS: ReturnType<typeof css> = css`
 	${sharedBodyStyles}
 
 	font-size: 1.2rem;
@@ -68,7 +67,7 @@ export const bodyS: RuleSet = css`
 	${bp.l` font-size: 1.4rem; `}
 `;
 
-export const captionL: RuleSet = css`
+export const captionL: ReturnType<typeof css> = css`
 	font-family: ${getFont('heading')};
 	font-weight: ${getFontWeight('regular')};
 
@@ -83,7 +82,7 @@ export const captionL: RuleSet = css`
 	${bp.l` font-size: 1rem; `}
 `;
 
-export const captionS: RuleSet = css`
+export const captionS: ReturnType<typeof css> = css`
 	font-family: ${getFont('body')};
 	font-weight: ${getFontWeight('regular')};
 
