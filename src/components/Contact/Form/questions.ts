@@ -81,10 +81,8 @@ const projectQuestions: FormQuestion[] = [
 		question: 'What kind of budget are you thinking about?',
 		key: 'projectBudget',
 		radioOptions: [
-			{ value: 'under-3k', label: 'Under £3k' },
-			{ value: '3k-10k', label: '£3k - £10k' },
-			{ value: '10k-25k', label: '£10k - £25k' },
-			{ value: '25k-plus', label: '£25k+' },
+			{ value: 'under-10k', label: 'Under £10k' },
+			{ value: 'over-10k', label: 'Over £10k' },
 			{ value: 'not-sure', label: "I'm not sure" },
 		],
 	},
@@ -98,23 +96,10 @@ const projectQuestions: FormQuestion[] = [
 		],
 	},
 	{
-		question: 'Is there anything else you want to share, {name}?',
-		key: 'projectAdditional',
-		inputType: 'text',
-		placeholder: 'Type any additional details',
-	},
-	{
 		statement:
-			"Thanks for sending everything over, {name}. I'll review it and get back to you.",
+			"Thanks for sending everything over, {name}. I'll review it and get back to you. Please expect a response within the coming days. If this is super urgent please email or call me directly.",
 		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
-		isFinal: true,
-	},
-	{
-		statement:
-			'Please expect a response within the coming days. If this is super urgent please email or call me directly.',
-		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
+		key: 'text' as keyof ContactPayload, // Dummy key, won't be used
 		isFinal: true,
 	},
 ];
@@ -137,9 +122,8 @@ const careerQuestions: FormQuestion[] = [
 			'What kind of day rate are you budgeting for this role per day?',
 		key: 'careerDayrate',
 		radioOptions: [
-			{ value: '400', label: '£400' },
-			{ value: '400-550', label: '£400-£550' },
-			{ value: '550-plus', label: '£550+' },
+			{ value: 'below-500', label: 'Below £500' },
+			{ value: 'over-500', label: 'Over £500' },
 			{ value: 'not-sure', label: "I'm not sure" },
 		],
 		// This will be conditionally shown based on careerRoleType === 'contract'
@@ -149,9 +133,8 @@ const careerQuestions: FormQuestion[] = [
 		question: 'What salary range are you considering for this role?',
 		key: 'careerSalaryRange',
 		radioOptions: [
-			{ value: '90k-110k', label: '£90k-£110k' },
-			{ value: '110k-140k', label: '£110k-£140k' },
-			{ value: '140k-plus', label: '£140k+' },
+			{ value: 'below-100k', label: 'Below £100k' },
+			{ value: 'over-100k', label: 'Over £100k' },
 			{ value: 'not-sure', label: 'Not sure / open to discussion' },
 		],
 		// This will be conditionally shown based on careerRoleType === 'full-time'
@@ -162,7 +145,6 @@ const careerQuestions: FormQuestion[] = [
 		key: 'careerLevel',
 		radioOptions: [
 			{ value: 'senior', label: 'Senior' },
-			{ value: 'mid-senior', label: 'Mid-Senior' },
 			{ value: 'lead', label: 'Lead' },
 			{ value: 'director', label: 'Director' },
 		],
@@ -179,23 +161,16 @@ const careerQuestions: FormQuestion[] = [
 		question: 'When are you hoping to fill this role?',
 		key: 'careerDeadline',
 		radioOptions: [
-			{ value: 'right-away', label: 'Right away' },
+			{ value: 'asap', label: 'ASAP' },
 			{ value: 'within-month', label: 'Within a month' },
 			{ value: 'flexible', label: 'Flexible' },
 		],
 	},
 	{
 		statement:
-			"Thanks for sending everything over, {name}. I'll review it and get back to you.",
+			"Thanks for sending everything over, {name}. I'll review it and get back to you. Please expect a response within the coming days. If this is super urgent please email or call me directly.",
 		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
-		isFinal: true,
-	},
-	{
-		statement:
-			'Please expect a response within the coming days. If this is super urgent please email or call me directly.',
-		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
+		key: 'text' as keyof ContactPayload, // Dummy key, won't be used
 		isFinal: true,
 	},
 ];
@@ -212,16 +187,9 @@ const otherQuestions: FormQuestion[] = [
 	},
 	{
 		statement:
-			"Thanks for sending everything over, {name}. I'll review it and get back to you.",
+			"Thanks for sending everything over, {name}. I'll review it and get back to you. Please expect a response within the coming days. If this is super urgent please email or call me directly.",
 		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
-		isFinal: true,
-	},
-	{
-		statement:
-			'Please expect a response within the coming days. If this is super urgent please email or call me directly.',
-		question: '',
-		key: 'email' as keyof ContactPayload, // Dummy key, won't be used
+		key: 'text' as keyof ContactPayload, // Dummy key, won't be used
 		isFinal: true,
 	},
 ];

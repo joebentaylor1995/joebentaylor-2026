@@ -33,8 +33,13 @@ const ContactContent = ({
 
 	useAnimation(
 		({ isDesktop }) => {
-			// If current step is 0, do not animate.
-			if (currentStep === 0) return;
+			// If current step is 0, show titles (reset state)
+			if (currentStep === 0) {
+				gsap.set(titlesRef.current, {
+					autoAlpha: contactOpen ? 1 : 0,
+				});
+				return;
+			}
 
 			gsap.to(titlesRef.current, {
 				autoAlpha: contactOpen ? 0 : 1,

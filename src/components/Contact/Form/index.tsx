@@ -35,6 +35,7 @@ const Form = ({}: I.FormProps) => {
 	const [answeredQuestions, setAnsweredQuestions] = useState<
 		Array<{ question: FormQuestion; answer: string }>
 	>([]);
+	const [resetKey, setResetKey] = useState<number>(0);
 
 	// Refs
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -94,21 +95,31 @@ const Form = ({}: I.FormProps) => {
 		}
 	}, [contactOpen, resetFormData]);
 
-	// Smooth scroll chatlog when new messages are added
+	// Smooth scroll chatlog when new messages are added (only if user is at bottom)
 	useEffect(() => {
 		if (!contactOpen) return;
 
-		// Scroll to bottom smoothly when new messages are added
+		// Scroll to bottom smoothly when new messages are added, but only if user is already near bottom
 		const timeoutId = setTimeout(() => {
 			const chatlog = document.querySelector(
 				'[data-chatlog]'
 			) as HTMLElement;
 			if (chatlog) {
-				gsap.to(chatlog, {
-					scrollTop: chatlog.scrollHeight,
-					duration: 0.4,
-					ease: 'power2.out',
-				});
+				// Check if user is near the bottom (within 100px)
+				const isNearBottom =
+					chatlog.scrollHeight -
+						chatlog.scrollTop -
+						chatlog.clientHeight <
+					100;
+
+				// Only auto-scroll if user is at/near bottom (following conversation)
+				if (isNearBottom) {
+					gsap.to(chatlog, {
+						scrollTop: chatlog.scrollHeight,
+						duration: 0.4,
+						ease: 'power2.out',
+					});
+				}
 			}
 		}, 50);
 
@@ -334,8 +345,8 @@ const Form = ({}: I.FormProps) => {
 	};
 
 	return (
-		<S.Jacket data-interactive>
-			<S.Chatlog data-chatlog>
+		<S.Jacket>
+			<S.Chatlog key={resetKey} data-chatlog>
 				{/* Display all previous robot messages */}
 				{(() => {
 					const items: React.ReactNode[] = [];
@@ -445,27 +456,41 @@ const Form = ({}: I.FormProps) => {
 				)}
 			</S.Chatlog>
 
-			{/* Hide ActionBar for final statements (isFinal and no question) */}
-			{!(currentQuestion.isFinal && !currentQuestion.question) && (
-				<ActionBar
-					ref={inputRef}
-					value={currentInputValue}
-					onChange={handleInputChange}
-					onRadioChange={handleRadioChange}
-					onSubmit={handleSubmit}
-					placeholder={
-						currentQuestion.placeholder || 'Type to respond'
-					}
-					inputType={currentQuestion.inputType || 'text'}
-					isDisabled={
-						currentQuestion.radioOptions
-							? true // Disable button for radio questions (auto-submits on selection)
-							: !currentInputValue.trim()
-					}
-					radioOptions={currentQuestion.radioOptions}
-					selectedRadio={selectedRadioValue}
-				/>
-			)}
+			{/* Show ActionBar - either for questions or reset button when finished */}
+			<ActionBar
+				ref={inputRef}
+				value={currentInputValue}
+				onChange={handleInputChange}
+				onRadioChange={handleRadioChange}
+				onSubmit={handleSubmit}
+				placeholder={currentQuestion.placeholder || 'Type to respond'}
+				inputType={currentQuestion.inputType || 'text'}
+				isDisabled={
+					currentQuestion.radioOptions
+						? true // Disable button for radio questions (auto-submits on selection)
+						: !currentInputValue.trim()
+				}
+				radioOptions={currentQuestion.radioOptions}
+				selectedRadio={selectedRadioValue}
+				isFinished={
+					currentQuestion.isFinal && !currentQuestion.question
+				}
+				onReset={() => {
+					// Clear animated messages first
+					clearAnimatedMessages();
+					// Clear local state BEFORE resetting form data
+					setAnsweredQuestions([]);
+					setCurrentInputValue('');
+					setSelectedRadioValue('');
+					// Reset form data (updates context)
+					resetFormData();
+					// Force complete remount AFTER state is cleared
+					// Use setTimeout to ensure state updates are processed first
+					setTimeout(() => {
+						setResetKey(prev => prev + 1);
+					}, 0);
+				}}
+			/>
 		</S.Jacket>
 	);
 };

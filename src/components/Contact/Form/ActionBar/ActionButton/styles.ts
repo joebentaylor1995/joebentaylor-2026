@@ -14,11 +14,13 @@ import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
+interface StylesInterface {
+	disabled?: boolean;
+}
 
 // Exports
 // ------------
-export const Jacket = styled.div(
+export const Jacket = styled.div<StylesInterface>(
 	props => css`
 		--size: 6rem;
 
@@ -34,7 +36,7 @@ export const Jacket = styled.div(
 	`
 );
 
-export const Content = styled.button(
+export const Content = styled.button<StylesInterface>(
 	props => css`
 		--size: 3.6rem;
 		--speed: 0.5s;
@@ -54,6 +56,20 @@ export const Content = styled.button(
 
 				svg {
 					stroke: ${getBrand('bc3')};
+				}
+			}
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+
+			@media (hover: hover) and (pointer: fine) {
+				&:hover {
+					background: ${getGlobal('white', 20)};
+					svg {
+						stroke: ${getGlobal('white')};
+					}
 				}
 			}
 		}

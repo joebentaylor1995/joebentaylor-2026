@@ -60,10 +60,6 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 		loaderFinishing,
 	} = use(GlobalContext);
 
-	useEffect(() => {
-		console.log('loaderFinishing', loaderFinishing);
-	}, [loaderFinishing]);
-
 	// On Mount Set all initial animation elements
 	useLayoutEffect(() => {
 		// Bottom Content

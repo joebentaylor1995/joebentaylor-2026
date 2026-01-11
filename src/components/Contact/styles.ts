@@ -37,12 +37,14 @@ export const Jacket = styled(Aside)(
 		width: 100%;
 		z-index: 100;
 		background: ${getBrand('bc4')};
-		overflow-y: auto;
-		overflow-x: hidden;
-		height: 100dvh;
+		overflow: visible;
+		height: 100lvh;
 		visibility: hidden;
 		-webkit-overflow-scrolling: touch;
 		touch-action: pan-y;
+
+		/* content-visibility: auto; */
+		/* contain-intrinsic-size: 100lvh; */
 
 		${bp.l`
 			width: 68vw;
@@ -57,7 +59,7 @@ export const Content = styled.div(
 
 		width: 100%;
 		height: 100%;
-		padding: var(--offset);
+		padding: 0 var(--offset) var(--offset) var(--offset);
 
 		${bp.l`
 			--offset: ${getGap('xl')};

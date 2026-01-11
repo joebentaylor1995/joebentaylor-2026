@@ -2,8 +2,11 @@
 
 // Imports
 // ------------
-import { forwardRef } from 'react';
+import Icon from '@parts/Icon';
+import { forwardRef, useMemo } from 'react';
 import ActionButton from './ActionButton';
+import Radio from './Radio';
+import { validateEmail } from '@utils/validateEmail';
 
 // Styles + Interfaces
 // ------------
@@ -24,54 +27,87 @@ const ActionBar = forwardRef<HTMLInputElement, I.ActionBarProps>(
 			isDisabled = false,
 			radioOptions,
 			selectedRadio,
+			isFinished = false,
+			onReset,
 		},
 		ref
 	) => {
-		// If radio options provided, render radio buttons
-		if (radioOptions && radioOptions.length > 0) {
-			return (
-				<S.Jacket>
-					<S.RadioGroup>
-						{radioOptions.map(option => (
-							<S.RadioOption key={option.value}>
-								<input
-									type='radio'
-									id={option.value}
-									name='radio-option'
+		const hasRadioOptions = radioOptions && radioOptions.length > 0;
+		const inputDisabled = hasRadioOptions;
+
+		// Validate email when inputType is 'email'
+		const isEmailValid = useMemo(() => {
+			if (inputType !== 'email') return true;
+			if (!value.trim()) return false;
+			return validateEmail(value.trim());
+		}, [inputType, value]);
+
+		// Determine if button should be disabled
+		const isButtonDisabled = useMemo(() => {
+			if (hasRadioOptions) {
+				return !selectedRadio || isDisabled;
+			}
+			// For email input, disable if email is invalid or if isDisabled is true
+			if (inputType === 'email') {
+				return !isEmailValid || isDisabled;
+			}
+			// For other input types, use isDisabled or empty value
+			return isDisabled || !value.trim();
+		}, [
+			hasRadioOptions,
+			selectedRadio,
+			isDisabled,
+			inputType,
+			isEmailValid,
+			value,
+		]);
+
+		return (
+			<>
+				<S.Jacket data-hover $isFinished={isFinished}>
+					{hasRadioOptions && (
+						<S.RadioGroup>
+							{radioOptions.map(option => (
+								<Radio
+									key={option.value}
 									value={option.value}
+									label={option.label}
 									checked={selectedRadio === option.value}
-									onChange={e =>
-										onRadioChange?.(e.target.value)
-									}
+									onChange={(
+										e: React.ChangeEvent<HTMLInputElement>
+									) => onRadioChange?.(e.target.value)}
 								/>
-								<label htmlFor={option.value}>
-									{option.label}
-								</label>
-							</S.RadioOption>
-						))}
-					</S.RadioGroup>
+							))}
+						</S.RadioGroup>
+					)}
+
+					<S.Input
+						ref={ref}
+						type={inputType}
+						placeholder={placeholder}
+						value={value}
+						onChange={onChange}
+						disabled={inputDisabled}
+					/>
 
 					<ActionButton
-						isDisabled={!selectedRadio || isDisabled}
+						isDisabled={isButtonDisabled}
 						onClick={onSubmit}
 					/>
 				</S.Jacket>
-			);
-		}
 
-		// Otherwise render text input
-		return (
-			<S.Jacket>
-				<input
-					ref={ref}
-					type={inputType}
-					placeholder={placeholder}
-					value={value}
-					onChange={onChange}
-				/>
-
-				<ActionButton isDisabled={isDisabled} onClick={onSubmit} />
-			</S.Jacket>
+				<S.ResetButton
+					type='button'
+					onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+						e.preventDefault();
+						e.stopPropagation();
+						onReset?.();
+					}}
+					$isFinished={isFinished}
+				>
+					<Icon type='reset' />
+				</S.ResetButton>
+			</>
 		);
 	}
 );

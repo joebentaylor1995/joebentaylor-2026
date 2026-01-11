@@ -18,4 +18,6 @@ export interface ActionBarProps {
 	isDisabled?: boolean;
 	radioOptions?: RadioOption[];
 	selectedRadio?: string;
+	isFinished?: boolean;
+	onReset?: () => void;
 }

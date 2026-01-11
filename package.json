@@ -46,7 +46,6 @@
 		"react-dom": "^19.2.3",
 		"styled-components": "^6.3.1",
 		"tar": "^7.5.2",
-		"three": "^0.182.0",
 		"unicornstudio-react": "^2.0.1"
 	},
 	"devDependencies": {
