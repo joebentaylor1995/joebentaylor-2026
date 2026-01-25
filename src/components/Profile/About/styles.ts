@@ -38,21 +38,10 @@ export const BackgroundImage = styled(Div)(
 		width: 100%;
 		height: 120%;
 		background: ${getBrand('bc4')};
-		filter: grayscale(100%);
-
-		&:after {
-			content: '';
-			position: absolute;
-			inset: 0;
-			z-index: 1;
-			background: linear-gradient(
-				to top,
-				${getBrand('bc4')} 0%,
-				${getBrand('bc4', 0)} 100%
-			);
-		}
+		mix-blend-mode: color-dodge;
 
 		img {
+			scale: 1.2;
 			object-fit: cover;
 			object-position: top center;
 			user-select: none;

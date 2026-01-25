@@ -43,8 +43,8 @@ export const Jacket = styled(Aside)(
 		-webkit-overflow-scrolling: touch;
 		touch-action: pan-y;
 
-		/* content-visibility: auto; */
-		/* contain-intrinsic-size: 100lvh; */
+		content-visibility: auto;
+		contain-intrinsic-size: 100lvh;
 
 		${bp.l`
 			width: 68vw;
