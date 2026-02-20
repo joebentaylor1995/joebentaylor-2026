@@ -1,11 +1,9 @@
 # Netlify config for Next.js
-# Uses the official Next.js plugin so the app is served correctly (not as static files).
-# Without this, Netlify may publish the wrong directory and show 404.
+# The Next.js plugin runs after build and deploys the app via serverless/edge.
+# In Netlify UI: Build & deploy → Build settings → Publish directory must be EMPTY.
 
 [build]
   command = "bun run build"
-  # Let the Next.js plugin set publish directory; do not set publish = ".next"
-  # or "out" — the plugin deploys via serverless/edge.
 
 [build.environment]
   NODE_VERSION = "24"
