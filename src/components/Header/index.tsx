@@ -1,22 +1,21 @@
 'use client';
 
+import { bezzy2 } from '@parts/AnimationPlugins/Curves';
+import Chopsticks from '@parts/Chopsticks';
+import { GlobalContext } from '@parts/Contexts';
+import Logo from '@parts/Logo';
+import { useMagnetic } from '@utils/useMagnetic';
+import { useIsDesktop, useIsTablet } from '@utils/useResponsive';
+import Grid from '@waffl';
+import { gsap } from 'gsap';
 // Imports
 // ------------
-import { useRef, useEffect, useLayoutEffect, use } from 'react';
-import Grid from '@waffl';
-import Logo from '@parts/Logo';
-import MobileMenu from './MobileMenu';
+import { use, useEffect, useLayoutEffect, useRef } from 'react';
 import DesktopMenu from './DesktopMenu';
-import Chopsticks from '@parts/Chopsticks';
-import { useIsDesktop, useIsTablet } from '@utils/useResponsive';
-import { useMagnetic } from '@utils/useMagnetic';
-import { GlobalContext } from '@parts/Contexts';
-import { gsap } from 'gsap';
-import { bezzy2 } from '@parts/AnimationPlugins/Curves';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import MobileMenu from './MobileMenu';
 import * as S from './styles';
 
 // Constants

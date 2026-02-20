@@ -1,29 +1,29 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Section, getBrand, getGlobal, getEase, getGap, Div } from '@tackl';
+
+import { bp, Div, getBrand, getGap, getGlobal, Section } from '@tackl';
 import { bodyL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Section)(
-	props => css`
+	() => css`
 		position: relative;
 		padding-bottom: ${getGap('xl')};
 		overflow: clip;
 
 		${bp.l`
-			padding-bottom: ${getGap('uber')};
+			padding-bottom: ${getGap('xl')};
 		`}
 	`
 );
 
 export const Background = styled(Div)(
-	props => css`
+	() => css`
 		position: sticky;
 		top: 0;
 		left: 0;
@@ -34,7 +34,7 @@ export const Background = styled(Div)(
 );
 
 export const BackgroundImage = styled(Div)(
-	props => css`
+	() => css`
 		width: 100%;
 		height: 120%;
 		background: ${getBrand('bc4')};
@@ -53,7 +53,7 @@ export const BackgroundImage = styled(Div)(
 );
 
 export const Sticky = styled(Div)(
-	props => css`
+	() => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
 
@@ -71,7 +71,7 @@ export const Sticky = styled(Div)(
 );
 
 export const Desc = styled(Div)(
-	props => css`
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};
@@ -85,7 +85,7 @@ export const Desc = styled(Div)(
 );
 
 export const Marquees = styled(Div)(
-	props => css`
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('s')};

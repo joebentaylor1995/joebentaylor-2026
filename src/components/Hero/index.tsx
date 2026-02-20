@@ -1,33 +1,33 @@
 'use client';
 
+// import { VideoPlayer } from 'react-datocms';
+import { bezzy3, slow, smooth } from '@parts/AnimationPlugins/Curves';
+// import VideoModal from './VideoModal';
+import Button from '@parts/Button';
+import { GlobalContext } from '@parts/Contexts';
+import CopyrightYear from '@parts/CopyrightYear';
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
+import { useMagnetic } from '@utils/useMagnetic';
+import { useResponsive } from '@utils/useResponsive';
 // Imports
 // ------------
 import Grid from '@waffl';
-import Background from './Background';
-// import VideoModal from './VideoModal';
-import Button from '@parts/Button';
-import StarHeading from '@parts/StarHeading';
-import CopyrightYear from '@parts/CopyrightYear';
+import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
 import {
-	useRef,
-	useState,
+	use,
+	useCallback,
 	useEffect,
 	useLayoutEffect,
-	useCallback,
-	use,
+	useRef,
+	useState,
 } from 'react';
-import { gsap } from 'gsap';
-import { useAnimation } from '@utils/useAnimation';
-import { useResponsive } from '@utils/useResponsive';
-import { useMagnetic } from '@utils/useMagnetic';
-// import { VideoPlayer } from 'react-datocms';
-import { bezzy3, slow, smooth } from '@parts/AnimationPlugins/Curves';
-import { GlobalContext } from '@parts/Contexts';
+import Background from './Background';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -54,10 +54,10 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	// Context
 	const {
 		loaderFinished,
-		profileOpen,
+		// profileOpen,
 		setProfileOpen,
-		contactOpen,
-		loaderFinishing,
+		// contactOpen,
+		// loaderFinishing,
 	} = use(GlobalContext);
 
 	// On Mount Set all initial animation elements
@@ -165,9 +165,9 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	);
 
 	// Handle modal open
-	const handleOpenModal = useCallback(() => {
-		setIsModalOpen(true);
-	}, []);
+	// const handleOpenModal = useCallback(() => {
+	// 	setIsModalOpen(true);
+	// }, []);
 
 	// Handle modal close
 	const handleCloseModal = useCallback(() => {
