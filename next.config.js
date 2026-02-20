@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	// Linting is handled by Biome; disable ESLint during Next.js build
+	eslint: { ignoreDuringBuilds: true },
+
 	// Image loader settings
 	images: {
 		formats: ['image/avif', 'image/webp'],

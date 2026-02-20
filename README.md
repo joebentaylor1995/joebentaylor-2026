@@ -95,7 +95,7 @@ A quick look at the top-level files and directories you'll see in a Tackl projec
     ├── public
     ├── src
     ├── .env
-    ├── eslint.config.js
+    ├── biome.json
     ├── .gitignore
     ├── .npmrc (optional; for registry overrides if needed)
     ├── .deployment_guide.md
@@ -126,7 +126,7 @@ A quick look at the top-level files and directories you'll see in a Tackl projec
 
 10. **`jsconfig.json`**: JavaScript project configuration file that enhances development experience by enabling TypeScript-like features, custom path aliases, and better IntelliSense support in modern IDEs.
 
-11. **`eslint.config.js`**: Modern ESLint flat configuration file that provides code quality rules, linting standards, and code formatting integration with Prettier for consistent code style across the project.
+11. **`biome.json`**: Biome configuration for linting, formatting, and import sorting. Replaces ESLint and Prettier with a single fast toolchain.
 
 12. **`next.config.js`**: Next.js framework configuration file where you can customize build settings, add environment variables, configure plugins, and modify webpack behavior. Essential for tailoring Next.js to your project's needs.
 
