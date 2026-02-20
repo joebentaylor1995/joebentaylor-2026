@@ -9,6 +9,6 @@ export interface DesktopMenuProps {
         strength?: number;
     };
     index: number;
-    navItems: readonly { label: string }[];
+    navItems: readonly { label: string, comingSoon?: boolean }[];
     handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }

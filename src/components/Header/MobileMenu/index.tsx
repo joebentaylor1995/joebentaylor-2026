@@ -20,9 +20,10 @@ const MobileMenu = ({ navItems, socials, handleClick }: I.MobileMenuProps) => {
 	return (
 		<S.Jacket $isOpen={menuOpen}>
 			<S.UL>
-				{navItems.map(({ label }) => (
+				{navItems.map(({ label, comingSoon }) => (
 					<li key={label}>
 						<button
+							disabled={comingSoon}
 							onClick={e => handleClick(e)}
 							data-label={label}
 							aria-label={`Navigate to ${label}`}

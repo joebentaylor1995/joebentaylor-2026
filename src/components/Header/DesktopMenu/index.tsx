@@ -39,6 +39,7 @@ const DesktopMenu = ({
 					ref={el => {
 						buttonRefs.current[index] = el;
 					}}
+					disabled={item.comingSoon}
 					data-hover
 					data-label={item.label}
 					$isFirst={index === 0}

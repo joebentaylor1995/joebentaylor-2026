@@ -24,7 +24,7 @@ import * as S from './styles';
 const NAV_ITEMS = [
 	{ label: 'Home' },
 	{ label: 'Profile' },
-	{ label: 'Projects' },
+	{ label: 'Projects', comingSoon: true },
 	{ label: "Let's Talk" },
 ] as const;
 
