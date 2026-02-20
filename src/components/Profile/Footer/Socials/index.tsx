@@ -40,12 +40,13 @@ const Socials = ({ socials }: I.SocialsProps) => {
 			})}
 			<S.Social>
 				<S.SocialLink
-					href='#'
+					href={'/JoeBenTaylor\u2013Resume.pdf'}
 					$isResume
 					data-hover
-					download
+					download='JoeBenTaylor-Resume.pdf'
 					target='_blank'
 					rel='noopener noreferrer'
+					aria-label='Download resume (PDF)'
 				>
 					<span>
 						{'Resume'.split('').map((char, idx) => (

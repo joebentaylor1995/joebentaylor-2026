@@ -77,7 +77,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "pnpm run commit"
+			"pre-commit": "bun run commit"
 		}
 	}
 }

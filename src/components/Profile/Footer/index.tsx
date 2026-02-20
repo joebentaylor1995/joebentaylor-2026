@@ -181,15 +181,23 @@ const Footer = ({
 				scaleY: 1.2,
 			});
 
-			tl.to(jacketRef.current, {
-				clipPath: 'inset(0rem 0rem round 0rem)',
-				ease: 'none',
-			});
+			tl.to(
+				jacketRef.current,
+				{
+					clipPath: 'inset(0rem 0rem round 0rem)',
+					ease: 'none',
+				},
+				0
+			);
 
-			tl.to(gradientRef.current, {
-				scaleY: 1,
-				ease: 'none',
-			});
+			tl.to(
+				gradientRef.current,
+				{
+					scaleY: 1,
+					ease: 'none',
+				},
+				0
+			);
 		},
 		{ scope: jacketRef, dependencies: [isActive, wrapperRef] }
 	);
