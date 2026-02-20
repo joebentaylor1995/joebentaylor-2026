@@ -88,8 +88,24 @@ bun run type-check
 
 ### Checking for Updates
 
+`bun outdated` can sometimes return no output even when updates exist. This project adds a script that uses `npm-check-updates` for a reliable report:
+
 ```bash
-# Check which packages are outdated
+# Check which packages are outdated (recommended)
+bun run outdated
+```
+
+To upgrade `package.json` to latest versions and then install:
+
+```bash
+bunx npm-check-updates -u
+bun install
+```
+
+Using Bun’s built-in commands:
+
+```bash
+# Bun’s built-in check (may show empty in some setups)
 bun outdated
 
 # Update all dependencies (respects semver in package.json)

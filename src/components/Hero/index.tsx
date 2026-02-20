@@ -4,7 +4,7 @@
 // ------------
 import Grid from '@waffl';
 import Background from './Background';
-import VideoModal from './VideoModal';
+// import VideoModal from './VideoModal';
 import Button from '@parts/Button';
 import StarHeading from '@parts/StarHeading';
 import CopyrightYear from '@parts/CopyrightYear';
@@ -21,7 +21,7 @@ import { gsap } from 'gsap';
 import { useAnimation } from '@utils/useAnimation';
 import { useResponsive } from '@utils/useResponsive';
 import { useMagnetic } from '@utils/useMagnetic';
-import { VideoPlayer } from 'react-datocms';
+// import { VideoPlayer } from 'react-datocms';
 import { bezzy3, slow, smooth } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
 
@@ -231,27 +231,26 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 		// Set initial state
 		gsap.set([modalRef.current, modalContentRef.current], {
-			opacity: 0,
+			autoAlpha: 0,
 		});
 		gsap.set(modalContentRef.current, { scale: 0.9 });
 
-		// Use timeline for coordinated animations
-		const tl = gsap.timeline();
-
-		tl.to(modalRef.current, {
-			opacity: 1,
+		const settings = {
+			autoAlpha: 1,
 			duration: 0.3,
 			ease: 'power2.out',
+		};
+
+		gsap.to(modalRef.current, {
+			...settings,
 		});
-		tl.to(
+
+		gsap.to(
 			modalContentRef.current,
 			{
-				opacity: 1,
 				scale: 1,
-				duration: 0.3,
-				ease: 'power2.out',
-			},
-			'<' // Start at same time as modalRef
+				...settings,
+			} // Start at same time as modalRef
 		);
 
 		return () => {
@@ -304,7 +303,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 			<S.BottomContent ref={bottomContentRef}>
 				<Grid>
-					<S.VideoPreview
+					{/* <S.VideoPreview
 						ref={videoPreviewRef}
 						$s='1/2'
 						$m='1/4'
@@ -329,9 +328,9 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 							loop
 							playsInline
 						/>
-					</S.VideoPreview>
+					</S.VideoPreview> */}
 
-					<S.Copyright $s='2/3' $m='4/7' $l='8/13'>
+					<S.Copyright $s='1/3' $m='4/7' $l='8/13'>
 						1995
 						<hr />
 						&copy;
@@ -342,14 +341,14 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 			</S.BottomContent>
 
 			{/* Video Modal */}
-			{isModalOpen && (
+			{/* {isModalOpen && (
 				<VideoModal
 					modalRef={modalRef}
 					modalContentRef={modalContentRef}
 					handleCloseModal={handleCloseModal}
 					video={videoThumbnail}
 				/>
-			)}
+			)} */}
 		</S.Jacket>
 	);
 };
