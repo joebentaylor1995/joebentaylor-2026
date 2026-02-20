@@ -38,7 +38,6 @@ export const BackgroundImage = styled(Div)(
 		width: 100%;
 		height: 120%;
 		background: ${getBrand('bc4')};
-		mix-blend-mode: color-dodge;
 
 		img {
 			scale: 1.2;
