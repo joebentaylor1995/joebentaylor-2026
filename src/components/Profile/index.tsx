@@ -2,6 +2,7 @@
 
 // Imports
 // ------------
+import MobileModalClose from '@parts/MobileModalClose';
 import SmoothScroll from './SmoothScroll';
 import ScrollProgress from './ScrollProgress';
 import Introduction from './Introduction';
@@ -119,11 +120,6 @@ const Profile = ({
 		}
 	};
 
-	// Handle close for mobile (used by MobileClose button)
-	const handleMobileClose = () => {
-		setProfileOpen(false);
-	};
-
 	// Shared Props
 	const sharedProps = {
 		isActive: profileOpen,
@@ -133,19 +129,14 @@ const Profile = ({
 
 	return (
 		<>
-			<S.BackgroundOverlay
-				$isProfileOpen={profileOpen}
-				onClick={handleClose}
-			/>
+			<S.BackgroundOverlay $isOpen={profileOpen} onClick={handleClose} />
 
 			<ScrollProgress isActive={profileOpen} wrapperRef={jacketRef} />
 
-			<S.MobileClose
-				onClick={handleMobileClose}
-				$isProfileOpen={profileOpen}
-			>
-				Close
-			</S.MobileClose>
+			<MobileModalClose
+				onClick={() => setProfileOpen(false)}
+				isOpen={profileOpen}
+			/>
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<SmoothScroll {...sharedProps} contentRef={contentRef} />

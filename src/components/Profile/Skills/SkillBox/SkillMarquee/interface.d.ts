@@ -6,7 +6,8 @@ import { SRCImage } from 'react-datocms';
 // ------------
 export interface SkillMarqueeProps {
     tools: ToolProps[];
-    isHidden?: boolean;
+	isHidden?: boolean;
+	isPlaying?: boolean;
     isActive?: boolean;
 }
 

@@ -42,6 +42,7 @@ const Skills = ({
 
 						return (
 							<SkillBox
+								wrapperRef={wrapperRef}
 								isActive={isActive}
 								key={skill.id}
 								cssAreaName={cssArea}

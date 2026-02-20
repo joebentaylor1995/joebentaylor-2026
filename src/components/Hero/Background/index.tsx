@@ -19,7 +19,8 @@ const Background = ({}: I.BackgroundProps) => {
 	const { isMobile } = useResponsive();
 
 	// Context
-	const { setUnicornSceneLoaded, menuOpen, profileOpen } = use(GlobalContext);
+	const { setUnicornSceneLoaded, menuOpen, profileOpen, contactOpen } =
+		use(GlobalContext);
 
 	// Handler to set the unicorn scene loaded state
 	const handleLoad = () => {
@@ -27,7 +28,10 @@ const Background = ({}: I.BackgroundProps) => {
 	};
 
 	return (
-		<S.Jacket $isMenuOpen={menuOpen} $isProfileOpen={profileOpen}>
+		<S.Jacket
+			$isMenuOpen={menuOpen}
+			$isModalOpen={profileOpen || contactOpen}
+		>
 			{isMobile ? (
 				<video
 					src='/video.mp4'

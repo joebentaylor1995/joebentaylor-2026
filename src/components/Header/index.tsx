@@ -24,7 +24,7 @@ import * as S from './styles';
 const NAV_ITEMS = [
 	{ label: 'Home' },
 	{ label: 'Profile' },
-	{ label: 'Projects' },
+	{ label: 'Projects', comingSoon: true },
 	{ label: "Let's Talk" },
 ] as const;
 
@@ -39,7 +39,8 @@ const Header = ({ socials }: I.HeaderProps) => {
 	const jacketRef = useRef<HTMLElement>(null);
 
 	// Context
-	const { loaderFinishing, setProfileOpen } = use(GlobalContext);
+	const { loaderFinishing, setProfileOpen, setContactOpen } =
+		use(GlobalContext);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
@@ -80,13 +81,16 @@ const Header = ({ socials }: I.HeaderProps) => {
 	// Event Handlers
 	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		console.log('click');
 
 		// Use currentTarget to get the button element, not the child that was clicked
 		const button = e.currentTarget as HTMLButtonElement;
 
 		if (button?.dataset.label === 'Profile') {
 			setProfileOpen(true);
+		}
+
+		if (button?.dataset.label === "Let's Talk") {
+			setContactOpen(true);
 		}
 	};
 

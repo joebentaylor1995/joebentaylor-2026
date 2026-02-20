@@ -39,11 +39,11 @@ const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => (
 	</S.Content>
 );
 
-const SkillMarquee = ({ tools, isActive }: I.SkillMarqueeProps) => {
+const SkillMarquee = ({ tools, isPlaying }: I.SkillMarqueeProps) => {
 	return (
 		<S.Jacket $itemCount={tools.length}>
-			<Content tools={tools} isActive={isActive} />
-			<Content tools={tools} isHidden isActive={isActive} />
+			<Content tools={tools} isActive={isPlaying} />
+			<Content tools={tools} isHidden isActive={isPlaying} />
 		</S.Jacket>
 	);
 };

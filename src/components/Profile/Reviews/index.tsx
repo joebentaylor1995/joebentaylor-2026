@@ -42,28 +42,28 @@ const Reviews = ({
 	// Animation
 	useAnimation(
 		({ isDesktop }) => {
-			if (
+			const checkRef =
 				!carouselRef.current ||
 				!jacketRef.current ||
-				!wrapperRef?.current
-			)
-				return;
+				!wrapperRef?.current;
+			if (checkRef) return;
 
-			const tl = gsap.timeline({
+			gsap.set(carouselRef.current, {
+				xPercent: 100,
+				autoAlpha: 0,
+			});
+
+			gsap.to(carouselRef.current, {
+				xPercent: 0,
+				autoAlpha: 1,
+				ease: 'none',
 				scrollTrigger: {
 					trigger: jacketRef.current,
 					scroller: wrapperRef?.current,
 					start: 'top 100%',
 					end: 'top 70%',
 					scrub: 0.5,
-					markers: false,
 				},
-			});
-
-			tl.from(carouselRef.current, {
-				x: '100%',
-				autoAlpha: 0,
-				ease: 'none',
 			});
 		},
 		{ scope: jacketRef, dependencies: [isActive] }

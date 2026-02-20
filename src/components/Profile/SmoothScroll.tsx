@@ -2,12 +2,16 @@
 
 // Imports
 // ------------
-import { use, useEffect } from 'react';
+import { use, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { GlobalContext } from '@parts/Contexts';
 import 'lenis/dist/lenis.css';
+
+// Constants
+// ------------
+const MODAL_CLOSE_DURATION_MS = 1000;
 
 // Interfaces
 // ------------
@@ -22,6 +26,10 @@ const SmoothScroll = ({
 }: I.SmoothScrollProps) => {
 	// Context
 	const { profileLenis } = use(GlobalContext);
+
+	// Ref updated each render so cleanup can tell if we're transitioning to inactive
+	const isActiveRef = useRef(isActive);
+	isActiveRef.current = isActive;
 
 	useEffect(() => {
 		if (!isActive) {
@@ -46,7 +54,7 @@ const SmoothScroll = ({
 						profileLenis.current = null;
 						ScrollTrigger.refresh();
 					}
-				}, 1000);
+				}, MODAL_CLOSE_DURATION_MS);
 				return () => {
 					clearTimeout(scrollTimeout);
 				};
@@ -113,17 +121,18 @@ const SmoothScroll = ({
 			if (updateFn) {
 				gsap.ticker.remove(updateFn);
 			}
-			// Only cleanup listeners - don't scroll or destroy here
-			// The !isActive block will handle scroll/destroy with the 1s delay
-			// This prevents immediate scrolling when transitioning to inactive
 			if (profileLenis.current) {
-				// Remove scroll listener
 				profileLenis.current.off('scroll', ScrollTrigger.update);
-				// Revert scrollerProxy
 				if (wrapperRef.current) {
 					ScrollTrigger.scrollerProxy(wrapperRef.current, {});
 				}
-				// Don't scroll or destroy - let !isActive block handle it with delay
+				// Only destroy when unmounting. When closing modal (isActive -> false),
+				// the !isActive branch scrolls to top after the close animation, then destroys.
+				if (isActiveRef.current) {
+					profileLenis.current.destroy();
+					profileLenis.current = null;
+					ScrollTrigger.refresh();
+				}
 			}
 		};
 	}, [isActive, wrapperRef, contentRef]);

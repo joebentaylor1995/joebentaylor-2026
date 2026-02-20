@@ -80,6 +80,11 @@ export const UL = styled(List)<{ $isSocial?: boolean }>(
 			color: ${getGlobal('white')};
 			font-size: 6rem;
 			line-height: 1.32;
+
+			&:disabled {
+				cursor: not-allowed;
+				opacity: 0.2;
+			}
 		}
 	`
 );

@@ -2,7 +2,7 @@
 // ------------
 import styled, { css } from 'styled-components';
 import { bp, Nav, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import { bodyS } from '@tackl/type';
+import { bodyS, captionL } from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -68,6 +68,11 @@ export const Button = styled.button<ButtonProps>(
 			&:not(:hover) .letter {
 				animation: moveDown var(--speed) var(--ease) forwards;
 			}
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			opacity: 0.2;
 		}
 
 		.letter {

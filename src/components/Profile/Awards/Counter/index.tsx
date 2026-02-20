@@ -25,6 +25,7 @@ const Counter = ({
 	// Refs
 	const jacketRef = useRef<HTMLParagraphElement | null>(null);
 	const splitTextRef = useRef<SplitText | null>(null);
+	const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
 	// Animation
 	useAnimation(
@@ -34,7 +35,11 @@ const Counter = ({
 			const element = jacketRef.current;
 			const targetText = count < 10 ? `0${count}` : `${count}`;
 
-			// Revert any previous split
+			// Revert any previous split and kill previous timeline
+			if (timelineRef.current) {
+				timelineRef.current.kill();
+				timelineRef.current = null;
+			}
 			if (splitTextRef.current) {
 				splitTextRef.current.revert();
 				splitTextRef.current = null;
@@ -60,7 +65,7 @@ const Counter = ({
 			gsap.set(splitTextRef.current.chars, { autoAlpha: 1 });
 
 			// Create timeline with ScrollTrigger
-			const tl = gsap.timeline({
+			timelineRef.current = gsap.timeline({
 				scrollTrigger: {
 					scroller: wrapperRef?.current || undefined,
 					trigger: parentRef,
@@ -70,11 +75,11 @@ const Counter = ({
 			});
 
 			// Start neon flicker animation immediately
-			animateNeonFlicker(splitTextRef.current.chars, tl);
+			animateNeonFlicker(splitTextRef.current.chars, timelineRef.current);
 
 			// Counting animation - update characters' textContent during counting
 			const countObj = { value: 0 };
-			tl.to(
+			timelineRef.current.to(
 				countObj,
 				{
 					value: count,
@@ -106,6 +111,17 @@ const Counter = ({
 				},
 				0 // Start at the same time as flicker
 			);
+
+			return () => {
+				if (timelineRef.current) {
+					timelineRef.current.kill();
+					timelineRef.current = null;
+				}
+				if (splitTextRef.current) {
+					splitTextRef.current.revert();
+					splitTextRef.current = null;
+				}
+			};
 		},
 		{
 			scope: jacketRef,

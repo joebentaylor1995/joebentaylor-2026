@@ -15,7 +15,7 @@ import { bodyM } from '@tackl/type';
 // Interfaces
 // ------------
 interface ProfileInterface {
-	$isProfileOpen?: boolean;
+	$isOpen?: boolean;
 }
 
 // Exports
@@ -60,7 +60,7 @@ export const Content = styled.div(
 );
 
 export const BackgroundOverlay = styled.aside<ProfileInterface>(
-	({ $isProfileOpen }) => css`
+	({ $isOpen }) => css`
 		${sharedStyles}
 
 		--cursor-url: url('/close-cursor.svg');
@@ -73,9 +73,9 @@ export const BackgroundOverlay = styled.aside<ProfileInterface>(
 		z-index: 98;
 
 		background: ${getGlobal('black', 60)};
-		opacity: ${$isProfileOpen ? 1 : 0};
-		pointer-events: ${$isProfileOpen ? 'auto' : 'none'};
-		backdrop-filter: blur(${$isProfileOpen ? 6 : 0}px);
+		opacity: ${$isOpen ? 1 : 0};
+		pointer-events: ${$isOpen ? 'auto' : 'none'};
+		backdrop-filter: blur(${$isOpen ? 6 : 0}px);
 
 		transition:
 			background 1s ${getEase('bezzy3')},
@@ -84,7 +84,7 @@ export const BackgroundOverlay = styled.aside<ProfileInterface>(
 );
 
 export const MobileClose = styled.button<ProfileInterface>(
-	({ $isProfileOpen }) => css`
+	({ $isOpen }) => css`
 		${bodyM}
 
 		--time: 1s;
@@ -97,9 +97,9 @@ export const MobileClose = styled.button<ProfileInterface>(
 
 		padding: ${getGap('s')};
 		color: ${getGlobal('white', 40)};
-		opacity: ${$isProfileOpen ? 1 : 0};
-		pointer-events: ${$isProfileOpen ? 'auto' : 'none'};
-		transform: translateX(${$isProfileOpen ? 0 : 100}%);
+		opacity: ${$isOpen ? 1 : 0};
+		pointer-events: ${$isOpen ? 'auto' : 'none'};
+		transform: translateX(${$isOpen ? 0 : 100}%);
 		transition:
 			opacity var(--time) ${getEase('bezzy2')},
 			transform var(--time) ${getEase('bezzy3')};

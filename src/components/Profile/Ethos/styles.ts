@@ -44,6 +44,7 @@ export const Heading = styled.h3(
 	props => css`
 		${titleL}
 		color: ${getGlobal('white')};
+		text-wrap: balance;
 	`
 );
 
@@ -59,6 +60,7 @@ export const Desc = styled(Div)(
 			text-wrap: balance;
 
 			mark {
+				position: relative;
 				background: none;
 				color: ${getGlobal('white', 40)};
 				overflow: hidden;

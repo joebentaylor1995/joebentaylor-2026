@@ -11,6 +11,7 @@ import { PerformanceProvider } from './Performance';
 export interface GlobalContextType {
 	lenis: React.RefObject<Lenis | null>;
 	profileLenis: React.RefObject<Lenis | null>;
+	contactLenis: React.RefObject<Lenis | null>;
 
 	menuOpen: boolean;
 	setMenuOpen: (value: boolean) => void;
@@ -38,41 +39,18 @@ export interface GlobalContextType {
 
 	profileOpen: boolean;
 	setProfileOpen: (value: boolean) => void;
+
+	contactOpen: boolean;
+	setContactOpen: (value: boolean) => void;
 }
 
 // Context Definition
 // ------------
-export const GlobalContext = createContext<GlobalContextType>({
-	lenis: { current: null } as React.RefObject<Lenis | null>,
-	profileLenis: { current: null } as React.RefObject<Lenis | null>,
-
-	menuOpen: false,
-	setMenuOpen: () => {},
-
-	imagesLoaded: false,
-	setImagesLoaded: () => {},
-
-	componentsLoaded: false,
-	setComponentsLoaded: () => {},
-
-	unicornSceneLoaded: false,
-	setUnicornSceneLoaded: () => {},
-
-	requiresUnicornScene: false,
-	setRequiresUnicornScene: () => {},
-
-	pageLoaded: false,
-	setPageLoaded: () => {},
-
-	loaderFinishing: false,
-	setLoaderFinishing: () => {},
-
-	loaderFinished: false,
-	setLoaderFinished: () => {},
-
-	profileOpen: false,
-	setProfileOpen: () => {},
-});
+// Default values are never used at runtime (all components are wrapped in Provider)
+// They're only required for TypeScript type checking
+export const GlobalContext = createContext<GlobalContextType>(
+	{} as GlobalContextType
+);
 
 // Component
 // ------------
@@ -85,6 +63,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 	// Create a stable reference for the lenis smooth scroll instance
 	const lenis = useRef<Lenis | null>(null);
 	const profileLenis = useRef<Lenis | null>(null);
+	const contactLenis = useRef<Lenis | null>(null);
 
 	const [menuOpen, setMenuOpen] = useState<boolean>(false);
 	const [pageLoaded, setPageLoaded] = useState<boolean>(false);
@@ -97,6 +76,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 	const [loaderFinishing, setLoaderFinishing] = useState<boolean>(false);
 	const [loaderFinished, setLoaderFinished] = useState<boolean>(false);
 	const [profileOpen, setProfileOpen] = useState<boolean>(false);
+	const [contactOpen, setContactOpen] = useState<boolean>(false);
 
 	// Memoize context value to prevent unnecessary re-renders
 	// Only recreate when actual state values change
@@ -104,6 +84,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 		() => ({
 			lenis,
 			profileLenis,
+			contactLenis,
 			menuOpen,
 			setMenuOpen,
 			imagesLoaded,
@@ -122,6 +103,8 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			setLoaderFinished,
 			profileOpen,
 			setProfileOpen,
+			contactOpen,
+			setContactOpen,
 		}),
 		[
 			menuOpen,
@@ -133,6 +116,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 			loaderFinishing,
 			loaderFinished,
 			profileOpen,
+			contactOpen,
 			// lenis ref is stable, setState functions are stable, so they don't need to be in deps
 		]
 	);
