@@ -203,7 +203,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 			);
 
 			// ScrollTrigger to pause/resume
-			ScrollTrigger.create({
+			const scrollTrigger = ScrollTrigger.create({
 				trigger: root,
 				scroller: wrapperRef?.current,
 				start: 'top bottom',
@@ -220,6 +220,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 					'visibilitychange',
 					handleVisibilityChange
 				);
+				scrollTrigger.kill();
 				if (tl) {
 					tl.kill();
 				}

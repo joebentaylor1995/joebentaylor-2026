@@ -19,7 +19,7 @@
  *   return () => window.removeEventListener('scroll', throttledScroll);
  * }, [throttledScroll]);
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export function useThrottle<TArgs extends any[]>(
   fn: (...args: TArgs) => void,
@@ -27,6 +27,16 @@ export function useThrottle<TArgs extends any[]>(
 ): (...args: TArgs) => void {
   const inThrottleRef = useRef(false);
   const lastTimeRef = useRef(0);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
+  }, []);
 
   return useCallback(
     (...args: TArgs) => {
@@ -37,8 +47,9 @@ export function useThrottle<TArgs extends any[]>(
         lastTimeRef.current = now;
         inThrottleRef.current = true;
 
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
           inThrottleRef.current = false;
+          timeoutRef.current = null;
         }, limit);
       }
     },

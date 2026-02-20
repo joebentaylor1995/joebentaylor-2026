@@ -28,6 +28,10 @@ const Ethos = ({
 	const textRef = useRef<HTMLHeadingElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
 	const descRef = useRef<HTMLElement>(null);
+	const headingSplitRef = useRef<SplitText | null>(null);
+	const descSplitRef = useRef<SplitText | null>(null);
+	const headingTlRef = useRef<gsap.core.Timeline | null>(null);
+	const descTlRef = useRef<gsap.core.Timeline | null>(null);
 
 	// Split text and animate on scroll
 	useAnimation(
@@ -35,12 +39,30 @@ const Ethos = ({
 			if (!textRef.current || !wrapperRef?.current || !descRef.current)
 				return;
 
+			// Revert and kill previous instances
+			if (headingTlRef.current) {
+				headingTlRef.current.kill();
+				headingTlRef.current = null;
+			}
+			if (headingSplitRef.current) {
+				headingSplitRef.current.revert();
+				headingSplitRef.current = null;
+			}
+			if (descTlRef.current) {
+				descTlRef.current.kill();
+				descTlRef.current = null;
+			}
+			if (descSplitRef.current) {
+				descSplitRef.current.revert();
+				descSplitRef.current = null;
+			}
+
 			// Heading animation
-			new SplitText(textRef.current, {
+			headingSplitRef.current = new SplitText(textRef.current, {
 				type: 'words, chars',
 				autoSplit: true,
 				onSplit(self) {
-					let tl = gsap.timeline({
+					headingTlRef.current = gsap.timeline({
 						scrollTrigger: {
 							scrub: true,
 							trigger: textRef.current,
@@ -50,7 +72,7 @@ const Ethos = ({
 						},
 					});
 
-					tl.from(self.chars, {
+					headingTlRef.current.from(self.chars, {
 						autoAlpha: 0,
 						stagger: 0.1,
 						ease: 'linear',
@@ -58,31 +80,51 @@ const Ethos = ({
 				},
 			});
 
-			// Description animation
+			// Description animation (only if mark exists)
 			const boldTextOnly = descRef.current.querySelector('mark');
+			if (boldTextOnly) {
+				descSplitRef.current = new SplitText(boldTextOnly, {
+					type: 'words, chars',
+					mask: 'chars',
+					autoSplit: true,
+					onSplit(self) {
+						descTlRef.current = gsap.timeline({
+							scrollTrigger: {
+								scrub: true,
+								trigger: descRef.current,
+								scroller: wrapperRef?.current,
+								start: 'top 70%',
+								end: 'center 40%',
+							},
+						});
 
-			new SplitText(boldTextOnly, {
-				type: 'words, chars',
-				mask: 'chars',
-				autoSplit: true,
-				onSplit(self) {
-					let tl = gsap.timeline({
-						scrollTrigger: {
-							scrub: true,
-							trigger: descRef.current,
-							scroller: wrapperRef?.current,
-							start: 'top 70%',
-							end: 'center 40%',
-						},
-					});
+						descTlRef.current.from(self.chars, {
+							autoAlpha: 0,
+							stagger: 0.1,
+							ease: 'linear',
+						});
+					},
+				});
+			}
 
-					tl.from(self.chars, {
-						autoAlpha: 0,
-						stagger: 0.1,
-						ease: 'linear',
-					});
-				},
-			});
+			return () => {
+				if (headingTlRef.current) {
+					headingTlRef.current.kill();
+					headingTlRef.current = null;
+				}
+				if (headingSplitRef.current) {
+					headingSplitRef.current.revert();
+					headingSplitRef.current = null;
+				}
+				if (descTlRef.current) {
+					descTlRef.current.kill();
+					descTlRef.current = null;
+				}
+				if (descSplitRef.current) {
+					descSplitRef.current.revert();
+					descSplitRef.current = null;
+				}
+			};
 		},
 		{ scope: jacketRef, dependencies: [ethosHeading, wrapperRef, isActive] }
 	);

@@ -80,6 +80,13 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 				});
 			},
 		});
+
+		return () => {
+			if (textSplitRef.current) {
+				textSplitRef.current.revert();
+				textSplitRef.current = null;
+			}
+		};
 	}, []);
 
 	useAnimation(

@@ -26,17 +26,29 @@ const Statement = ({
 	// Refs
 	const textRef = useRef<HTMLElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
+	const splitRef = useRef<SplitText | null>(null);
+	const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
 	// Split text and animate on scroll
 	useAnimation(
 		({ isDesktop }) => {
 			if (!textRef.current || !wrapperRef?.current) return;
 
-			new SplitText(textRef.current, {
+			// Revert previous split before creating new one
+			if (splitRef.current) {
+				splitRef.current.revert();
+				splitRef.current = null;
+			}
+			if (timelineRef.current) {
+				timelineRef.current.kill();
+				timelineRef.current = null;
+			}
+
+			splitRef.current = new SplitText(textRef.current, {
 				type: 'words, chars',
 				autoSplit: true,
 				onSplit(self) {
-					let tl = gsap.timeline({
+					timelineRef.current = gsap.timeline({
 						scrollTrigger: {
 							scrub: true,
 							trigger: textRef.current,
@@ -46,13 +58,24 @@ const Statement = ({
 						},
 					});
 
-					tl.from(self.chars, {
+					timelineRef.current.from(self.chars, {
 						autoAlpha: 0.2,
 						stagger: 0.1,
 						ease: 'linear',
 					});
 				},
 			});
+
+			return () => {
+				if (timelineRef.current) {
+					timelineRef.current.kill();
+					timelineRef.current = null;
+				}
+				if (splitRef.current) {
+					splitRef.current.revert();
+					splitRef.current = null;
+				}
+			};
 		},
 		{ scope: jacketRef, dependencies: [statement, wrapperRef, isActive] }
 	);

@@ -26,6 +26,7 @@ const SkillBox = ({
 }: I.SkillBoxProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLDivElement>(null);
+	const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
 	// States
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -57,7 +58,7 @@ const SkillBox = ({
 			);
 
 			// Play Marquees only when in view
-			ScrollTrigger.create({
+			scrollTriggerRef.current = ScrollTrigger.create({
 				scroller: wrapperRef?.current,
 				trigger: jacketRef.current,
 				start: 'top bottom',
@@ -68,6 +69,13 @@ const SkillBox = ({
 				onLeave: () => setIsPlaying(false),
 				onLeaveBack: () => setIsPlaying(false),
 			});
+
+			return () => {
+				if (scrollTriggerRef.current) {
+					scrollTriggerRef.current.kill();
+					scrollTriggerRef.current = null;
+				}
+			};
 		},
 		{ scope: jacketRef, dependencies: [isActive] }
 	);
