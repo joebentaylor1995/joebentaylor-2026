@@ -1,14 +1,13 @@
 'use client';
 
+import { GlobalContext } from '@parts/Contexts';
+import { use } from 'react';
+// Styles + Interfaces
+// ------------
+import type * as I from './interface';
 // Imports
 // ------------
 import Social from './Social';
-import { use } from 'react';
-import { GlobalContext } from '@parts/Contexts';
-
-// Styles + Interfaces
-// ------------
-import * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -39,12 +38,7 @@ const MobileMenu = ({ navItems, socials, handleClick }: I.MobileMenuProps) => {
 					({ url, name, isEnabled }) =>
 						isEnabled && (
 							<li key={name}>
-								<Social
-									url={url}
-									name={name}
-									icon={name.toLowerCase()}
-									isEnabled={isEnabled}
-								/>
+								<Social url={url} name={name} icon={name.toLowerCase()} isEnabled={isEnabled} />
 							</li>
 						)
 				)}

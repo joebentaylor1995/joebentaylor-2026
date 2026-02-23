@@ -15,14 +15,7 @@ import { useResponsive } from '@utils/useResponsive';
 import Grid from '@waffl';
 import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
-import {
-	use,
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react';
+import { use, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Background from './Background';
 
 // Styles + Interfaces
@@ -202,14 +195,11 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	useEffect(() => {
 		if (!videoPreviewRef.current) return;
 
-		const muxPlayerElement = videoPreviewRef.current.querySelector(
-			'mux-player'
-		) as any;
+		const muxPlayerElement = videoPreviewRef.current.querySelector('mux-player') as any;
 		if (!muxPlayerElement) return;
 
 		// mux-player is a web component, access the underlying media element
-		const mediaElement =
-			muxPlayerElement.media || (muxPlayerElement as HTMLMediaElement);
+		const mediaElement = muxPlayerElement.media || (muxPlayerElement as HTMLMediaElement);
 		if (!mediaElement) return;
 
 		if (isModalOpen) {
@@ -223,8 +213,7 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 
 	// Animate modal in when opened
 	useEffect(() => {
-		if (!isModalOpen || !modalRef.current || !modalContentRef.current)
-			return;
+		if (!isModalOpen || !modalRef.current || !modalContentRef.current) return;
 
 		// Prevent body scroll
 		document.body.style.overflow = 'hidden';
@@ -282,19 +271,11 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 			<S.CenterContent ref={centerContentRef} $offset={bottomheight}>
 				<Grid>
 					<S.Texts $m='4/7' $l='8/12'>
-						<StarHeading
-							text={subheading}
-							semantic='h1'
-							passedRef={starHeadingRef}
-						/>
+						<StarHeading text={subheading} semantic='h1' passedRef={starHeadingRef} />
 						<S.Text ref={textRef}>{title}</S.Text>
 						{isMobile && (
 							<S.ButtonAnimation ref={buttonAnimationRef}>
-								<Button
-									href='/'
-									label='View Profile'
-									onClick={() => setProfileOpen(true)}
-								/>
+								<Button href='/' label='View Profile' onClick={() => setProfileOpen(true)} />
 							</S.ButtonAnimation>
 						)}
 					</S.Texts>
