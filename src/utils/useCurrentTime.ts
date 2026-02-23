@@ -29,11 +29,12 @@ export function useCurrentTime(
 		[optionsKey]
 	);
 
-	const [time, setTime] = useState(() =>
-		new Date().toLocaleTimeString('en-GB', timeOptions)
-	);
+	// Use placeholder during SSR so server and client match (avoids React hydration error #418).
+	// Real time is set in useEffect after mount.
+	const [time, setTime] = useState<string>('--:--');
 
 	useEffect(() => {
+		setTime(new Date().toLocaleTimeString('en-GB', timeOptions));
 		const interval = setInterval(() => {
 			setTime(new Date().toLocaleTimeString('en-GB', timeOptions));
 		}, 1000);
