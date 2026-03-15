@@ -1,12 +1,12 @@
 'use client';
 
+import { GlobalContext } from '@parts/Contexts';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
 // Imports
 // ------------
 import { use, useEffect, useRef } from 'react';
-import Lenis from 'lenis';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GlobalContext } from '@parts/Contexts';
 import 'lenis/dist/lenis.css';
 
 // Constants
@@ -15,15 +15,11 @@ const MODAL_CLOSE_DURATION_MS = 1000;
 
 // Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 
 // Component
 // ------------
-const SmoothScroll = ({
-	wrapperRef,
-	contentRef,
-	isActive,
-}: I.SmoothScrollProps) => {
+const SmoothScroll = ({ wrapperRef, contentRef, isActive }: I.SmoothScrollProps) => {
 	// Context
 	const { profileLenis } = use(GlobalContext);
 
@@ -43,10 +39,7 @@ const SmoothScroll = ({
 							immediate: true,
 						});
 						// Clean up and destroy immediately after scrolling
-						profileLenis.current.off(
-							'scroll',
-							ScrollTrigger.update
-						);
+						profileLenis.current.off('scroll', ScrollTrigger.update);
 						if (wrapperRef.current) {
 							ScrollTrigger.scrollerProxy(wrapperRef.current, {});
 						}
@@ -88,11 +81,7 @@ const SmoothScroll = ({
 			// ScrollTrigger scrollerProxy integration
 			ScrollTrigger.scrollerProxy(wrapperRef.current, {
 				scrollTop(value?: number) {
-					if (
-						arguments.length &&
-						value !== undefined &&
-						profileLenis.current
-					) {
+					if (arguments.length && value !== undefined && profileLenis.current) {
 						profileLenis.current.scrollTo(value, {
 							immediate: true,
 						});
@@ -107,9 +96,7 @@ const SmoothScroll = ({
 						height: wrapperRef.current?.clientHeight || 0,
 					};
 				},
-				pinType: wrapperRef.current?.style.transform
-					? 'transform'
-					: 'fixed',
+				pinType: wrapperRef.current?.style.transform ? 'transform' : 'fixed',
 			});
 
 			// Refresh ScrollTrigger when Lenis scrolls
@@ -135,7 +122,7 @@ const SmoothScroll = ({
 				}
 			}
 		};
-	}, [isActive, wrapperRef, contentRef]);
+	}, [isActive, wrapperRef, contentRef, profileLenis]);
 
 	return null;
 };

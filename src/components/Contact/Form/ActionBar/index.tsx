@@ -3,14 +3,13 @@
 // Imports
 // ------------
 import Icon from '@parts/Icon';
+import { validateEmail } from '@utils/validateEmail';
 import { forwardRef, useMemo } from 'react';
 import ActionButton from './ActionButton';
-import Radio from './Radio';
-import { validateEmail } from '@utils/validateEmail';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import Radio from './Radio';
 import * as S from './styles';
 
 // Component
@@ -53,14 +52,7 @@ const ActionBar = forwardRef<HTMLInputElement, I.ActionBarProps>(
 			}
 			// For other input types, use isDisabled or empty value
 			return isDisabled || !value.trim();
-		}, [
-			hasRadioOptions,
-			selectedRadio,
-			isDisabled,
-			inputType,
-			isEmailValid,
-			value,
-		]);
+		}, [hasRadioOptions, selectedRadio, isDisabled, inputType, isEmailValid, value]);
 
 		return (
 			<>
@@ -73,9 +65,9 @@ const ActionBar = forwardRef<HTMLInputElement, I.ActionBarProps>(
 									value={option.value}
 									label={option.label}
 									checked={selectedRadio === option.value}
-									onChange={(
-										e: React.ChangeEvent<HTMLInputElement>
-									) => onRadioChange?.(e.target.value)}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+										onRadioChange?.(e.target.value)
+									}
 								/>
 							))}
 						</S.RadioGroup>
@@ -90,10 +82,7 @@ const ActionBar = forwardRef<HTMLInputElement, I.ActionBarProps>(
 						disabled={inputDisabled}
 					/>
 
-					<ActionButton
-						isDisabled={isButtonDisabled}
-						onClick={onSubmit}
-					/>
+					<ActionButton isDisabled={isButtonDisabled} onClick={onSubmit} />
 				</S.Jacket>
 
 				<S.ResetButton

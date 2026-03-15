@@ -3,27 +3,24 @@
 // Imports
 // ------------
 import '@parts/AnimationPlugins';
-import Contexts from '@parts/Contexts';
 import Contact from '@parts/Contact';
+import Contexts from '@parts/Contexts';
+import Cursor from '@parts/Cursor';
 // import CookieBar from '@parts/CookieBar';
 import GridExposer from '@parts/GridExposer';
 import { GlobalStyle, theme } from '@theme';
-import { sequel, ppNeueMontreal } from '@theme/fonts';
+import { ppNeueMontreal, sequel } from '@theme/fonts';
 import StyledComponentsRegistry from '@utils/registry';
-import { ViewTransitions } from '@utils/viewTransitions';
 import { usePageTitle } from '@utils/usePageTitle';
+import { ViewTransitions } from '@utils/viewTransitions';
 import { gsap } from 'gsap';
-import { ReactLenis, LenisRef } from 'lenis/react';
-import Cursor from '@parts/Cursor';
+import { type LenisRef, ReactLenis } from 'lenis/react';
 import { useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 // Component
 // ------------
 const Client = ({ children }: { children: React.ReactNode }) => {
-	// NOTE • Font Classes
-	const classes = `${sequel.variable} ${ppNeueMontreal.variable}`;
-
 	// NOTE • Lenis Setup
 	const lenisRef = useRef<LenisRef>(null);
 
@@ -43,16 +40,14 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<ViewTransitions>
-			<html lang='en' className={classes} suppressHydrationWarning>
-				<body>
+			<html lang='en' suppressHydrationWarning>
+				<body className={`${sequel.variable} ${ppNeueMontreal.variable}`}>
 					<StyledComponentsRegistry>
 						<ThemeProvider theme={theme} key='themeprovider'>
 							<GlobalStyle />
 
 							{/* GridExposer only rendered in development environment */}
-							{process.env.NODE_ENV === 'development' && (
-								<GridExposer />
-							)}
+							{process.env.NODE_ENV === 'development' && <GridExposer />}
 
 							{/* CookieBar only rendered in production environment */}
 							{/* {process.env.NODE_ENV === 'production' && (
@@ -62,11 +57,7 @@ const Client = ({ children }: { children: React.ReactNode }) => {
 							<Contexts>
 								<Cursor />
 
-								<ReactLenis
-									root
-									options={{ autoRaf: false }}
-									ref={lenisRef}
-								>
+								<ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
 									{children}
 									<Contact />
 								</ReactLenis>

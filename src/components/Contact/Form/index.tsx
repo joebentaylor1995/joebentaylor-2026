@@ -1,19 +1,17 @@
 'use client';
 
+import { GlobalContext } from '@parts/Contexts';
+import { type ContactPayload, FormContext, type RouteKey } from '@parts/Contexts/ContactForm';
+import { gsap } from 'gsap';
+import React, { use, useEffect, useRef, useState } from 'react';
 // Imports
 // ------------
 import ActionBar from './ActionBar';
-import Message, { clearAnimatedMessages } from './Message';
-import React, { use, useRef, useEffect, useState } from 'react';
-import { FormContext, ContactPayload } from '@parts/Contexts/ContactForm';
-import { GlobalContext } from '@parts/Contexts';
-import { getQuestions, shouldShowQuestion, FormQuestion } from './questions';
-import { RouteKey } from '@parts/Contexts/ContactForm';
-import { gsap } from 'gsap';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import Message, { clearAnimatedMessages } from './Message';
+import { type FormQuestion, getQuestions, shouldShowQuestion } from './questions';
 import * as S from './styles';
 
 // Component
@@ -21,20 +19,12 @@ import * as S from './styles';
 const Form = ({}: I.FormProps) => {
 	// Contexts
 	const { contactOpen } = use(GlobalContext);
-	const {
-		formData,
-		setFormData,
-		resetFormData,
-		currentStep,
-		setCurrentStep,
-	} = use(FormContext);
+	const { formData, setFormData, resetFormData, currentStep, setCurrentStep } = use(FormContext);
 
 	// State
 	const [currentInputValue, setCurrentInputValue] = useState<string>('');
 	const [selectedRadioValue, setSelectedRadioValue] = useState<string>('');
-	const [answeredQuestions, setAnsweredQuestions] = useState<
-		Array<{ question: FormQuestion; answer: string }>
-	>([]);
+	const [answeredQuestions, setAnsweredQuestions] = useState<Array<{ question: FormQuestion; answer: string }>>([]);
 	const [resetKey, setResetKey] = useState<number>(0);
 
 	// Refs
@@ -48,18 +38,12 @@ const Form = ({}: I.FormProps) => {
 	const allQuestions = getQuestions(helpType, formData);
 
 	// Filter questions based on conditional logic (e.g., contract vs full-time for career)
-	const questions = allQuestions.filter((q, index) =>
-		shouldShowQuestion(q, formData, index, allQuestions)
-	);
+	const questions = allQuestions.filter((q, index) => shouldShowQuestion(q, formData, index, allQuestions));
 
 	// Ensure currentStep is within bounds
 	// After phone (step 3), we move to route-specific questions (step 4+)
-	const safeCurrentStep = Math.max(
-		0,
-		Math.min(currentStep, questions.length - 1)
-	);
-	const currentQuestion: FormQuestion | undefined =
-		questions[safeCurrentStep];
+	const safeCurrentStep = Math.max(0, Math.min(currentStep, questions.length - 1));
+	const currentQuestion: FormQuestion | undefined = questions[safeCurrentStep];
 
 	// Cleanup timeout on unmount
 	useEffect(() => {
@@ -101,16 +85,10 @@ const Form = ({}: I.FormProps) => {
 
 		// Scroll to bottom smoothly when new messages are added, but only if user is already near bottom
 		const timeoutId = setTimeout(() => {
-			const chatlog = document.querySelector(
-				'[data-chatlog]'
-			) as HTMLElement;
+			const chatlog = document.querySelector('[data-chatlog]') as HTMLElement;
 			if (chatlog) {
 				// Check if user is near the bottom (within 100px)
-				const isNearBottom =
-					chatlog.scrollHeight -
-						chatlog.scrollTop -
-						chatlog.clientHeight <
-					100;
+				const isNearBottom = chatlog.scrollHeight - chatlog.scrollTop - chatlog.clientHeight < 100;
 
 				// Only auto-scroll if user is at/near bottom (following conversation)
 				if (isNearBottom) {
@@ -144,10 +122,7 @@ const Form = ({}: I.FormProps) => {
 					if (inputRef.current) {
 						inputRef.current.focus();
 						const existingValue = formData[currentQuestion.key];
-						if (
-							existingValue &&
-							typeof existingValue === 'string'
-						) {
+						if (existingValue && typeof existingValue === 'string') {
 							setCurrentInputValue(existingValue);
 							inputRef.current.value = existingValue;
 						} else {
@@ -169,14 +144,9 @@ const Form = ({}: I.FormProps) => {
 		updatedQuestions: FormQuestion[],
 		value: string
 	): number => {
-		const currentQuestionIndex = updatedQuestions.findIndex(
-			q => q.key === currentQuestion.key
-		);
+		const currentQuestionIndex = updatedQuestions.findIndex(q => q.key === currentQuestion.key);
 
-		let nextStep =
-			currentQuestionIndex !== -1
-				? currentQuestionIndex + 1
-				: currentStep + 1;
+		let nextStep = currentQuestionIndex !== -1 ? currentQuestionIndex + 1 : currentStep + 1;
 
 		// Handle conditional routing (e.g., helpType -> route selection)
 		if (currentQuestion.conditionalNext) {
@@ -195,10 +165,7 @@ const Form = ({}: I.FormProps) => {
 	};
 
 	// Helper: Handle final statements (auto-advance through them)
-	const handleFinalStatements = (
-		nextStep: number,
-		updatedQuestions: FormQuestion[]
-	) => {
+	const handleFinalStatements = (nextStep: number, updatedQuestions: FormQuestion[]) => {
 		const nextQuestion = updatedQuestions[nextStep];
 		if (!nextQuestion?.isFinal || nextQuestion.question) return false;
 
@@ -209,20 +176,14 @@ const Form = ({}: I.FormProps) => {
 		}
 
 		// Add first final statement
-		setAnsweredQuestions(prev => [
-			...prev,
-			{ question: nextQuestion, answer: '' },
-		]);
+		setAnsweredQuestions(prev => [...prev, { question: nextQuestion, answer: '' }]);
 
 		// Auto-advance to second final statement after delay
 		finalStatementTimeoutRef.current = setTimeout(() => {
 			if (nextStep + 1 < updatedQuestions.length) {
 				const nextFinalQuestion = updatedQuestions[nextStep + 1];
 				if (nextFinalQuestion?.isFinal && !nextFinalQuestion.question) {
-					setAnsweredQuestions(prev => [
-						...prev,
-						{ question: nextFinalQuestion, answer: '' },
-					]);
+					setAnsweredQuestions(prev => [...prev, { question: nextFinalQuestion, answer: '' }]);
 				} else {
 					setCurrentStep(nextStep + 1);
 				}
@@ -242,16 +203,10 @@ const Form = ({}: I.FormProps) => {
 		newFormData: ContactPayload
 	) => {
 		setFormData(newFormData);
-		setAnsweredQuestions(prev => [
-			...prev,
-			{ question: currentQuestion, answer: displayAnswer },
-		]);
+		setAnsweredQuestions(prev => [...prev, { question: currentQuestion, answer: displayAnswer }]);
 
 		// Get updated questions based on new formData
-		const updatedAllQuestions = getQuestions(
-			newFormData.helpType as RouteKey,
-			newFormData
-		);
+		const updatedAllQuestions = getQuestions(newFormData.helpType as RouteKey, newFormData);
 		const updatedQuestions = updatedAllQuestions.filter((q, index) =>
 			shouldShowQuestion(q, newFormData, index, updatedAllQuestions)
 		);
@@ -265,12 +220,7 @@ const Form = ({}: I.FormProps) => {
 			newFormData.helpType = helpTypeValue;
 		}
 
-		const nextStep = calculateNextStep(
-			currentQuestion,
-			currentStep,
-			updatedQuestions,
-			value
-		);
+		const nextStep = calculateNextStep(currentQuestion, currentStep, updatedQuestions, value);
 
 		// Handle final statements or advance to next question
 		if (nextStep < updatedQuestions.length) {
@@ -278,6 +228,9 @@ const Form = ({}: I.FormProps) => {
 				setCurrentStep(nextStep);
 				setCurrentInputValue('');
 				setSelectedRadioValue('');
+			} else {
+				// Reached final step: submit to Netlify Forms (same flow as handleSubmit)
+				submitToNetlify(newFormData);
 			}
 		}
 	};
@@ -298,11 +251,26 @@ const Form = ({}: I.FormProps) => {
 			[currentQuestion.key]: value,
 		} as ContactPayload;
 
-		const displayAnswer =
-			currentQuestion.radioOptions.find(opt => opt.value === value)
-				?.label || value;
+		const displayAnswer = currentQuestion.radioOptions.find(opt => opt.value === value)?.label || value;
 
 		processAnswer(value, displayAnswer, currentQuestion, newFormData);
+	};
+
+	// Netlify Forms: POST payload (field names must match hidden form in Client.tsx)
+	const submitToNetlify = (payload: ContactPayload) => {
+		const params = new URLSearchParams();
+		params.set('form-name', 'contact');
+		params.set('bot-field', '');
+		const keys = Object.keys(payload) as Array<keyof ContactPayload>;
+		for (const key of keys) {
+			const v = payload[key];
+			params.set(key, v === undefined || v === null ? '' : String(v));
+		}
+		fetch('/', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: params.toString(),
+		}).catch(() => {});
 	};
 
 	// Handle submit
@@ -312,9 +280,7 @@ const Form = ({}: I.FormProps) => {
 		if (!currentQuestion) return;
 
 		// Determine value based on question type
-		const value = currentQuestion.radioOptions
-			? selectedRadioValue
-			: currentInputValue.trim();
+		const value = currentQuestion.radioOptions ? selectedRadioValue : currentInputValue.trim();
 
 		// Validation
 		if (!value) return;
@@ -324,8 +290,7 @@ const Form = ({}: I.FormProps) => {
 
 		// Get display answer (label for radio, value for text)
 		const displayAnswer = currentQuestion.radioOptions
-			? currentQuestion.radioOptions.find(opt => opt.value === value)
-					?.label || value
+			? currentQuestion.radioOptions.find(opt => opt.value === value)?.label || value
 			: value;
 
 		const newFormData = {
@@ -346,6 +311,35 @@ const Form = ({}: I.FormProps) => {
 
 	return (
 		<S.Jacket>
+			{/* Netlify Forms: hidden form for build-time detection (field names must match submitToNetlify) */}
+			<form
+				name='contact'
+				method='POST'
+				data-netlify='true'
+				data-netlify-honeypot='bot-field'
+				hidden
+				aria-hidden='true'
+			>
+				<input type='hidden' name='form-name' value='contact' />
+				<input type='text' name='bot-field' tabIndex={-1} autoComplete='off' />
+				<input type='hidden' name='name' />
+				<input type='hidden' name='email' />
+				<input type='hidden' name='phone' />
+				<input type='hidden' name='helpType' />
+				<input type='hidden' name='projectDetails' />
+				<input type='hidden' name='projectStage' />
+				<input type='hidden' name='projectBudget' />
+				<input type='hidden' name='projectTimeline' />
+				<input type='hidden' name='projectAdditional' />
+				<input type='hidden' name='careerRoleType' />
+				<input type='hidden' name='careerDayrate' />
+				<input type='hidden' name='careerSalaryRange' />
+				<input type='hidden' name='careerLevel' />
+				<input type='hidden' name='careerInfo' />
+				<input type='hidden' name='careerDeadline' />
+				<input type='hidden' name='otherDetails' />
+			</form>
+
 			<S.Chatlog key={resetKey} data-chatlog>
 				{/* Display all previous robot messages */}
 				{(() => {
@@ -357,8 +351,7 @@ const Form = ({}: I.FormProps) => {
 						const question = current.question;
 
 						// Check if this is a final statement and if the next one is also a final statement
-						const isFinalStatement =
-							question.isFinal && !question.question;
+						const isFinalStatement = question.isFinal && !question.question;
 						const nextIsFinalStatement =
 							i + 1 < answeredQuestions.length &&
 							answeredQuestions[i + 1].question.isFinal &&
@@ -370,21 +363,13 @@ const Form = ({}: I.FormProps) => {
 							const messageKey = `robot-answered-${i}-group`;
 							items.push(
 								<React.Fragment key={`conversation-group-${i}`}>
-									<Message
-										type='robot'
-										messageKey={messageKey}
-										delay={0.25 + i * 0.1}
-									>
+									<Message type='robot' messageKey={messageKey} delay={0.25 + i * 0.1}>
 										{question.statement && (
-											<S.Statement data-statement>
-												{formatText(question.statement)}
-											</S.Statement>
+											<S.Statement data-statement>{formatText(question.statement)}</S.Statement>
 										)}
 										{next.question.statement && (
 											<S.Statement data-statement>
-												{formatText(
-													next.question.statement
-												)}
+												{formatText(next.question.statement)}
 											</S.Statement>
 										)}
 									</Message>
@@ -397,32 +382,18 @@ const Form = ({}: I.FormProps) => {
 							const userMessageKey = `user-answered-${i}`;
 							items.push(
 								<React.Fragment key={`conversation-${i}`}>
-									<Message
-										type='robot'
-										messageKey={robotMessageKey}
-										delay={0.25 + i * 0.1}
-									>
+									<Message type='robot' messageKey={robotMessageKey} delay={0.25 + i * 0.1}>
 										{question.statement && (
-											<S.Statement data-statement>
-												{formatText(question.statement)}
-											</S.Statement>
+											<S.Statement data-statement>{formatText(question.statement)}</S.Statement>
 										)}
 										{question.question && (
-											<S.Question data-question>
-												{formatText(question.question)}
-											</S.Question>
+											<S.Question data-question>{formatText(question.question)}</S.Question>
 										)}
 									</Message>
 									{/* Only show user answer if it exists (final statements don't have answers) */}
 									{current.answer && (
-										<Message
-											type='user'
-											messageKey={userMessageKey}
-											delay={i * 0.1 + 0.15}
-										>
-											<S.Answer>
-												{current.answer}
-											</S.Answer>
+										<Message type='user' messageKey={userMessageKey} delay={i * 0.1 + 0.15}>
+											<S.Answer>{current.answer}</S.Answer>
 										</Message>
 									)}
 								</React.Fragment>
@@ -443,14 +414,10 @@ const Form = ({}: I.FormProps) => {
 						delay={0.25 + answeredQuestions.length * 0.1}
 					>
 						{currentQuestion.statement && (
-							<S.Statement data-statement>
-								{formatText(currentQuestion.statement)}
-							</S.Statement>
+							<S.Statement data-statement>{formatText(currentQuestion.statement)}</S.Statement>
 						)}
 						{currentQuestion.question && (
-							<S.Question data-question>
-								{formatText(currentQuestion.question)}
-							</S.Question>
+							<S.Question data-question>{formatText(currentQuestion.question)}</S.Question>
 						)}
 					</Message>
 				)}
@@ -472,9 +439,7 @@ const Form = ({}: I.FormProps) => {
 				}
 				radioOptions={currentQuestion.radioOptions}
 				selectedRadio={selectedRadioValue}
-				isFinished={
-					currentQuestion.isFinal && !currentQuestion.question
-				}
+				isFinished={currentQuestion.isFinal && !currentQuestion.question}
 				onReset={() => {
 					// Clear animated messages first
 					clearAnimatedMessages();
