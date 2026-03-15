@@ -256,7 +256,7 @@ const Form = ({}: I.FormProps) => {
 		processAnswer(value, displayAnswer, currentQuestion, newFormData);
 	};
 
-	// Netlify Forms: POST payload (field names must match hidden form in Client.tsx)
+	// Netlify Forms (plugin v5): POST to static file for detection (see public/__forms.html)
 	const submitToNetlify = (payload: ContactPayload) => {
 		const params = new URLSearchParams();
 		params.set('form-name', 'contact');
@@ -266,7 +266,7 @@ const Form = ({}: I.FormProps) => {
 			const v = payload[key];
 			params.set(key, v === undefined || v === null ? '' : String(v));
 		}
-		fetch('/', {
+		fetch('/__forms.html', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 			body: params.toString(),
@@ -311,35 +311,6 @@ const Form = ({}: I.FormProps) => {
 
 	return (
 		<S.Jacket>
-			{/* Netlify Forms: hidden form for build-time detection (field names must match submitToNetlify) */}
-			<form
-				name='contact'
-				method='POST'
-				data-netlify='true'
-				data-netlify-honeypot='bot-field'
-				hidden
-				aria-hidden='true'
-			>
-				<input type='hidden' name='form-name' value='contact' />
-				<input type='text' name='bot-field' tabIndex={-1} autoComplete='off' />
-				<input type='hidden' name='name' />
-				<input type='hidden' name='email' />
-				<input type='hidden' name='phone' />
-				<input type='hidden' name='helpType' />
-				<input type='hidden' name='projectDetails' />
-				<input type='hidden' name='projectStage' />
-				<input type='hidden' name='projectBudget' />
-				<input type='hidden' name='projectTimeline' />
-				<input type='hidden' name='projectAdditional' />
-				<input type='hidden' name='careerRoleType' />
-				<input type='hidden' name='careerDayrate' />
-				<input type='hidden' name='careerSalaryRange' />
-				<input type='hidden' name='careerLevel' />
-				<input type='hidden' name='careerInfo' />
-				<input type='hidden' name='careerDeadline' />
-				<input type='hidden' name='otherDetails' />
-			</form>
-
 			<S.Chatlog key={resetKey} data-chatlog>
 				{/* Display all previous robot messages */}
 				{(() => {

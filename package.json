@@ -53,7 +53,9 @@
 		"unicornstudio-react": "^2.0.1"
 	},
 	"devDependencies": {
+		"@biomejs/biome": "^2.4.4",
 		"@lhci/cli": "^0.15.1",
+		"@netlify/plugin-nextjs": "4",
 		"@storybook/addon-docs": "^10.2.10",
 		"@storybook/addon-links": "^10.2.10",
 		"@storybook/addon-onboarding": "^10.2.10",
@@ -62,10 +64,8 @@
 		"@types/node": "^25.3.0",
 		"@types/react": "^19.2.14",
 		"@types/styled-components": "^5.1.36",
-		"@biomejs/biome": "^2.4.4",
 		"ajv": "^8.18.0",
 		"ajv-keywords": "^5.1.0",
-		"@netlify/plugin-nextjs": "^5.15.8",
 		"husky": "^9.1.7",
 		"storybook": "^10.2.10",
 		"typescript": "5.9.3"
