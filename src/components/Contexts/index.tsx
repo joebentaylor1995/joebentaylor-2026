@@ -2,8 +2,8 @@
 
 // Imports
 // ------------
-import Lenis from 'lenis';
-import { createContext, useRef, useState, useMemo, useEffect } from 'react';
+import type Lenis from 'lenis';
+import { createContext, useEffect, useMemo, useRef, useState } from 'react';
 import { PerformanceProvider } from './Performance';
 
 // Context Type Definition
@@ -48,9 +48,7 @@ export interface GlobalContextType {
 // ------------
 // Default values are never used at runtime (all components are wrapped in Provider)
 // They're only required for TypeScript type checking
-export const GlobalContext = createContext<GlobalContextType>(
-	{} as GlobalContextType
-);
+export const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
 
 // Component
 // ------------
@@ -69,10 +67,8 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 	const [pageLoaded, setPageLoaded] = useState<boolean>(false);
 	const [imagesLoaded, setImagesLoaded] = useState<boolean>(false);
 	const [componentsLoaded, setComponentsLoaded] = useState<boolean>(false);
-	const [unicornSceneLoaded, setUnicornSceneLoaded] =
-		useState<boolean>(false);
-	const [requiresUnicornScene, setRequiresUnicornScene] =
-		useState<boolean>(false);
+	const [unicornSceneLoaded, setUnicornSceneLoaded] = useState<boolean>(false);
+	const [requiresUnicornScene, setRequiresUnicornScene] = useState<boolean>(false);
 	const [loaderFinishing, setLoaderFinishing] = useState<boolean>(false);
 	const [loaderFinished, setLoaderFinished] = useState<boolean>(false);
 	const [profileOpen, setProfileOpen] = useState<boolean>(false);
@@ -134,12 +130,7 @@ const Contexts = ({ children }: { children: React.ReactNode }) => {
 		}
 
 		return () => clearTimeout(timer);
-	}, [
-		componentsLoaded,
-		imagesLoaded,
-		unicornSceneLoaded,
-		requiresUnicornScene,
-	]);
+	}, [componentsLoaded, imagesLoaded, unicornSceneLoaded, requiresUnicornScene]);
 
 	return (
 		<GlobalContext.Provider value={contextValue}>

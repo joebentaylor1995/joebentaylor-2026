@@ -1,7 +1,8 @@
 // Imports
 // ------------
+
+import { getEase, getGlobal } from '@tackl';
 import styled, { css } from 'styled-components';
-import { getGlobal, getEase } from '@tackl';
 
 // Exports
 // ------------

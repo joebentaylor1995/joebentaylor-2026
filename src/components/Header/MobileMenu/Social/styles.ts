@@ -1,27 +1,18 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getFont,
-	getFontWeight,
-} from '@tackl';
+
+import { getGap, getGlobal } from '@tackl';
 import { bodyM } from '@tackl/type';
 import Link from 'next/link';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Link)(
-	props => css`
+	_props => css`
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;

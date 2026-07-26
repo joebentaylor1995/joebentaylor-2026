@@ -91,9 +91,7 @@ export function animateNeonFlicker(
 	const elementsArray = Array.isArray(elements) ? elements : [elements];
 
 	// Filter out null/undefined elements
-	const validElements = elementsArray.filter(
-		el => el !== null && el !== undefined
-	) as Element[];
+	const validElements = elementsArray.filter(el => el !== null && el !== undefined) as Element[];
 
 	if (validElements.length === 0) return tl;
 
@@ -104,9 +102,7 @@ export function animateNeonFlicker(
 
 		// Random number of flickers
 		const flickerCount =
-			Math.floor(
-				Math.random() * (config.maxFlickers - config.minFlickers + 1)
-			) + config.minFlickers;
+			Math.floor(Math.random() * (config.maxFlickers - config.minFlickers + 1)) + config.minFlickers;
 
 		// Create individual timeline for this element
 		const elementTl = gsap.timeline({ delay: randomDelay });
@@ -115,15 +111,11 @@ export function animateNeonFlicker(
 		for (let i = 0; i < flickerCount; i++) {
 			// Random flicker duration
 			const flickerDuration =
-				config.minFlickerDuration +
-				Math.random() *
-					(config.maxFlickerDuration - config.minFlickerDuration);
+				config.minFlickerDuration + Math.random() * (config.maxFlickerDuration - config.minFlickerDuration);
 
 			// Random flicker opacity
 			const flickerOpacity =
-				config.minFlickerOpacity +
-				Math.random() *
-					(config.maxFlickerOpacity - config.minFlickerOpacity);
+				config.minFlickerOpacity + Math.random() * (config.maxFlickerOpacity - config.minFlickerOpacity);
 
 			// Flicker ON
 			elementTl.to(element, {

@@ -1,7 +1,7 @@
 // Imports
 // ------------
 
-import { Aside, bp, Div, getBrand, getEase, getGap, getGlobal, getRadius } from '@tackl';
+import { bp, Div, getBrand, getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyM } from '@tackl/type';
 import styled, { css } from 'styled-components';
 
@@ -15,7 +15,7 @@ interface StylesInterface {
 
 // Exports
 // ------------
-export const Jacket = styled(Aside)<StylesInterface>(
+export const Jacket = styled(Div).attrs({ as: 'aside' })<StylesInterface>(
 	({ $isFinished }) => css`
 		--offset: ${getGap('m')};
 		--speed: 0.5s;
@@ -48,7 +48,7 @@ export const Jacket = styled(Aside)<StylesInterface>(
 );
 
 export const Input = styled.input<StylesInterface>(
-	({}) => css`
+	() => css`
 		${bodyM}
 
 		flex: 1;
@@ -72,7 +72,7 @@ export const Input = styled.input<StylesInterface>(
 );
 
 export const RadioGroup = styled.div<StylesInterface>(
-	({}) => css`
+	() => css`
 		position: absolute;
 		bottom: 100%;
 		right: 0;

@@ -1,27 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	Section,
-	Header,
-	Footer,
-} from '@tackl';
+
+import { bp, Div, getGap, getGlobal } from '@tackl';
 import { bodyL, bodyM, displayL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface StylesInterface {}
 
 // Exports
 // ------------
-export const Jacket = styled(Section)<StylesInterface>(
-	({}) => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	() => css`
 		padding-bottom: ${getGap('xl')};
 
 		${bp.l`
@@ -30,8 +20,8 @@ export const Jacket = styled(Section)<StylesInterface>(
 	`
 );
 
-export const Top = styled(Header)<StylesInterface>(
-	({}) => css`
+export const Top = styled(Div).attrs({ as: 'header' })(
+	() => css`
 		position: relative;
 		height: 100svh;
 
@@ -44,8 +34,8 @@ export const Top = styled(Header)<StylesInterface>(
 	`
 );
 
-export const TopContent = styled(Div)<StylesInterface>(
-	({}) => css`
+export const TopContent = styled(Div)(
+	() => css`
 		align-self: flex-end;
 		display: flex;
 		flex-direction: column;
@@ -60,8 +50,8 @@ export const TopContent = styled(Div)<StylesInterface>(
 	`
 );
 
-export const Title = styled(Div)<StylesInterface>(
-	({}) => css`
+export const Title = styled(Div)(
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('s')};
@@ -80,8 +70,8 @@ export const Title = styled(Div)<StylesInterface>(
 	`
 );
 
-export const Scroll = styled.span<StylesInterface>(
-	({}) => css`
+export const Scroll = styled.span(
+	() => css`
 		display: none;
 
 		${bp.l`
@@ -105,8 +95,8 @@ export const Scroll = styled.span<StylesInterface>(
 	`
 );
 
-export const Bottom = styled(Footer)<StylesInterface>(
-	({}) => css`
+export const Bottom = styled(Div).attrs({ as: 'footer' })(
+	() => css`
 		overflow: unset;
 		padding-top: ${getGap('huge')};
 
@@ -116,8 +106,8 @@ export const Bottom = styled(Footer)<StylesInterface>(
 	`
 );
 
-export const BottomSubheading = styled(Div)<StylesInterface>(
-	({}) => css`
+export const BottomSubheading = styled(Div)(
+	() => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
 		display: none;
@@ -138,8 +128,8 @@ export const BottomSubheading = styled(Div)<StylesInterface>(
 	`
 );
 
-export const BottomContent = styled(Div)<StylesInterface>(
-	({}) => css`
+export const BottomContent = styled(Div)(
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('l')};

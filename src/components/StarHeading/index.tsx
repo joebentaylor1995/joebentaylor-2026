@@ -6,27 +6,16 @@ import Icon from '@parts/Icon';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const StarHeading = ({
-	text,
-	semantic,
-	passedRef,
-	iconOverride,
-	hasRotation = true,
-}: I.StarHeadingProps) => {
+const StarHeading = ({ text, semantic, passedRef, iconOverride, hasRotation = true }: I.StarHeadingProps) => {
 	const HeadingTag = semantic || 'span';
 
 	return (
-		<S.Jacket
-			ref={passedRef}
-			$hasRotation={hasRotation}
-			$hasAnimation={passedRef ? true : false}
-			className='star-heading'
-		>
+		<S.Jacket ref={passedRef} $hasRotation={hasRotation} $hasAnimation={!!passedRef} className='star-heading'>
 			<Icon type={iconOverride ?? 'star'} />
 			<HeadingTag>{text}</HeadingTag>
 		</S.Jacket>

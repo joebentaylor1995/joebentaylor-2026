@@ -1,23 +1,21 @@
 'use client';
 
+import { bezzy3 } from '@parts/AnimationPlugins/Curves';
+import { GlobalContext } from '@parts/Contexts';
+import { FormContext, FormProvider } from '@parts/Contexts/ContactForm';
+import MobileModalClose from '@parts/MobileModalClose';
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
+import { useIsDesktop } from '@utils/useResponsive';
+import { gsap } from 'gsap';
+import { use, useContext, useEffect, useLayoutEffect, useRef } from 'react';
 // Imports
 // ------------
 import Form from './Form';
-import StarHeading from '@parts/StarHeading';
-import WelcomeTitle from './WelcomeTItle';
-import MobileModalClose from '@parts/MobileModalClose';
-import { FormProvider, FormContext } from '@parts/Contexts/ContactForm';
-import { use, useRef, useLayoutEffect, useEffect, useContext } from 'react';
-import { GlobalContext } from '@parts/Contexts';
-import { gsap } from 'gsap';
-import { bezzy3 } from '@parts/AnimationPlugins/Curves';
-import { useIsDesktop } from '@utils/useResponsive';
-import { useAnimation } from '@utils/useAnimation';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
 import * as S from './styles';
+import WelcomeTitle from './WelcomeTitle';
 
 // Inner component that can access FormContext
 // ------------
@@ -32,7 +30,7 @@ const ContactContent = ({
 	const { currentStep } = useContext(FormContext);
 
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			// If current step is 0, show titles (reset state)
 			if (currentStep === 0) {
 				gsap.set(titlesRef.current, {
@@ -57,12 +55,7 @@ const ContactContent = ({
 	return (
 		<>
 			<S.Titles ref={titlesRef}>
-				<StarHeading
-					text="let's Talk"
-					semantic='h2'
-					iconOverride='chat'
-					hasRotation={false}
-				/>
+				<StarHeading text="let's Talk" semantic='h2' iconOverride='chat' hasRotation={false} />
 				<WelcomeTitle text='Hello' shouldAnimate={contactOpen} />
 			</S.Titles>
 
@@ -73,7 +66,7 @@ const ContactContent = ({
 
 // Component
 // ------------
-const Contact = ({}: I.ContactProps) => {
+const Contact = () => {
 	// Context
 	const { lenis, contactOpen, setContactOpen } = use(GlobalContext);
 
@@ -133,9 +126,7 @@ const Contact = ({}: I.ContactProps) => {
 
 		// Don't close if clicking on interactive elements
 		const isInteractive =
-			target.closest(
-				'button, a, [role="button"], input, select, textarea'
-			) ||
+			target.closest('button, a, [role="button"], input, select, textarea') ||
 			target.closest('[data-interactive]') ||
 			target.hasAttribute('title') || // Elements with tooltips
 			target.closest('[title]'); // Parent elements with tooltips
@@ -149,18 +140,12 @@ const Contact = ({}: I.ContactProps) => {
 		<>
 			<S.BackgroundOverlay $isOpen={contactOpen} onClick={handleClose} />
 
-			<MobileModalClose
-				onClick={() => setContactOpen(false)}
-				isOpen={contactOpen}
-			/>
+			<MobileModalClose onClick={() => setContactOpen(false)} isOpen={contactOpen} />
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<S.Content ref={contentRef}>
 					<FormProvider>
-						<ContactContent
-							titlesRef={titlesRef}
-							contactOpen={contactOpen}
-						/>
+						<ContactContent titlesRef={titlesRef} contactOpen={contactOpen} />
 					</FormProvider>
 				</S.Content>
 			</S.Jacket>

@@ -1,13 +1,14 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Section, Div, getBrand, getGlobal, getGap } from '@tackl';
+
+import { bp, Div, getBrand, getGap, getGlobal } from '@tackl';
 import { bodyL, bodyS } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		padding-block: ${getGap('xl')};
 
 		${bp.l`
@@ -17,7 +18,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Content = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};
@@ -29,7 +30,7 @@ export const Content = styled(Div)(
 );
 
 export const Desc = styled.div(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};
@@ -89,7 +90,7 @@ export const Helper = styled.span<{ $isMobile: boolean }>(
 );
 
 export const Carousel = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		margin-top: ${getGap('xl')};
 

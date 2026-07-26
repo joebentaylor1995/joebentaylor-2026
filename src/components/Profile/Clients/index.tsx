@@ -1,26 +1,19 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
 // Imports
 // ------------
 import Grid from '@waffl';
-import Marquee from './Marquee';
-import StarHeading from '@parts/StarHeading';
 import { StructuredText } from 'react-datocms';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import Marquee from './Marquee';
 import * as S from './styles';
 
 // Component
 // ------------
-const Clients = ({
-	wrapperRef,
-	isActive,
-	columnOverride,
-	clientsDesc,
-	clients,
-}: I.ClientsProps) => {
+const Clients = ({ wrapperRef, columnOverride, clientsDesc, clients }: I.ClientsProps) => {
 	return (
 		<S.Jacket>
 			<Grid $lCols={columnOverride}>

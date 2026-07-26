@@ -1,23 +1,17 @@
 'use client';
 
+import Grid from '@waffl';
+// Styles + Interfaces
+// ------------
+import type * as I from './interface';
 // Imports
 // ------------
 import SkillBox from './SkillBox';
-import Grid from '@waffl';
-
-// Styles + Interfaces
-// ------------
-import * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Skills = ({
-	skills,
-	isActive,
-	wrapperRef,
-	columnOverride,
-}: I.SkillsProps) => {
+const Skills = ({ skills, isActive, wrapperRef, columnOverride }: I.SkillsProps) => {
 	// Strip text of spaces and return first 3 letters
 	const conversion = (text: string): string => {
 		return text.toLowerCase().replace(' ', '').slice(0, 3);
@@ -31,11 +25,7 @@ const Skills = ({
 	return (
 		<S.Jacket>
 			<Grid $lCols={columnOverride}>
-				<S.CustomLayout
-					$cssAreaOne={cssAreaOne}
-					$cssAreaTwo={cssAreaTwo}
-					$cssAreaThree={cssAreaThree}
-				>
+				<S.CustomLayout $cssAreaOne={cssAreaOne} $cssAreaTwo={cssAreaTwo} $cssAreaThree={cssAreaThree}>
 					{skills?.map((skill, index) => {
 						// Assign CSS area for the skill
 						const cssArea = conversion(skill.heading);

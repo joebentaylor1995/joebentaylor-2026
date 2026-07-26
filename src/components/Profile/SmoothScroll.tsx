@@ -81,7 +81,7 @@ const SmoothScroll = ({ wrapperRef, contentRef, isActive }: I.SmoothScrollProps)
 			// ScrollTrigger scrollerProxy integration
 			ScrollTrigger.scrollerProxy(wrapperRef.current, {
 				scrollTop(value?: number) {
-					if (arguments.length && value !== undefined && profileLenis.current) {
+					if (value !== undefined && profileLenis.current) {
 						profileLenis.current.scrollTo(value, {
 							immediate: true,
 						});

@@ -1,14 +1,12 @@
 // Imports
 // ------
 import { memo } from 'react';
-
+// Interfaces
+// ------------
+import type { IconProps } from './interface';
 // Styles
 // ------
 import { Jacket } from './styles';
-
-// Interfaces
-// ------------
-import { IconProps } from './interface';
 
 /**
  * Icon Component
@@ -96,16 +94,8 @@ const ICON_MAP: Record<string, { viewBox: string; path: React.ReactNode }> = {
 		viewBox: '0 0 18 18',
 		path: (
 			<>
-				<path
-					d='M9.25 15.5V2V2.375'
-					strokeMiterlimit='10'
-					strokeLinecap='round'
-				/>
-				<path
-					d='M14.5 7.25L9.25 2L4 7.25'
-					strokeMiterlimit='10'
-					strokeLinecap='round'
-				/>
+				<path d='M9.25 15.5V2V2.375' strokeMiterlimit='10' strokeLinecap='round' />
+				<path d='M14.5 7.25L9.25 2L4 7.25' strokeMiterlimit='10' strokeLinecap='round' />
 			</>
 		),
 	},
@@ -137,9 +127,7 @@ const Icon = memo(({ type, className, onClick }: IconProps) => {
 
 	// If icon type not found, log error and return null
 	if (!iconConfig) {
-		console.error(
-			`Icon type "${type}" not found. Please check the type prop passed to Icon component.`
-		);
+		console.error(`Icon type "${type}" not found. Please check the type prop passed to Icon component.`);
 		return null;
 	}
 

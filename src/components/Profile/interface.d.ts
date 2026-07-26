@@ -1,32 +1,30 @@
 // Imports
 // ------------
-import { IntroductionProps } from './Introduction/interface';
-import { ServicesProps } from './Services/interface';
-import { StatementProps } from './Statement/interface';
-import { SkillsProps } from './Skills/interface';
+
 import { AboutProps } from './About/interface';
+import { AwardsProps } from './Awards/interface';
 import { ClientsProps } from './Clients/interface';
 import { EthosProps } from './Ethos/interface';
-import { AwardsProps } from './Awards/interface';
-import { ReviewsProps } from './Reviews/interface';
 import { SocialsProps } from './Footer/Socials/interface';
+import { IntroductionProps } from './Introduction/interface';
+import { ReviewsProps } from './Reviews/interface';
+import { ServicesProps } from './Services/interface';
+import { SkillsProps } from './Skills/interface';
+import { StatementProps } from './Statement/interface';
 
 // Exports
 // ------------
-export interface ProfileProps extends
-	IntroductionProps,
-	ServicesProps,
-	StatementProps,
-	SkillsProps,
-	AboutProps,
-	ClientsProps,
-	EthosProps,
-	AwardsProps,
-	ReviewsProps,
-	SocialsProps
-{
-}
-
+export interface ProfileProps
+	extends IntroductionProps,
+		ServicesProps,
+		StatementProps,
+		SkillsProps,
+		AboutProps,
+		ClientsProps,
+		EthosProps,
+		AwardsProps,
+		ReviewsProps,
+		SocialsProps {}
 
 export interface SmoothScrollProps {
 	wrapperRef: React.RefObject<HTMLDivElement | null>;

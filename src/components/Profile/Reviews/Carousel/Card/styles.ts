@@ -1,26 +1,17 @@
 // Imports
 // ------------
+
+import { bp, Div, getBrand, getGap, getGlobal, getRadius } from '@tackl';
+import { bodyL, bodyM, captionL } from '@tackl/type';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	Article,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
-import { bodyM, captionL, bodyL } from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Article)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'article' })(
+	_props => css`
 		display: flex;
 		flex-flow: column;
 		align-items: flex-start;
@@ -58,7 +49,7 @@ export const Jacket = styled(Article)(
 );
 
 export const Pics = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		width: var(--size);
 		height: var(--size);
@@ -101,7 +92,7 @@ export const Pics = styled(Div)(
 );
 
 export const Texts = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		display: flex;
 		flex-direction: column;

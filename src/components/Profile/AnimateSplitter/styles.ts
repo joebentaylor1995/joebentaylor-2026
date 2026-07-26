@@ -1,12 +1,13 @@
 // Imports
 // ------------
+
+import { bp, Div, getBrand, getGap } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, Section, Div, getBrand, getGap } from '@tackl';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		position: relative;
 		padding-block: ${getGap('xl')};
 
@@ -17,13 +18,13 @@ export const Jacket = styled(Section)(
 );
 
 export const Col = styled(Div)(
-	props => css`
+	_props => css`
 		width: 100%;
 	`
 );
 
 export const Line = styled.hr(
-	props => css`
+	_props => css`
 		display: block;
 		width: 100%;
 		height: 1px;

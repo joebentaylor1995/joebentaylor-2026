@@ -1,16 +1,8 @@
 // Imports
 // ------------
+
+import { getBrand, getEase, getGlobal, getRadius } from '@tackl';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -21,7 +13,7 @@ interface StylesInterface {
 // Exports
 // ------------
 export const Jacket = styled.div<StylesInterface>(
-	props => css`
+	_props => css`
 		--size: 6rem;
 
 		position: absolute;
@@ -37,7 +29,7 @@ export const Jacket = styled.div<StylesInterface>(
 );
 
 export const Content = styled.button<StylesInterface>(
-	props => css`
+	_props => css`
 		--size: 3.6rem;
 		--speed: 0.5s;
 		--ease: ${getEase('bezzy2')};

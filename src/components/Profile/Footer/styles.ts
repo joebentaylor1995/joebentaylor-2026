@@ -1,16 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Section, Div, getGlobal, getGap, getBrand } from '@tackl';
+
+import { bp, Div, getBrand, getGap, getGlobal } from '@tackl';
 import { bodyL, displayL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		position: relative;
 		margin-top: ${getGap('xl')};
 		height: 100lvh;
@@ -26,7 +27,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Gradient = styled.aside(
-	props => css`
+	_props => css`
 		--offset: -2.4rem;
 
 		pointer-events: none;
@@ -49,7 +50,7 @@ export const Gradient = styled.aside(
 );
 
 export const Content = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -84,7 +85,7 @@ export const Content = styled(Div)(
 );
 
 export const Left = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -94,13 +95,13 @@ export const Left = styled(Div)(
 );
 
 export const Right = styled(Div)(
-	props => css`
+	_props => css`
 		/*  */
 	`
 );
 
 export const Location = styled.div(
-	props => css`
+	_props => css`
 		display: flex;
 		align-items: flex-end;
 		justify-content: space-between;

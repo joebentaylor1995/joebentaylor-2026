@@ -46,10 +46,7 @@ export function usePageTitle(hiddenTitle: string, visibleTitle?: string): void {
 
 		// Cleanup
 		return () => {
-			document.removeEventListener(
-				'visibilitychange',
-				handleVisibilityChange
-			);
+			document.removeEventListener('visibilitychange', handleVisibilityChange);
 			// Clear any pending timeout
 			if (timeoutRef.current) {
 				clearTimeout(timeoutRef.current);

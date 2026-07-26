@@ -1,11 +1,14 @@
 // Imports
 // ------------
+import { gsap } from 'gsap';
 import { CustomEase } from 'gsap/CustomEase';
+
+// NOTE • Registered here as well as in AnimationPlugins so these eases are
+// safe regardless of module import order (SSR included)
+gsap.registerPlugin(CustomEase);
 
 // Exports
 // ------------
-// CustomEase should be registered in AnimationPlugins before these are created
-// If you see errors, ensure AnimationPlugins is imported/rendered first
 export const slow = CustomEase.create('slow', 'M0,0 C0,0 0,1 1,1');
 export const smooth = CustomEase.create('smooth', 'M0,0 C0.8,0 0.2,1 1,1');
 export const bezzy = CustomEase.create('bezzy', 'M0,0 C0.8,0 0.2,1 1,1');
