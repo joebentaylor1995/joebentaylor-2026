@@ -1,20 +1,21 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, getGlobal, getEase, getGap } from '@tackl';
+
+import { bp, getEase, getGap, getGlobal } from '@tackl';
 import { bodyL } from '@tackl/type';
 import Link from 'next/link';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
 export const Jacket = styled.ul(
-	props => css`
+	_props => css`
 		/*  */
 	`
 );
 
 export const Social = styled.li(
-	props => css`
+	_props => css`
 		/*  */
 		border-bottom: 1px solid ${getGlobal('white', 20)};
 	`

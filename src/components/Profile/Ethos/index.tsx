@@ -1,33 +1,27 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
 // Imports
 // ------------
 import Grid from '@waffl';
-import StarHeading from '@parts/StarHeading';
-import { StructuredText } from 'react-datocms';
+import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
 import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useAnimation } from '@utils/useAnimation';
+import { StructuredText } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Ethos = ({
-	ethosHeading,
-	ethosText,
-	columnOverride,
-	wrapperRef,
-	isActive,
-}: I.EthosProps) => {
+const Ethos = ({ ethosHeading, ethosText, columnOverride, wrapperRef, isActive }: I.EthosProps) => {
 	// Refs
 	const textRef = useRef<HTMLHeadingElement>(null);
-	const jacketRef = useRef<HTMLElement>(null);
-	const descRef = useRef<HTMLElement>(null);
+	const jacketRef = useRef<HTMLDivElement>(null);
+	const descRef = useRef<HTMLDivElement>(null);
 	const headingSplitRef = useRef<SplitText | null>(null);
 	const descSplitRef = useRef<SplitText | null>(null);
 	const headingTlRef = useRef<gsap.core.Timeline | null>(null);
@@ -35,9 +29,8 @@ const Ethos = ({
 
 	// Split text and animate on scroll
 	useAnimation(
-		({ isDesktop }) => {
-			if (!textRef.current || !wrapperRef?.current || !descRef.current)
-				return;
+		() => {
+			if (!textRef.current || !wrapperRef?.current || !descRef.current) return;
 
 			// Revert and kill previous instances
 			if (headingTlRef.current) {

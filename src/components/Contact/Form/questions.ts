@@ -1,6 +1,6 @@
 // Imports
 // ------------
-import { ContactPayload, RouteKey } from '@parts/Contexts/ContactForm';
+import type { ContactPayload, RouteKey } from '@parts/Contexts/ContactForm';
 
 // Interfaces + Types
 // ------------
@@ -42,8 +42,7 @@ const baseQuestions: FormQuestion[] = [
 		conditionalNext: (answer: string) => answer as RouteKey,
 	},
 	{
-		statement:
-			'Nice one, {name}. Before we dive in, I need to grab a couple details so I can reply properly.',
+		statement: 'Nice one, {name}. Before we dive in, I need to grab a couple details so I can reply properly.',
 		question: "What's your email address?",
 		key: 'email',
 		inputType: 'email',
@@ -61,8 +60,7 @@ const baseQuestions: FormQuestion[] = [
 // ------------
 const projectQuestions: FormQuestion[] = [
 	{
-		question:
-			'Awesome. Tell me a little about the project you have in mind.',
+		question: 'Awesome. Tell me a little about the project you have in mind.',
 		key: 'projectDetails',
 		inputType: 'text',
 		placeholder: 'Describe your project',
@@ -118,8 +116,7 @@ const careerQuestions: FormQuestion[] = [
 	},
 	// Contract path - day rate question
 	{
-		question:
-			'What kind of day rate are you budgeting for this role per day?',
+		question: 'What kind of day rate are you budgeting for this role per day?',
 		key: 'careerDayrate',
 		radioOptions: [
 			{ value: 'below-500', label: 'Below £500' },
@@ -196,10 +193,7 @@ const otherQuestions: FormQuestion[] = [
 
 // Helper function to get questions based on route
 // ------------
-export function getQuestions(
-	helpType?: RouteKey,
-	formData?: ContactPayload
-): FormQuestion[] {
+export function getQuestions(helpType?: RouteKey, _formData?: ContactPayload): FormQuestion[] {
 	const questions = [...baseQuestions];
 
 	if (helpType && helpType !== 'general') {
@@ -225,15 +219,13 @@ export function getQuestions(
 export function shouldShowQuestion(
 	question: FormQuestion,
 	formData: ContactPayload,
-	currentStep: number,
+	_currentStep: number,
 	allQuestions: FormQuestion[]
 ): boolean {
 	// For career questions, we need to handle conditional routing
 	if (formData.helpType === 'career') {
 		// Find the careerRoleType question index
-		const roleTypeIndex = allQuestions.findIndex(
-			q => q.key === 'careerRoleType'
-		);
+		const _roleTypeIndex = allQuestions.findIndex(q => q.key === 'careerRoleType');
 
 		// If this is the day rate question
 		if (question.key === 'careerDayrate') {

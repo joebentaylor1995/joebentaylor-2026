@@ -24,23 +24,33 @@
  * - Only the last call within the delay period will trigger the function.
  * - The timer is cleared and restarted on each call.
  * - The function is not called on unmount.
+ * - Pending timer is cleared on unmount to prevent leaks and state updates after unmount.
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-export function useDebounce<T extends (...args: any[]) => any>(fn: T, delay: number) {
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
+export function useDebounce<TArgs extends unknown[]>(fn: (...args: TArgs) => void, delay: number) {
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    return useCallback(
-        (...args: Parameters<T>) => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
-            }
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current);
+				timerRef.current = null;
+			}
+		};
+	}, []);
 
-            timerRef.current = setTimeout(() => {
-                fn(...args);
-                timerRef.current = null;
-            }, delay);
-        },
-        [fn, delay]
-    );
+	return useCallback(
+		(...args: TArgs) => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current);
+			}
+
+			timerRef.current = setTimeout(() => {
+				fn(...args);
+				timerRef.current = null;
+			}, delay);
+		},
+		[fn, delay]
+	);
 }

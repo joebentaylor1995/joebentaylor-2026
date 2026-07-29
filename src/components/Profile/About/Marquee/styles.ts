@@ -1,25 +1,16 @@
 // Imports
 // ------------
+
+import { bp, Div, getGap, getRadius } from '@tackl';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -37,7 +28,7 @@ export const Jacket = styled(Div)(
 );
 
 export const Collection = styled.div(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -47,7 +38,7 @@ export const Collection = styled.div(
 );
 
 export const List = styled.ul(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;

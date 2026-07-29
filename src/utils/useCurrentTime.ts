@@ -1,6 +1,6 @@
 // Imports
 // ------------
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Hook
 // ------------
@@ -16,18 +16,11 @@ const DEFAULT_OPTIONS: Intl.DateTimeFormatOptions = {
 	timeZone: 'Europe/London',
 };
 
-export function useCurrentTime(
-	options: Intl.DateTimeFormatOptions = DEFAULT_OPTIONS
-): string {
+export function useCurrentTime(options: Intl.DateTimeFormatOptions = DEFAULT_OPTIONS): string {
 	// Stabilize options by stringifying so inline objects don't cause interval thrash
-	const optionsKey =
-		typeof options === 'object' && options !== null
-			? JSON.stringify(options)
-			: '';
-	const timeOptions = useMemo(
-		() => ({ ...DEFAULT_OPTIONS, ...options }),
-		[optionsKey]
-	);
+	const optionsKey = typeof options === 'object' && options !== null ? JSON.stringify(options) : '';
+	// biome-ignore lint/correctness/useExhaustiveDependencies: optionsKey is the stringified stand-in for options
+	const timeOptions = useMemo(() => ({ ...DEFAULT_OPTIONS, ...options }), [optionsKey]);
 
 	// Use placeholder during SSR so server and client match (avoids React hydration error #418).
 	// Real time is set in useEffect after mount.

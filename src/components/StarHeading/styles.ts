@@ -1,8 +1,9 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
+
+import { bp, Div, getEase, getGap, getGlobal } from '@tackl';
 import { captionL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
@@ -35,10 +36,12 @@ export const Jacket = styled(Div)<JacketInterface>(
 			height: var(--size);
 			fill: ${getGlobal('white')};
 
-			${$hasRotation &&
-			css`
+			${
+				$hasRotation &&
+				css`
 				animation: spin 3s ${getEase('bezzy3')} infinite;
-			`}
+			`
+			}
 
 			${bp.l`
                 --size: 1.2rem;

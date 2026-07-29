@@ -1,22 +1,14 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Section,
-	getRadius,
-	getGlobal,
-	getGap,
-	Div,
-	List,
-	ListItem,
-} from '@tackl';
+
+import { bp, Div, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyL, titleL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		padding-bottom: ${getGap('xl')};
 
 		${bp.l`
@@ -26,7 +18,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Sticky = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
 		display: none;
@@ -48,13 +40,13 @@ export const Sticky = styled(Div)(
 );
 
 export const Text = styled(Div)(
-	props => css`
+	_props => css`
 		/*  Purely for Grid positioning purposes */
 	`
 );
 
 export const Desc = styled(Div)(
-	props => css`
+	_props => css`
 		/*  Purely for Grid positioning purposes */
 
 		p {
@@ -70,8 +62,8 @@ export const Desc = styled(Div)(
 	`
 );
 
-export const ServiceList = styled(List)(
-	props => css`
+export const ServiceList = styled(Div).attrs({ as: 'ul' })(
+	_props => css`
 		display: flex;
 		flex-direction: column;
 
@@ -84,8 +76,8 @@ export const ServiceList = styled(List)(
 	`
 );
 
-export const ServiceItem = styled(ListItem)(
-	props => css`
+export const ServiceItem = styled(Div).attrs({ as: 'li' })(
+	_props => css`
 		display: flex;
 		align-items: center;
 		gap: ${getGap('sm')};
@@ -97,7 +89,7 @@ export const ServiceItem = styled(ListItem)(
 );
 
 export const Picture = styled(Div)(
-	props => css`
+	_props => css`
 		transform-origin: left center;
 
 		picture {
@@ -129,7 +121,7 @@ export const Picture = styled(Div)(
 );
 
 export const Title = styled(Div)(
-	props => css`
+	_props => css`
 		h3 {
 			${titleL}
 			color: ${getGlobal('white')};

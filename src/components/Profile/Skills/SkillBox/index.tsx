@@ -1,29 +1,20 @@
 'use client';
 
+import { useAnimation } from '@utils/useAnimation';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 // Imports
 // ------------
 import { useRef, useState } from 'react';
-import SkillMarquee from './SkillMarquee';
-import gsap from 'gsap';
-import { useAnimation } from '@utils/useAnimation';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import SkillMarquee from './SkillMarquee';
 import * as S from './styles';
 
 // Component
 // ------------
-const SkillBox = ({
-	wrapperRef,
-	heading,
-	description,
-	tools,
-	cssAreaName,
-	isLast,
-	isActive,
-}: I.SkillBoxProps) => {
+const SkillBox = ({ wrapperRef, heading, description, tools, cssAreaName, isLast, isActive }: I.SkillBoxProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLDivElement>(null);
 	const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
@@ -82,11 +73,7 @@ const SkillBox = ({
 
 	return (
 		<S.Jacket $cssAreaName={cssAreaName} ref={jacketRef}>
-			<SkillMarquee
-				tools={tools}
-				isActive={isActive}
-				isPlaying={isPlaying}
-			/>
+			<SkillMarquee tools={tools} isActive={isActive} isPlaying={isPlaying} />
 
 			<S.Texts $isLast={isLast}>
 				<h2>{heading}</h2>

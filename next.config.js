@@ -3,7 +3,9 @@ const nextConfig = {
 	// Image loader settings
 	images: {
 		formats: ['image/avif', 'image/webp'],
-		minimumCacheTTL: 60,
+		// Optimized images are cached for a day — bump higher if your imagery
+		// rarely changes (CMS images get new URLs on change anyway)
+		minimumCacheTTL: 86400,
 		// imageSizes defines the set of fixed image widths (in pixels) that Next.js will generate for images
 		// when using the "sizes" attribute or for static image imports. These are typically used for icons,
 		// avatars, or other images that are rendered at specific, small sizes.
@@ -16,14 +18,6 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'picsum.photos',
-			},
-			{
-				protocol: 'https',
-				hostname: 'placehold.it',
-			},
-			{
-				protocol: 'https',
 				hostname: 'cdn.dribbble.com',
 			},
 			{
@@ -32,29 +26,8 @@ const nextConfig = {
 			},
 		],
 	},
-	transpilePackages: ['next-image-export-optimizer'],
-
-	// Image export optimizer settings
-	env: {
-		nextImageExportOptimizer_imageFolderPath: 'public/enhanced-images',
-		nextImageExportOptimizer_exportFolderPath: 'out',
-		nextImageExportOptimizer_quality: '75',
-		nextImageExportOptimizer_storePicturesInWEBP: 'true',
-		nextImageExportOptimizer_exportFolderName: 'nextImageExportOptimizer',
-
-		// If you do not want to use blurry placeholder images, then you can set
-		// nextImageExportOptimizer_generateAndUseBlurImages to false and pass
-		// `placeholder="empty"` to all <ExportedImage> components.
-		nextImageExportOptimizer_generateAndUseBlurImages: 'true',
-	},
 
 	// React Strict Mode is a development-only feature that helps identify potential problems
-	// It enables additional checks and warnings for:
-	// - Identifying unsafe lifecycles
-	// - Warning about legacy string ref API usage
-	// - Detecting unexpected side effects
-	// - Ensuring reusable state
-	// - Detecting legacy context API
 	reactStrictMode: true,
 
 	// Ensure trailing slashes are added to all routes
@@ -66,7 +39,6 @@ const nextConfig = {
 
 	// Styled Components settings
 	compiler: {
-		// styledComponents: true,
 		removeConsole: process.env.NODE_ENV === 'production',
 
 		styledComponents: {

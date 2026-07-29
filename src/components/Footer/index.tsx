@@ -9,21 +9,18 @@ import { Jacket } from './styles';
 
 // Interfaces
 // ------------
-interface FooterProps {
-    
-}
 
 // Component
 // ------------
-const Footer = ({ }: FooterProps) => {
-    return (
-        <Jacket>
-            {/*  */}
-            {/*  */}
-            {/*  */}
-        </Jacket>
-    );
-}
+const Footer = () => {
+	return (
+		<Jacket>
+			{/*  */}
+			{/*  */}
+			{/*  */}
+		</Jacket>
+	);
+};
 
 // Exports
 // ------------

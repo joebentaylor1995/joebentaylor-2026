@@ -1,13 +1,14 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Section, Div, getGlobal, getGap } from '@tackl';
+
+import { bp, Div, getGap, getGlobal } from '@tackl';
 import { bodyL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		position: relative;
 		padding-bottom: ${getGap('xl')};
 		overflow: clip;
@@ -19,7 +20,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Sticky = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
 
@@ -37,7 +38,7 @@ export const Sticky = styled(Div)(
 );
 
 export const Desc = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};
@@ -51,7 +52,7 @@ export const Desc = styled(Div)(
 );
 
 export const ClientList = styled(Div)(
-	props => css`
+	_props => css`
 		margin-top: ${getGap('xl')};
 
 		${bp.l`

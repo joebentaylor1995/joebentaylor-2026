@@ -1,27 +1,15 @@
 // Imports
 // ------------
+
+import { Div, getBrand, getEase, getFont, getFontWeight, getGap, getGlobal } from '@tackl';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Nav,
-	List,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getFont,
-	getFontWeight,
-	getRadius,
-} from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
+export const Jacket = styled(Div).attrs({ as: 'nav' })<{ $isOpen: boolean }>(
 	({ $isOpen }) => css`
 		--ease: ${getEase('bezzy2')};
 		--speed: 0.5s;
@@ -45,14 +33,16 @@ export const Jacket = styled(Nav)<{ $isOpen: boolean }>(
 		pointer-events: ${$isOpen ? 'auto' : 'none'};
 
 		/* Only use will-change during animation to avoid constant repaints */
-		${$isOpen &&
-		css`
+		${
+			$isOpen &&
+			css`
 			will-change: clip-path;
-		`}
+		`
+		}
 	`
 );
 
-export const UL = styled(List)<{ $isSocial?: boolean }>(
+export const UL = styled(Div).attrs({ as: 'ul' })<{ $isSocial?: boolean }>(
 	({ $isSocial }) => css`
 		display: flex;
 		flex-direction: column;
@@ -62,12 +52,14 @@ export const UL = styled(List)<{ $isSocial?: boolean }>(
 		width: 100%;
 		padding-inline: ${getGap('m')};
 
-		${$isSocial &&
-		css`
+		${
+			$isSocial &&
+			css`
 			position: absolute;
 			inset: auto 0 ${getGap('m')} 0;
 			gap: ${getGap('s')};
-		`}
+		`
+		}
 
 		li {
 			display: inline-block;

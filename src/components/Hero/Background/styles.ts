@@ -1,7 +1,8 @@
 // Imports
 // ------------
+
+import { bp, Div, getEase, getGlobal } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, Div, getGlobal, getEase } from '@tackl';
 
 // Interfaces
 interface JacketInterface {

@@ -1,17 +1,17 @@
 // Imports
 // ------------
+
+import { bp, Div, getEase, getGap, getGlobal } from '@tackl';
+import { bodyS } from '@tackl/type';
 import styled, { css } from 'styled-components';
-import { bp, Nav, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import { bodyS, captionL } from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Nav)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'nav' })(
+	_props => css`
 		display: none;
 		align-items: center;
 		justify-content: space-between;

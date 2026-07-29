@@ -14,23 +14,15 @@ export async function GET(request: Request) {
 	}
 
 	if (!code) {
-		return NextResponse.json(
-			{ error: 'No authorization code provided' },
-			{ status: 400 }
-		);
+		return NextResponse.json({ error: 'No authorization code provided' }, { status: 400 });
 	}
 
 	const clientId = process.env.DRIBBBLE_CLIENT_ID;
 	const clientSecret = process.env.DRIBBBLE_CLIENT_SECRET;
-	const redirectUri =
-		process.env.DRIBBBLE_REDIRECT_URI ||
-		'http://localhost:3000/api/dribbble/callback';
+	const redirectUri = process.env.DRIBBBLE_REDIRECT_URI || 'http://localhost:3000/api/dribbble/callback';
 
 	if (!clientId || !clientSecret) {
-		return NextResponse.json(
-			{ error: 'Dribbble client credentials not configured' },
-			{ status: 500 }
-		);
+		return NextResponse.json({ error: 'Dribbble client credentials not configured' }, { status: 500 });
 	}
 
 	try {
@@ -53,9 +45,7 @@ export async function GET(request: Request) {
 		if (!response.ok) {
 			return NextResponse.json(
 				{
-					error:
-						data.error_description ||
-						'Failed to exchange code for token',
+					error: data.error_description || 'Failed to exchange code for token',
 				},
 				{ status: response.status }
 			);
@@ -66,14 +56,10 @@ export async function GET(request: Request) {
 			access_token: data.access_token,
 			token_type: data.token_type,
 			scope: data.scope,
-			message:
-				'Success! Copy the access_token and add it to your .env.local file as DRIBBBLE_ACCESS_TOKEN',
+			message: 'Success! Copy the access_token and add it to your .env.local file as DRIBBBLE_ACCESS_TOKEN',
 		});
-	} catch (error: any) {
+	} catch (error: unknown) {
 		console.error('Error in Dribbble OAuth callback:', error);
-		return NextResponse.json(
-			{ error: 'Failed to exchange authorization code' },
-			{ status: 500 }
-		);
+		return NextResponse.json({ error: 'Failed to exchange authorization code' }, { status: 500 });
 	}
 }

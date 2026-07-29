@@ -1,30 +1,29 @@
 'use client';
 
+import { bezzy3 } from '@parts/AnimationPlugins/Curves';
+import { GlobalContext } from '@parts/Contexts';
 // Imports
 // ------------
 import MobileModalClose from '@parts/MobileModalClose';
-import SmoothScroll from './SmoothScroll';
-import ScrollProgress from './ScrollProgress';
-import Introduction from './Introduction';
-import Statement from './Statement';
-import Skills from './Skills';
-import Services from './Services';
+import { useIsDesktop } from '@utils/useResponsive';
+import { gsap } from 'gsap';
+import { use, useEffect, useLayoutEffect, useRef } from 'react';
 import About from './About';
+import AnimatedSplitter from './AnimateSplitter';
+import Awards from './Awards';
 import Clients from './Clients';
 import Ethos from './Ethos';
-import Awards from './Awards';
-import Reviews from './Reviews';
-import AnimatedSplitter from './AnimateSplitter';
 import Footer from './Footer';
-import { use, useRef, useLayoutEffect, useEffect } from 'react';
-import { GlobalContext } from '@parts/Contexts';
-import { gsap } from 'gsap';
-import { bezzy3 } from '@parts/AnimationPlugins/Curves';
-import { useIsDesktop } from '@utils/useResponsive';
-
+import Introduction from './Introduction';
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import Reviews from './Reviews';
+import ScrollProgress from './ScrollProgress';
+import Services from './Services';
+import Skills from './Skills';
+import SmoothScroll from './SmoothScroll';
+import Statement from './Statement';
 import * as S from './styles';
 
 // Constants
@@ -108,9 +107,7 @@ const Profile = ({
 
 		// Don't close if clicking on interactive elements
 		const isInteractive =
-			target.closest(
-				'button, a, [role="button"], input, select, textarea'
-			) ||
+			target.closest('button, a, [role="button"], input, select, textarea') ||
 			target.closest('[data-interactive]') ||
 			target.hasAttribute('title') || // Elements with tooltips
 			target.closest('[title]'); // Parent elements with tooltips
@@ -133,10 +130,7 @@ const Profile = ({
 
 			<ScrollProgress isActive={profileOpen} wrapperRef={jacketRef} />
 
-			<MobileModalClose
-				onClick={() => setProfileOpen(false)}
-				isOpen={profileOpen}
-			/>
+			<MobileModalClose onClick={() => setProfileOpen(false)} isOpen={profileOpen} />
 
 			<S.Jacket data-lenis-prevent ref={jacketRef} onClick={handleClose}>
 				<SmoothScroll {...sharedProps} contentRef={contentRef} />
@@ -152,50 +146,21 @@ const Profile = ({
 
 					<Skills {...sharedProps} skills={skills} />
 
-					<Services
-						{...sharedProps}
-						services={services}
-						servicesText={servicesText}
-					/>
+					<Services {...sharedProps} services={services} servicesText={servicesText} />
 
-					<About
-						{...sharedProps}
-						aboutImage={aboutImage}
-						aboutDesc={aboutDesc}
-						aboutMarquee={aboutMarquee}
-					/>
+					<About {...sharedProps} aboutImage={aboutImage} aboutDesc={aboutDesc} aboutMarquee={aboutMarquee} />
 
-					<Clients
-						{...sharedProps}
-						clientsDesc={clientsDesc}
-						clients={clients}
-					/>
+					<Clients {...sharedProps} clientsDesc={clientsDesc} clients={clients} />
 
-					<Ethos
-						{...sharedProps}
-						ethosHeading={ethosHeading}
-						ethosText={ethosText}
-					/>
+					<Ethos {...sharedProps} ethosHeading={ethosHeading} ethosText={ethosText} />
 
 					<AnimatedSplitter {...sharedProps} />
 
-					<Awards
-						awardsDesc={awardsDesc}
-						awards={awards}
-						{...sharedProps}
-					/>
+					<Awards awardsDesc={awardsDesc} awards={awards} {...sharedProps} />
 
-					<Reviews
-						{...sharedProps}
-						reviewsDesc={reviewsDesc}
-						reviews={reviews}
-					/>
+					<Reviews {...sharedProps} reviewsDesc={reviewsDesc} reviews={reviews} />
 
-					<Footer
-						{...sharedProps}
-						dribbbleUsername='joebentaylor'
-						socials={socials}
-					/>
+					<Footer {...sharedProps} dribbbleUsername='joebentaylor' socials={socials} />
 				</S.Content>
 			</S.Jacket>
 		</>

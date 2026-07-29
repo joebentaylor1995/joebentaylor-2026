@@ -24,4 +24,3 @@ declare module 'unicornstudio-react/next' {
 	const UnicornScene: ComponentType<UnicornSceneProps>;
 	export default UnicornScene;
 }
-

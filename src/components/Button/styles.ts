@@ -1,25 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
+
+import { getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyS } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled.button(
-	props => css`
+	_props => css`
 		--speed: 0.35s;
 		--ease: ${getEase('bezzy2')};
 
@@ -102,15 +94,10 @@ export const Jacket = styled.button(
 			.letter {
 				display: inline-block;
 				text-shadow: 0 3rem 0 ${getGlobal('white')};
-				color: ${getBrand('bc6')};
+				color: ${getGlobal('white')};
 				transition: transform var(--speed) var(--ease);
 
-				${[...Array(12)]
-					.map(
-						(_, i) =>
-							`&:nth-child(${i + 1}) { animation-delay: ${i * 0.01}s; }`
-					)
-					.join('\n')}
+				${[...Array(12)].map((_, i) => `&:nth-child(${i + 1}) { animation-delay: ${i * 0.01}s; }`).join('\n')}
 			}
 		}
 	`

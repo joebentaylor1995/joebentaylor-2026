@@ -1,9 +1,10 @@
 'use client';
 
+import { gsap } from 'gsap';
 // Imports
 // ------------
-import React, { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import * as S from './styles';
 
 // Interfaces
@@ -37,10 +38,8 @@ const Message = ({ children, type, messageKey, delay = 0 }: MessageProps) => {
 			gsap.set(ref.current, { autoAlpha: 1, yPercent: 0 });
 			// Also set children visible for robot messages
 			if (type === 'robot') {
-				const statements =
-					ref.current.querySelectorAll('[data-statement]');
-				const questions =
-					ref.current.querySelectorAll('[data-question]');
+				const statements = ref.current.querySelectorAll('[data-statement]');
+				const questions = ref.current.querySelectorAll('[data-question]');
 				gsap.set([...statements, ...questions], {
 					autoAlpha: 1,
 					yPercent: 0,

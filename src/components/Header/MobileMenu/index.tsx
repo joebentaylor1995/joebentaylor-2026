@@ -22,6 +22,7 @@ const MobileMenu = ({ navItems, socials, handleClick }: I.MobileMenuProps) => {
 				{navItems.map(({ label, comingSoon }) => (
 					<li key={label}>
 						<button
+							type='button'
 							disabled={comingSoon}
 							onClick={e => handleClick(e)}
 							data-label={label}

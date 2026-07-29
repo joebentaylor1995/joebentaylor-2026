@@ -1,17 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getRadius, getGap, Form } from '@tackl';
+
+import { Div, getBrand, getGap, getGlobal } from '@tackl';
 import { bodyM } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interface
 // ------------
-interface StylesInterface {}
 
 // Exports
 // ------------
-export const Jacket = styled(Form)<StylesInterface>(
-	({}) => css`
+export const Jacket = styled(Div).attrs({ as: 'form' })(
+	() => css`
 		height: 100%;
 		display: flex;
 		flex-direction: column;
@@ -29,8 +29,8 @@ const sharedStyles = css`
 	max-width: 36rem;
 `;
 
-export const Statement = styled.p<StylesInterface>(
-	({}) => css`
+export const Statement = styled.p(
+	() => css`
 		${bodyM}
 		${sharedStyles}
 		color: ${getGlobal('white')};
@@ -40,8 +40,8 @@ export const Statement = styled.p<StylesInterface>(
 	`
 );
 
-export const Question = styled.p<StylesInterface>(
-	({}) => css`
+export const Question = styled.p(
+	() => css`
 		${bodyM}
 		${sharedStyles}
 		color: ${getGlobal('white')};
@@ -51,8 +51,8 @@ export const Question = styled.p<StylesInterface>(
 	`
 );
 
-export const Answer = styled.p<StylesInterface>(
-	({}) => css`
+export const Answer = styled.p(
+	() => css`
 		${bodyM}
 		${sharedStyles}
 		align-self: flex-end;
@@ -69,8 +69,8 @@ export const Answer = styled.p<StylesInterface>(
 	`
 );
 
-export const Chatlog = styled.div<StylesInterface>(
-	({}) => css`
+export const Chatlog = styled.div(
+	() => css`
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -81,8 +81,8 @@ export const Chatlog = styled.div<StylesInterface>(
 	`
 );
 
-export const Robot = styled.div<StylesInterface>(
-	({}) => css`
+export const Robot = styled.div(
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('xs')};
@@ -91,8 +91,8 @@ export const Robot = styled.div<StylesInterface>(
 	`
 );
 
-export const User = styled.div<StylesInterface>(
-	({}) => css`
+export const User = styled.div(
+	() => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('s')};

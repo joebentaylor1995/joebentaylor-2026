@@ -1,22 +1,14 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Section,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
+
+import { bp, Div, getBrand, getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyL, bodyM } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		position: relative;
 		padding-block: ${getGap('xl')};
 
@@ -27,7 +19,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Sticky = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		margin-bottom: ${getGap('m')};
 
@@ -44,7 +36,7 @@ export const Sticky = styled(Div)(
 );
 
 export const Desc = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};
@@ -58,7 +50,7 @@ export const Desc = styled(Div)(
 );
 
 export const AwardsList = styled(Div)(
-	props => css`
+	_props => css`
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		grid-template-rows: auto;
@@ -76,7 +68,7 @@ export const AwardsList = styled(Div)(
 );
 
 export const AwardItem = styled(Div)(
-	props => css`
+	_props => css`
 		--speed: 0.8s;
 		--ease: ${getEase('bezzy3')};
 		--trans: var(--speed) var(--ease);
@@ -167,7 +159,7 @@ export const AwardItem = styled(Div)(
 );
 
 export const AwardItemTitle = styled.h3(
-	props => css`
+	_props => css`
 		${bodyM}
 		color: ${getGlobal('white', 40)};
 

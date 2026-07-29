@@ -1,17 +1,17 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
 // Imports
 // ------------
 import Grid from '@waffl';
-import StarHeading from '@parts/StarHeading';
-import { StructuredText, SRCImage } from 'react-datocms';
-import { useRef } from 'react';
-import { useAnimation } from '@utils/useAnimation';
 import { gsap } from 'gsap';
+import { useRef } from 'react';
+import { SRCImage, StructuredText } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Constants
@@ -33,13 +33,7 @@ const OFFSET = {
 
 // Component
 // ------------
-const Services = ({
-	services,
-	servicesText,
-	isActive,
-	wrapperRef,
-	columnOverride,
-}: I.ServicesProps) => {
+const Services = ({ services, servicesText, isActive, wrapperRef, columnOverride }: I.ServicesProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLElement>(null);
 	const serviceItemsRef = useRef<HTMLElement[]>([]);

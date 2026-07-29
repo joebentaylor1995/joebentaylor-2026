@@ -6,7 +6,7 @@ import Icon from '@parts/Icon';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -28,6 +28,7 @@ const Socials = ({ socials }: I.SocialsProps) => {
 						>
 							<span>
 								{name.split('').map((char, idx) => (
+									// biome-ignore lint/suspicious/noArrayIndexKey: static split-text letters — position is the identity
 									<span key={idx} className='letter'>
 										{char === ' ' ? '\u00A0' : char}
 									</span>
@@ -50,6 +51,7 @@ const Socials = ({ socials }: I.SocialsProps) => {
 				>
 					<span>
 						{'Resume'.split('').map((char, idx) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: static split-text letters — position is the identity
 							<span key={idx} className='letter'>
 								{char === ' ' ? '\u00A0' : char}
 							</span>
