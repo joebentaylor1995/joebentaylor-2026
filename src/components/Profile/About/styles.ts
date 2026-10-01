@@ -1,7 +1,7 @@
 // Imports
 // ------------
 
-import { bp, Div, getBrand, getGap, getGlobal, Section } from '@tackl';
+import { bp, Div, getBrand, getGap, getGlobal } from '@tackl';
 import { bodyL } from '@tackl/type';
 import styled, { css } from 'styled-components';
 
@@ -10,7 +10,7 @@ import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
+export const Jacket = styled(Div).attrs({ as: 'section' })(
 	() => css`
 		position: relative;
 		padding-bottom: ${getGap('xl')};

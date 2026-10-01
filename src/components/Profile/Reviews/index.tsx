@@ -1,30 +1,24 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
+import { useResponsive } from '@utils/useResponsive';
 // Imports
 // ------------
 import Grid from '@waffl';
-import Carousel from './Carousel';
-import StarHeading from '@parts/StarHeading';
 import gsap from 'gsap';
-import { StructuredText } from 'react-datocms';
-import { useResponsive } from '@utils/useResponsive';
 import { useRef } from 'react';
-import { useAnimation } from '@utils/useAnimation';
+import { StructuredText } from 'react-datocms';
+import Carousel from './Carousel';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Reviews = ({
-	isActive,
-	wrapperRef,
-	columnOverride,
-	reviewsDesc,
-	reviews,
-}: I.ReviewsProps) => {
+const Reviews = ({ isActive, wrapperRef, columnOverride, reviewsDesc, reviews }: I.ReviewsProps) => {
 	// Responsive Hook
 	const { isDesktop } = useResponsive();
 
@@ -34,18 +28,13 @@ const Reviews = ({
 
 	// DRY Render
 	const helperRender = (isMobile: boolean) => {
-		return (
-			<S.Helper $isMobile={isMobile}>Drag + Slide to Navigate</S.Helper>
-		);
+		return <S.Helper $isMobile={isMobile}>Drag + Slide to Navigate</S.Helper>;
 	};
 
 	// Animation
 	useAnimation(
-		({ isDesktop }) => {
-			const checkRef =
-				!carouselRef.current ||
-				!jacketRef.current ||
-				!wrapperRef?.current;
+		() => {
+			const checkRef = !carouselRef.current || !jacketRef.current || !wrapperRef?.current;
 			if (checkRef) return;
 
 			gsap.set(carouselRef.current, {

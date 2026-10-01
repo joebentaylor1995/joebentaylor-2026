@@ -4,8 +4,8 @@
 // Exports
 // ------------
 export interface SocialProps {
-    url: string;
-    name: string;
-    icon: string;
-    isEnabled?: boolean;
+	url: string;
+	name: string;
+	icon: string;
+	isEnabled?: boolean;
 }

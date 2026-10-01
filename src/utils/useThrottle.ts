@@ -18,41 +18,45 @@
  *   window.addEventListener('scroll', throttledScroll);
  *   return () => window.removeEventListener('scroll', throttledScroll);
  * }, [throttledScroll]);
+ *
+ * @remarks
+ * - The throttle's internal cooldown timer is cleared on unmount to prevent memory leaks.
  */
 import { useCallback, useEffect, useRef } from 'react';
 
-export function useThrottle<TArgs extends any[]>(
-  fn: (...args: TArgs) => void,
-  limit: number
+export function useThrottle<TArgs extends unknown[]>(
+	fn: (...args: TArgs) => void,
+	limit: number
 ): (...args: TArgs) => void {
-  const inThrottleRef = useRef(false);
-  const lastTimeRef = useRef(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const inThrottleRef = useRef(false);
+	const lastTimeRef = useRef(0);
+	const throttleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current !== null) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-  }, []);
+	useEffect(() => {
+		return () => {
+			if (throttleTimerRef.current) {
+				clearTimeout(throttleTimerRef.current);
+				throttleTimerRef.current = null;
+			}
+		};
+	}, []);
 
-  return useCallback(
-    (...args: TArgs) => {
-      const now = Date.now();
+	return useCallback(
+		(...args: TArgs) => {
+			const now = Date.now();
 
-      if (!inThrottleRef.current && now - lastTimeRef.current >= limit) {
-        fn(...args);
-        lastTimeRef.current = now;
-        inThrottleRef.current = true;
+			if (!inThrottleRef.current && now - lastTimeRef.current >= limit) {
+				fn(...args);
+				lastTimeRef.current = now;
+				inThrottleRef.current = true;
 
-        timeoutRef.current = setTimeout(() => {
-          inThrottleRef.current = false;
-          timeoutRef.current = null;
-        }, limit);
-      }
-    },
-    [fn, limit]
-  );
+				if (throttleTimerRef.current) clearTimeout(throttleTimerRef.current);
+				throttleTimerRef.current = setTimeout(() => {
+					inThrottleRef.current = false;
+					throttleTimerRef.current = null;
+				}, limit);
+			}
+		},
+		[fn, limit]
+	);
 }

@@ -9,4 +9,3 @@ export interface BackgroundProps {
 	introSectionRef: React.RefObject<HTMLDivElement | null>;
 	isActive?: boolean;
 }
-

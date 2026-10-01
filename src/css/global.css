@@ -6,7 +6,6 @@
 	box-sizing: border-box;
 	-webkit-font-smoothing: subpixel-antialiased; /* Enable subpixel antialiasing for better text rendering */
 	-moz-osx-font-smoothing: grayscale; /* Enable grayscale antialiasing for better text rendering */
-	text-rendering: geometricPrecision; /* Improve text rendering quality */
 }
 
 /* HTML5 Elements */
@@ -67,6 +66,14 @@ button:focus {
 	outline: none;
 }
 
+/* Waffl Grid — direct children span the full grid by default.
+   :where() keeps specificity at zero, so any span prop ($s/$m/$l…), class,
+   or --col-* variable on the child wins. Works for plain/server-rendered
+   elements too — no styled-component required to sit in the grid. */
+waffl-grid > :where(*) {
+	grid-column: 1 / -1;
+}
+
 /* Scrollbar & Performance */
 * {
 	scrollbar-width: none;
@@ -77,24 +84,8 @@ button:focus {
 	display: none;
 }
 
-/* Optimize paint performance */
-.fast-scroll * {
-	will-change: transform;
-}
-
-/* Force GPU acceleration for smooth animations */
-.smooth-scroll {
-	transform: translateZ(0);
-	backface-visibility: hidden;
-	perspective: 1000px;
-}
-
-.disable-hover,
-.disable-hover * {
-	pointer-events: none !important;
-}
-
-/* Lenis Smooth Scroll Configuration */
+/* Lenis Smooth Scroll Configuration — the page scrolls on window (ReactLenis
+   root); the Profile and Contact drawers run their own nested instances */
 .lenis {
 	height: auto;
 }
@@ -111,26 +102,21 @@ button:focus {
 	overscroll-behavior: contain;
 }
 
-.lenis-wrapper {
-	position: relative;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	scrollbar-width: none;
-}
-
 /* Page Transitions using the new transitions API*/
 ::view-transition-old(root),
 ::view-transition-new(root) {
+	/* biome-ignore lint/complexity/noImportantStyles: must override the UA's default view-transition animation */
 	animation: none !important;
 }
 
 ::view-transition-group(root) {
+	/* biome-ignore lint/complexity/noImportantStyles: must override the UA's default view-transition stacking */
 	z-index: auto !important;
 }
 
 ::view-transition-image-pair(root) {
 	isolation: isolate;
-	/* NOTE • Change to whatever property you want to animate */
+	/* NOTE • Change to whatever property you want to animate */
 	will-change: transform, opacity, clip-path;
 	z-index: 1;
 }

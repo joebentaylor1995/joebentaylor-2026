@@ -4,6 +4,6 @@
 // Exports
 // ------------
 export interface MobileModalCloseProps {
-    onClick: () => void;
-    isOpen?: boolean;
+	onClick: () => void;
+	isOpen?: boolean;
 }

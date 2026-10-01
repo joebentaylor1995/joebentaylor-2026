@@ -6,7 +6,7 @@ import { SRCImage } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -22,12 +22,7 @@ const Content = ({ tools, isHidden, isActive }: I.SkillMarqueeProps) => (
 					<S.Picture>
 						{logoIcon.mimeType === 'image/svg+xml' ? (
 							<picture>
-								<img
-									src={logoIcon?.url}
-									alt={logoIcon?.alt}
-									width={48}
-									height={48}
-								/>
+								<img src={logoIcon?.url} alt={logoIcon?.alt} width={48} height={48} />
 							</picture>
 						) : (
 							<SRCImage data={logoIcon?.responsiveImage} />

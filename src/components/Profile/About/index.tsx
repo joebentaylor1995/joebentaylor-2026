@@ -1,39 +1,31 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
+import { useAnimation } from '@utils/useAnimation';
 // Imports
 // ------------
 import Grid from '@waffl';
-import Marquee from './Marquee';
-import StarHeading from '@parts/StarHeading';
-import { StructuredText, SRCImage } from 'react-datocms';
-import { useRef } from 'react';
-import { useAnimation } from '@utils/useAnimation';
 import gsap from 'gsap';
-
+import { useRef } from 'react';
+import { SRCImage, StructuredText } from 'react-datocms';
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+import Marquee from './Marquee';
 import * as S from './styles';
 
 // Component
 // ------------
-const About = ({
-	aboutImage,
-	aboutDesc,
-	aboutMarquee,
-	isActive,
-	wrapperRef,
-	columnOverride,
-}: I.AboutProps) => {
+const About = ({ aboutImage, aboutDesc, aboutMarquee, isActive, wrapperRef, columnOverride }: I.AboutProps) => {
 	// Refs
-	const jacketRef = useRef<HTMLElement>(null);
-	const backgroundRef = useRef<HTMLElement>(null);
-	const contentRef = useRef<HTMLElement>(null);
-	const imageRef = useRef<HTMLElement>(null);
+	const jacketRef = useRef<HTMLDivElement>(null);
+	const backgroundRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
+	const imageRef = useRef<HTMLDivElement>(null);
 
 	// Animation
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!isActive) return;
 
 			const tl = gsap.timeline({
@@ -74,18 +66,8 @@ const About = ({
 			</Grid>
 
 			<S.Marquees>
-				<Marquee
-					images={aboutMarquee.slice(
-						0,
-						Math.ceil(aboutMarquee.length / 2)
-					)}
-				/>
-				<Marquee
-					images={aboutMarquee.slice(
-						Math.ceil(aboutMarquee.length / 2)
-					)}
-					isRight
-				/>
+				<Marquee images={aboutMarquee.slice(0, Math.ceil(aboutMarquee.length / 2))} />
+				<Marquee images={aboutMarquee.slice(Math.ceil(aboutMarquee.length / 2))} isRight />
 			</S.Marquees>
 		</S.Jacket>
 	);

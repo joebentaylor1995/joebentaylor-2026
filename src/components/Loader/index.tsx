@@ -1,17 +1,17 @@
 'use client';
 
+import { bezzy2, bezzy4 } from '@parts/AnimationPlugins/Curves';
+import { GlobalContext } from '@parts/Contexts';
+import { gsap } from 'gsap';
 // Imports
 // ------------
-import { useState, useLayoutEffect, useRef, use } from 'react';
+import { use, useLayoutEffect, useRef, useState } from 'react';
 import { SRCImage } from 'react-datocms';
 import { useAnimation } from '@/utils/useAnimation';
-import { gsap } from 'gsap';
-import { bezzy4, bezzy3, bezzy2 } from '@parts/AnimationPlugins/Curves';
-import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Constants
@@ -29,7 +29,7 @@ const FULLSCREEN_SCALE = 5;
 
 // Component
 // ------------
-const Loader = ({ images }: I.LoaderProps) => {
+const Loader = ({ images = [] }: I.LoaderProps) => {
 	// Context
 	const { setLoaderFinished, setLoaderFinishing } = use(GlobalContext);
 
@@ -54,13 +54,11 @@ const Loader = ({ images }: I.LoaderProps) => {
 	}, []);
 
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!listRef.current || !listItemRefs.current.length) return;
 
 			const list = listRef.current;
-			const items = listItemRefs.current.filter(
-				Boolean
-			) as HTMLLIElement[];
+			const items = listItemRefs.current.filter(Boolean) as HTMLLIElement[];
 			if (items.length === 0) return;
 
 			// Cache DOM measurements
@@ -78,16 +76,11 @@ const Loader = ({ images }: I.LoaderProps) => {
 
 			// Cache DOM queries
 			const imageScales = items
-				.map(item =>
-					item.querySelector<HTMLElement>('[data-image-scale]')
-				)
+				.map(item => item.querySelector<HTMLElement>('[data-image-scale]'))
 				.filter(Boolean);
-			const lastItemImageContainer =
-				lastItem.firstElementChild as HTMLElement | null;
-			const lastItemImageClip =
-				lastItem.querySelector<HTMLElement>('[data-image-clip]');
-			const lastItemImageScale =
-				lastItem.querySelector<HTMLElement>('[data-image-scale]');
+			const lastItemImageContainer = lastItem.firstElementChild as HTMLElement | null;
+			const lastItemImageClip = lastItem.querySelector<HTMLElement>('[data-image-clip]');
+			const lastItemImageScale = lastItem.querySelector<HTMLElement>('[data-image-scale]');
 			const otherItems = items.slice(0, -1);
 
 			// Set initial positions
@@ -240,7 +233,7 @@ const Loader = ({ images }: I.LoaderProps) => {
 			<ul ref={listRef}>
 				{images.map(({ responsiveImage }, i) => (
 					<li
-						key={i}
+						key={responsiveImage?.src ?? i}
 						ref={el => {
 							listItemRefs.current[i] = el;
 						}}

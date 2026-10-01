@@ -9,14 +9,13 @@ import React, { use, useEffect, useRef, useState } from 'react';
 import ActionBar from './ActionBar';
 // Styles + Interfaces
 // ------------
-import type * as I from './interface';
 import Message, { clearAnimatedMessages } from './Message';
 import { type FormQuestion, getQuestions, shouldShowQuestion } from './questions';
 import * as S from './styles';
 
 // Component
 // ------------
-const Form = ({}: I.FormProps) => {
+const Form = () => {
 	// Contexts
 	const { contactOpen } = use(GlobalContext);
 	const { formData, setFormData, resetFormData, currentStep, setCurrentStep } = use(FormContext);
@@ -80,6 +79,7 @@ const Form = ({}: I.FormProps) => {
 	}, [contactOpen, resetFormData]);
 
 	// Smooth scroll chatlog when new messages are added (only if user is at bottom)
+	// biome-ignore lint/correctness/useExhaustiveDependencies: answeredQuestions/currentQuestion intentionally re-trigger the scroll
 	useEffect(() => {
 		if (!contactOpen) return;
 
@@ -105,6 +105,7 @@ const Form = ({}: I.FormProps) => {
 	}, [answeredQuestions, currentQuestion, contactOpen]);
 
 	// Auto-focus input when modal opens or step changes
+	// biome-ignore lint/correctness/useExhaustiveDependencies: currentStep intentionally re-triggers the focus
 	useEffect(() => {
 		if (contactOpen && currentQuestion) {
 			// Handle radio questions

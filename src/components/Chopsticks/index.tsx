@@ -1,18 +1,17 @@
 'use client';
 
+import { GlobalContext } from '@parts/Contexts';
 // Imports
 // ------------
 import { use } from 'react';
-import { GlobalContext } from '@parts/Contexts';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Chopsticks = ({}: I.ChopsticksProps) => {
+const Chopsticks = () => {
 	// Context
 	const { setMenuOpen, menuOpen } = use(GlobalContext);
 

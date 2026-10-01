@@ -1,25 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
+
+import { getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyS } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface StylesInterface {}
 
 // Exports
 // ------------
-export const Jacket = styled.div<StylesInterface>(
-	({}) => css`
+export const Jacket = styled.div(
+	() => css`
 		display: flex;
 		align-items: center;
 		gap: ${getGap('s')};
@@ -125,14 +117,11 @@ export const Jacket = styled.div<StylesInterface>(
 				.letter {
 					display: inline-block;
 					text-shadow: 0 3rem 0 ${getGlobal('white')};
-					color: ${getBrand('bc6')};
+					color: ${getGlobal('white')};
 					transition: transform var(--speed) var(--ease);
 
 					${[...Array(50)]
-						.map(
-							(_, i) =>
-								`&:nth-child(${i + 1}) { animation-delay: ${i * 0.005}s; }`
-						)
+						.map((_, i) => `&:nth-child(${i + 1}) { animation-delay: ${i * 0.005}s; }`)
 						.join('\n')}
 				}
 			}

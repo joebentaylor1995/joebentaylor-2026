@@ -1,17 +1,17 @@
 'use client';
 
+import gsap from 'gsap';
+import { Observer } from 'gsap/Observer';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 // Imports
 // ------------
 import { useRef } from 'react';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import { Observer } from 'gsap/Observer';
-import { useAnimation } from '@/utils/useAnimation';
 import { SRCImage } from 'react-datocms';
+import { useAnimation } from '@/utils/useAnimation';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -26,7 +26,7 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 	const cleanupRef = useRef<(() => void) | null>(null);
 
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			const wrapper = wrapperRef.current;
 			const collection = collectionRef.current;
 			const list = listRef.current;
@@ -54,10 +54,10 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 				}
 
 				// Remove cloned elements
-				const clones = collection.querySelectorAll(
-					'[data-draggable-marquee-clone]'
-				);
-				clones.forEach(clone => clone.remove());
+				const clones = collection.querySelectorAll('[data-draggable-marquee-clone]');
+				clones.forEach(clone => {
+					clone.remove();
+				});
 
 				// Reset collection position
 				gsap.set(collection, { x: 0 });
@@ -70,30 +70,17 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 
 				if (!wrapper || !collection || !list) return;
 
-				const getNumberAttr = (
-					el: HTMLElement,
-					name: string,
-					fallback: number
-				): number => {
+				const getNumberAttr = (el: HTMLElement, name: string, fallback: number): number => {
 					const value = parseFloat(el.getAttribute(name) || '');
 					return Number.isFinite(value) ? value : fallback;
 				};
 
 				const duration = getNumberAttr(wrapper, 'data-duration', 20);
-				const multiplier = getNumberAttr(
-					wrapper,
-					'data-multiplier',
-					40
-				);
-				const sensitivity = getNumberAttr(
-					wrapper,
-					'data-sensitivity',
-					0.01
-				);
+				const multiplier = getNumberAttr(wrapper, 'data-multiplier', 40);
+				const sensitivity = getNumberAttr(wrapper, 'data-sensitivity', 0.01);
 
 				const wrapperWidth = wrapper.getBoundingClientRect().width;
-				const listWidth =
-					list.scrollWidth || list.getBoundingClientRect().width;
+				const listWidth = list.scrollWidth || list.getBoundingClientRect().width;
 				if (!wrapperWidth || !listWidth) return;
 
 				// Make enough duplicates to cover screen
@@ -118,35 +105,27 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 						marqueeLoop.progress(1);
 					},
 					modifiers: {
-						x: x => wrapX(parseFloat(x)) + 'px',
+						x: x => `${wrapX(parseFloat(x))}px`,
 					},
 				});
 
 				marqueeLoopRef.current = marqueeLoop;
 
 				// Direction can be used for css + set initial direction on load
-				const initialDirectionAttr = (
-					wrapper.getAttribute('data-direction') || 'left'
-				).toLowerCase();
+				const initialDirectionAttr = (wrapper.getAttribute('data-direction') || 'left').toLowerCase();
 				const baseDirection = initialDirectionAttr === 'right' ? -1 : 1;
 
 				const timeScale = { value: 1 };
 
 				timeScale.value = baseDirection;
-				wrapper.setAttribute(
-					'data-direction',
-					baseDirection < 0 ? 'right' : 'left'
-				);
+				wrapper.setAttribute('data-direction', baseDirection < 0 ? 'right' : 'left');
 
 				if (baseDirection < 0) marqueeLoop.progress(1);
 
 				function applyTimeScale() {
 					marqueeLoop.timeScale(timeScale.value);
 					if (wrapper) {
-						wrapper.setAttribute(
-							'data-direction',
-							timeScale.value < 0 ? 'right' : 'left'
-						);
+						wrapper.setAttribute('data-direction', timeScale.value < 0 ? 'right' : 'left');
 					}
 				}
 
@@ -159,13 +138,8 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 					preventDefault: true,
 					debounce: false,
 					onChangeX: observerEvent => {
-						let velocityTimeScale =
-							observerEvent.velocityX * -sensitivity;
-						velocityTimeScale = gsap.utils.clamp(
-							-multiplier,
-							multiplier,
-							velocityTimeScale
-						);
+						let velocityTimeScale = observerEvent.velocityX * -sensitivity;
+						velocityTimeScale = gsap.utils.clamp(-multiplier, multiplier, velocityTimeScale);
 
 						gsap.killTweensOf(timeScale);
 
@@ -250,13 +224,10 @@ const Marquee = ({ images, isRight }: I.MarqueeProps) => {
 			data-sensitivity='0.01'
 			data-hover
 		>
-			<S.Collection
-				ref={collectionRef}
-				data-draggable-marquee-collection=''
-			>
+			<S.Collection ref={collectionRef} data-draggable-marquee-collection=''>
 				<S.List ref={listRef} data-draggable-marquee-list=''>
 					{images.map(({ responsiveImage }, i) => (
-						<li key={i}>
+						<li key={responsiveImage?.src ?? i}>
 							<SRCImage data={responsiveImage} />
 						</li>
 					))}

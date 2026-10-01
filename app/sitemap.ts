@@ -1,15 +1,23 @@
-import { MetadataRoute } from 'next';
+// Imports
+// ------------
+import type { MetadataRoute } from 'next';
+import { siteUrl } from '@/config';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-	const baseUrl = 'https://joebentaylor.co.uk'; // Update with your actual domain
-
+// Sitemap
+// ------------
+// NOTE • Served at /sitemap.xml. Static routes are listed by hand; with
+// more CMS-driven routes, fetch slugs via @cms and spread them in.
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
 	return [
 		{
-			url: baseUrl,
+			url: `${siteUrl}/`,
 			lastModified: new Date(),
 			changeFrequency: 'monthly',
 			priority: 1,
 		},
-		// Add more pages as needed
 	];
-}
+};
+
+// Exports
+// ------------
+export default sitemap;

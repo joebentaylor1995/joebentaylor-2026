@@ -1,16 +1,16 @@
 'use client';
 
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 // Imports
 // ------------
 import { useRef } from 'react';
-import { useAnimation } from '@/utils/useAnimation';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 import { SRCImage } from 'react-datocms';
+import { useAnimation } from '@/utils/useAnimation';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -23,25 +23,20 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 	const LOOP_DELAY = 1.25; // Loop DURATION
 
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			const root = jacketRef.current;
 			const list = listRef.current;
 
 			if (!root || !list || !clients.length) return;
 
-			const shuffleFront =
-				root.getAttribute('data-logo-wall-shuffle') !== 'false';
+			const shuffleFront = root.getAttribute('data-logo-wall-shuffle') !== 'false';
 
 			// Get all item elements
-			const items = Array.from(
-				list.querySelectorAll<HTMLElement>('[data-logo-wall-item]')
-			);
+			const items = Array.from(list.querySelectorAll<HTMLElement>('[data-logo-wall-item]'));
 
 			// Store original targets for cloning
 			const originalTargets = items
-				.map(item =>
-					item.querySelector<HTMLElement>('[data-logo-wall-target]')
-				)
+				.map(item => item.querySelector<HTMLElement>('[data-logo-wall-target]'))
 				.filter(Boolean) as HTMLElement[];
 
 			if (originalTargets.length === 0) return;
@@ -76,22 +71,18 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 
 				if (visibleCount === 0) return;
 
-				pattern = shuffleArray(
-					Array.from({ length: visibleCount }, (_, i) => i)
-				);
+				pattern = shuffleArray(Array.from({ length: visibleCount }, (_, i) => i));
 				patternIndex = 0;
 
 				// Remove all injected targets
 				items.forEach(item => {
-					item.querySelectorAll('[data-logo-wall-target]').forEach(
-						old => old.remove()
-					);
+					item.querySelectorAll('[data-logo-wall-target]').forEach(old => {
+						old.remove();
+					});
 				});
 
 				// Clone original targets for the pool
-				pool = originalTargets.map(
-					n => n.cloneNode(true) as HTMLElement
-				);
+				pool = originalTargets.map(n => n.cloneNode(true) as HTMLElement);
 
 				let front: HTMLElement[];
 				let rest: HTMLElement[];
@@ -110,9 +101,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 				// Append initial targets to visible items
 				for (let i = 0; i < visibleCount; i++) {
 					const parent =
-						visibleItems[i].querySelector<HTMLElement>(
-							'[data-logo-wall-target-parent]'
-						) || visibleItems[i];
+						visibleItems[i].querySelector<HTMLElement>('[data-logo-wall-target-parent]') || visibleItems[i];
 					const target = pool.shift();
 					if (target && parent) {
 						parent.appendChild(target);
@@ -139,24 +128,16 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 				if (!container) return;
 
 				const parent =
-					container.querySelector<HTMLElement>(
-						'[data-logo-wall-target-parent]'
-					) ||
-					container.querySelector<HTMLElement>(
-						'*:has(> [data-logo-wall-target])'
-					) ||
+					container.querySelector<HTMLElement>('[data-logo-wall-target-parent]') ||
+					container.querySelector<HTMLElement>('*:has(> [data-logo-wall-target])') ||
 					container;
 
 				if (!parent) return;
 
-				const existing = parent.querySelectorAll(
-					'[data-logo-wall-target]'
-				);
+				const existing = parent.querySelectorAll('[data-logo-wall-target]');
 				if (existing.length > 1) return;
 
-				const current = parent.querySelector<HTMLElement>(
-					'[data-logo-wall-target]'
-				);
+				const current = parent.querySelector<HTMLElement>('[data-logo-wall-target]');
 				const incoming = pool.shift();
 
 				if (!incoming) return;
@@ -197,10 +178,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 				}
 			};
 
-			document.addEventListener(
-				'visibilitychange',
-				handleVisibilityChange
-			);
+			document.addEventListener('visibilitychange', handleVisibilityChange);
 
 			// ScrollTrigger to pause/resume
 			const scrollTrigger = ScrollTrigger.create({
@@ -216,10 +194,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 
 			// Cleanup
 			return () => {
-				document.removeEventListener(
-					'visibilitychange',
-					handleVisibilityChange
-				);
+				document.removeEventListener('visibilitychange', handleVisibilityChange);
 				scrollTrigger.kill();
 				if (tl) {
 					tl.kill();
@@ -230,12 +205,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 	);
 
 	return (
-		<S.Jacket
-			ref={jacketRef}
-			data-logo-wall-shuffle='false'
-			data-logo-wall-cycle-init=''
-			className='logo-wall'
-		>
+		<S.Jacket ref={jacketRef} data-logo-wall-shuffle='false' data-logo-wall-cycle-init='' className='logo-wall'>
 			<S.Collection>
 				<S.List ref={listRef} data-logo-wall-list=''>
 					{clients.map((client, i) => (
@@ -244,10 +214,7 @@ const Marquee = ({ clients = [], wrapperRef }: I.MarqueeProps) => {
 								<S.LogoBefore className='logo-wall__logo-before' />
 
 								<S.LogoTarget data-logo-wall-target=''>
-									<SRCImage
-										data={client.logo?.responsiveImage}
-										usePlaceholder={false}
-									/>
+									<SRCImage data={client.logo?.responsiveImage} usePlaceholder={false} />
 								</S.LogoTarget>
 							</S.LogoWall>
 						</S.ListItem>

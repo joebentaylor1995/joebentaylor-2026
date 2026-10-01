@@ -1,16 +1,9 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Aside,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
+
+import { bp, Div, getBrand, getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyM } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
@@ -29,8 +22,8 @@ const sharedStyles = css`
 		auto;
 `;
 
-export const Jacket = styled(Aside)(
-	({}) => css`
+export const Jacket = styled(Div).attrs({ as: 'aside' })(
+	() => css`
 		${sharedStyles}
 		inset: 0 0 auto auto;
 
@@ -52,7 +45,7 @@ export const Jacket = styled(Aside)(
 );
 
 export const Content = styled.div(
-	props => css`
+	_props => css`
 		width: 100%;
 		height: auto;
 		min-height: 100%;

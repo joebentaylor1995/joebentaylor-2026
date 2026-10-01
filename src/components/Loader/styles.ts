@@ -1,17 +1,9 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	Aside,
-	getRadius,
-} from '@tackl';
+
+import { bp, Div, getBrand, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
@@ -24,8 +16,8 @@ const sharedContainerStyles = css`
 	overflow: hidden;
 `;
 
-export const Jacket = styled(Aside)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'aside' })(
+	_props => css`
 		${sharedContainerStyles}
 		z-index: 99;
 		background: ${getBrand('bc4')};
@@ -50,7 +42,7 @@ export const Jacket = styled(Aside)(
 );
 
 export const Image = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 		display: block;
 
@@ -63,7 +55,7 @@ export const Image = styled.div(
 );
 
 export const ImageClip = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 		width: 100%;
 		height: 100%;
@@ -74,7 +66,7 @@ export const ImageClip = styled.div(
 );
 
 export const ImageScale = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 		width: 100%;
 		height: 100%;
@@ -102,7 +94,7 @@ export const ImageScale = styled.div(
 );
 
 export const Counter = styled.div(
-	props => css`
+	_props => css`
 		position: absolute;
 		top: 50%;
 		left: 50%;

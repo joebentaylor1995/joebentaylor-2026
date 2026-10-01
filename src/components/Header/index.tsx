@@ -32,14 +32,13 @@ const MAGNETIC_STRENGTH = 0.4; // 0-1, how much the button moves (30% of distanc
 
 // Component
 // ------------
-const Header = ({ socials }: I.HeaderProps) => {
+const Header = ({ socials = [] }: I.HeaderProps) => {
 	// refs
 	const logoRef = useRef<HTMLDivElement>(null);
 	const jacketRef = useRef<HTMLElement>(null);
 
 	// Context
-	const { loaderFinishing, setProfileOpen, setContactOpen } =
-		use(GlobalContext);
+	const { loaderFinishing, setProfileOpen, setContactOpen } = use(GlobalContext);
 
 	// Check if desktop
 	const isDesktop = useIsDesktop();
@@ -123,13 +122,7 @@ const Header = ({ socials }: I.HeaderProps) => {
 				</Grid>
 			</S.Jacket>
 
-			{!isDesktop && (
-				<MobileMenu
-					navItems={NAV_ITEMS}
-					socials={socials}
-					handleClick={handleClick}
-				/>
-			)}
+			{!isDesktop && <MobileMenu navItems={NAV_ITEMS} socials={socials} handleClick={handleClick} />}
 		</>
 	);
 };

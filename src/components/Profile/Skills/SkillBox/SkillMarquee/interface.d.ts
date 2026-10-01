@@ -5,14 +5,14 @@ import { SRCImage } from 'react-datocms';
 // Exports
 // ------------
 export interface SkillMarqueeProps {
-    tools: ToolProps[];
+	tools: ToolProps[];
 	isHidden?: boolean;
 	isPlaying?: boolean;
-    isActive?: boolean;
+	isActive?: boolean;
 }
 
 export interface ToolProps {
-    id: string;
+	id: string;
 	logoIcon: LogoIconProps;
 }
 

@@ -1,7 +1,8 @@
 // Imports
 // ------------
+
+import { bp, getBrand, getGlobal } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, getGlobal, getBrand } from '@tackl';
 
 // Interfaces
 // ------------
@@ -9,7 +10,7 @@ import { bp, getGlobal, getBrand } from '@tackl';
 // Exports
 // ------------
 export const Jacket = styled.div(
-	({ theme }) => css`
+	() => css`
 		--offset: 4.8rem;
 
 		position: fixed;
@@ -31,7 +32,7 @@ export const Jacket = styled.div(
 );
 
 export const Progress = styled.div(
-	props => css`
+	_props => css`
 		position: absolute;
 		inset: 0;
 		background: ${getGlobal('white')};

@@ -1,19 +1,9 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Section,
-	Div,
-	P,
-	Footer,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
+
+import { bp, Div, getBrand, getEase, getGap, getGlobal, getRadius } from '@tackl';
 import { bodyL, bodyS } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 interface StyleInterface {
 	$isModalOpen?: boolean;
@@ -22,8 +12,8 @@ interface StyleInterface {
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	({}) => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	() => css`
 		position: relative;
 		z-index: 0;
 		width: 100%;
@@ -37,7 +27,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Texts = styled(Div)(
-	({}) => css`
+	() => css`
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -46,8 +36,8 @@ export const Texts = styled(Div)(
 	`
 );
 
-export const Text = styled(P)(
-	({}) => css`
+export const Text = styled(Div).attrs({ as: 'p' })(
+	() => css`
 		${bodyL}
 		color: ${getGlobal('white')};
 		overflow: hidden;
@@ -59,7 +49,7 @@ export const Text = styled(P)(
 );
 
 export const ButtonAnimation = styled(Div)(
-	({}) => css`
+	() => css`
 		opacity: 0; /* Start hidden, will be animated in after text animation */
 	`
 );
@@ -76,8 +66,8 @@ export const CenterContent = styled(Div)<StyleInterface>(
 	`
 );
 
-export const BottomContent = styled(Footer)(
-	({}) => css`
+export const BottomContent = styled(Div).attrs({ as: 'footer' })(
+	() => css`
 		--offset: ${getGap('m')};
 
 		position: absolute;
@@ -94,7 +84,7 @@ export const BottomContent = styled(Footer)(
 );
 
 export const Copyright = styled(Div)(
-	({}) => css`
+	() => css`
 		${bodyS}
 		color: ${getGlobal('white', 40)};
 
@@ -143,7 +133,7 @@ export const VideoPreview = styled(Div)<StyleInterface>(
 );
 
 export const Modal = styled.div(
-	({}) => css`
+	() => css`
 		position: fixed;
 		inset: 0;
 		z-index: 9998;
@@ -160,7 +150,7 @@ export const Modal = styled.div(
 );
 
 export const ModalContent = styled.div(
-	({}) => css`
+	() => css`
 		position: relative;
 		width: 100%;
 		max-width: 90rem;
@@ -172,7 +162,7 @@ export const ModalContent = styled.div(
 );
 
 export const ModalCloseButton = styled.button(
-	({}) => css`
+	() => css`
 		position: absolute;
 		top: ${getGap('s')};
 		right: ${getGap('s')};
@@ -214,7 +204,7 @@ export const ModalCloseButton = styled.button(
 );
 
 export const ModalVideo = styled.div(
-	({}) => css`
+	() => css`
 		width: 100%;
 		aspect-ratio: 16/9;
 		position: relative;

@@ -1,5 +1,7 @@
 'use client';
 
+import { useAnimation } from '@utils/useAnimation';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 /**
  * Marquee — A horizontally scrolling marquee/carousel component.
  *
@@ -24,23 +26,15 @@
  * @param autoClone - If true, repeats/duplicates the children automatically for seamless scroll. Default is `true`.
  */
 import { useRef, useState } from 'react';
-import { useAnimation } from '@utils/useAnimation';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Marquee = ({
-	children,
-	speed = 10,
-	direction = 'left',
-	autoClone = true,
-	cloneCount = 6,
-}: I.MarqueeProps) => {
+const Marquee = ({ children, speed = 10, direction = 'left', autoClone = true, cloneCount = 6 }: I.MarqueeProps) => {
 	// Reference to the outer container (jacket)
 	const jacketRef = useRef<HTMLDivElement>(null);
 
@@ -49,7 +43,7 @@ const Marquee = ({
 
 	// Sync playing state with scroll visibility using ScrollTrigger
 	useAnimation(
-		({}) => {
+		() => {
 			if (!jacketRef.current) return;
 
 			const scrollTrigger = ScrollTrigger.create({
@@ -78,17 +72,12 @@ const Marquee = ({
 	 * @param children - React children (passed by caller)
 	 */
 	const renderList = (isHidden?: boolean, children?: React.ReactNode) => {
-		const clonedChildren = autoClone
-			? Array.from({ length: cloneCount }, () => children)
-			: [children];
+		const clonedChildren = autoClone ? Array.from({ length: cloneCount }, () => children) : [children];
 
 		return (
-			<S.List
-				$isPlaying={isPlaying}
-				$direction={direction}
-				aria-hidden={isHidden ? 'true' : 'false'}
-			>
+			<S.List $isPlaying={isPlaying} $direction={direction} aria-hidden={isHidden ? 'true' : 'false'}>
 				{clonedChildren.map((child, index) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey: cloned marquee copies are positional by nature
 					<li key={index}>{child}</li>
 				))}
 			</S.List>

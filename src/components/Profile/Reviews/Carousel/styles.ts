@@ -1,25 +1,16 @@
 // Imports
 // ------------
+
+import { bp, Div, getGap } from '@tackl';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-} from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Div)(
-	props => css`
+	_props => css`
 		cursor: grab;
 		width: 100%;
 		padding-left: ${getGap('m')};
@@ -29,7 +20,7 @@ export const Jacket = styled(Div)(
 );
 
 export const Collection = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 
 		display: flex;
@@ -40,7 +31,7 @@ export const Collection = styled(Div)(
 );
 
 export const List = styled.ul(
-	props => css`
+	_props => css`
 		flex: none;
 		position: relative;
 
@@ -52,7 +43,7 @@ export const List = styled.ul(
 );
 
 export const ListItem = styled.li(
-	props => css`
+	_props => css`
 		flex: none;
 		margin-right: ${getGap('s')};
 

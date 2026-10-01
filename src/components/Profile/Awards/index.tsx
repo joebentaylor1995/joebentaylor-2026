@@ -1,27 +1,21 @@
 'use client';
 
+import StarHeading from '@parts/StarHeading';
 // Imports
 // ------------
 import Grid from '@waffl';
-import Counter from './Counter';
-import StarHeading from '@parts/StarHeading';
-import { StructuredText } from 'react-datocms';
 import { useRef } from 'react';
+import { StructuredText } from 'react-datocms';
+import Counter from './Counter';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Awards = ({
-	isActive,
-	wrapperRef,
-	columnOverride,
-	awardsDesc,
-	awards,
-}: I.AwardsProps) => {
+const Awards = ({ isActive, wrapperRef, columnOverride, awardsDesc, awards }: I.AwardsProps) => {
 	// Refs
 	const awardItemRefs = useRef<HTMLElement[]>([]);
 

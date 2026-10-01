@@ -1,10 +1,10 @@
 'use client';
 
+import { useIsDesktop } from '@utils/useResponsive';
+import { gsap } from 'gsap';
 // Imports
 // ------------
 import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-import { useIsDesktop } from '@utils/useResponsive';
 
 // Styles + Interfaces
 // ------------
@@ -43,8 +43,7 @@ const Cursor = () => {
 	useEffect(() => {
 		if (!isDesktop) return;
 
-		const getAngle = (diffX: number, diffY: number) =>
-			(Math.atan2(diffY, diffX) * 180) / Math.PI;
+		const getAngle = (diffX: number, diffY: number) => (Math.atan2(diffY, diffX) * 180) / Math.PI;
 
 		const getScale = (diffX: number, diffY: number) => {
 			const distance = Math.sqrt(diffX * diffX + diffY * diffY);

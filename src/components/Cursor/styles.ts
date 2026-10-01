@@ -1,17 +1,16 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
+
 import { bp, Div, getGlobal, getRadius } from '@tackl';
-import {} from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled(Div)(
-	props => css`
+	_props => css`
 		--size: 4.8rem;
 
 		display: none;

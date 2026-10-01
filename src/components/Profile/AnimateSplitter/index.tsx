@@ -1,31 +1,27 @@
 'use client';
 
+import { useAnimation } from '@utils/useAnimation';
 // Imports
 // ------------
 import Grid from '@waffl';
-import { useRef } from 'react';
 import { gsap } from 'gsap';
-import { useAnimation } from '@utils/useAnimation';
+import { useRef } from 'react';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const AnimatedSplitter = ({
-	columnOverride,
-	wrapperRef,
-	isActive,
-}: I.AnimatedSplitterProps) => {
+const AnimatedSplitter = ({ columnOverride, wrapperRef, isActive }: I.AnimatedSplitterProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLElement>(null);
 	const lineRef = useRef<HTMLHRElement>(null);
 
 	// Animation
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!lineRef.current || !wrapperRef?.current) return;
 
 			const tl = gsap.timeline({

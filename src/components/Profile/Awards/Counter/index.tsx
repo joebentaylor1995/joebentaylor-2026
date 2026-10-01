@@ -1,27 +1,21 @@
 'use client';
 
-// Imports
-// ------------
-import { useRef } from 'react';
+import { animateNeonFlicker } from '@utils/animateNeonFlicker';
 import { useAnimation } from '@utils/useAnimation';
 import gsap from 'gsap';
 import SplitText from 'gsap/SplitText';
-import { animateNeonFlicker } from '@utils/animateNeonFlicker';
+// Imports
+// ------------
+import { useRef } from 'react';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Counter = ({
-	count,
-	id,
-	wrapperRef,
-	isActive,
-	parentRef,
-}: I.CounterProps) => {
+const Counter = ({ count, id, wrapperRef, isActive, parentRef }: I.CounterProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLParagraphElement | null>(null);
 	const splitTextRef = useRef<SplitText | null>(null);
@@ -29,7 +23,7 @@ const Counter = ({
 
 	// Animation
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!jacketRef.current || !parentRef || !isActive) return;
 
 			const element = jacketRef.current;
@@ -54,10 +48,7 @@ const Counter = ({
 				charsClass: 'char++',
 			});
 
-			if (
-				!splitTextRef.current.chars ||
-				splitTextRef.current.chars.length === 0
-			) {
+			if (!splitTextRef.current.chars || splitTextRef.current.chars.length === 0) {
 				return;
 			}
 
@@ -86,12 +77,9 @@ const Counter = ({
 					duration: 1.2,
 					ease: 'power2.out',
 					snap: { value: 1 },
-					onUpdate: function () {
+					onUpdate: () => {
 						const currentVal = Math.ceil(countObj.value);
-						const formattedCount =
-							currentVal < 10
-								? `0${currentVal}`
-								: `${currentVal}`;
+						const formattedCount = currentVal < 10 ? `0${currentVal}` : `${currentVal}`;
 
 						// Update each character's textContent
 						splitTextRef.current?.chars?.forEach((char, index) => {
@@ -100,7 +88,7 @@ const Counter = ({
 							}
 						});
 					},
-					onComplete: function () {
+					onComplete: () => {
 						// Ensure final text is set
 						splitTextRef.current?.chars?.forEach((char, index) => {
 							if (char) {

@@ -3,17 +3,17 @@
 // Imports
 // ------------
 import StarHeading from '@parts/StarHeading';
+import { animateNeonFlicker } from '@utils/animateNeonFlicker';
 import Grid from '@waffl';
-import { StructuredText } from 'react-datocms';
-import { useRef, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
-import { animateNeonFlicker } from '@utils/animateNeonFlicker';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { StructuredText } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -28,19 +28,20 @@ const Introduction = ({
 }: I.IntroductionProps) => {
 	// Refs
 	const jacketRef = useRef<HTMLElement>(null);
-	const topSubRef = useRef<HTMLElement>(null);
+	const topSubRef = useRef<HTMLDivElement>(null);
 	const splitTextRefs = useRef<(SplitText | null)[]>([]);
-	const headingRefs = useRef<(HTMLSpanElement | null)[]>(
-		new Array(introHeading.length).fill(null)
-	);
+	const headingRefs = useRef<(HTMLSpanElement | null)[]>(new Array(introHeading.length).fill(null));
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
 
 	// Split text into characters and prepare for animation
+	// biome-ignore lint/correctness/useExhaustiveDependencies: introHeading.length intentionally re-inits the split
 	useLayoutEffect(() => {
 		if (!isActive) {
 			// Revert splits when inactive
-			splitTextRefs.current.forEach(split => split?.revert?.());
+			splitTextRefs.current.forEach(split => {
+				split?.revert?.();
+			});
 			splitTextRefs.current = [];
 			return;
 		}
@@ -50,14 +51,13 @@ const Introduction = ({
 		// Wait for next frame to ensure refs are set
 		const timeoutId = setTimeout(() => {
 			// Revert any previous splits
-			splitTextRefs.current.forEach(split => split?.revert?.());
+			splitTextRefs.current.forEach(split => {
+				split?.revert?.();
+			});
 			splitTextRefs.current = [];
 
 			// Check if we have any headings
-			if (
-				headingRefs.current.length === 0 ||
-				!headingRefs.current.some(h => h)
-			) {
+			if (headingRefs.current.length === 0 || !headingRefs.current.some(h => h)) {
 				return;
 			}
 
@@ -93,9 +93,9 @@ const Introduction = ({
 			// Collect all characters from all headings
 			const getAllChars = (): Element[] => {
 				const allChars: Element[] = [];
-				headingRefs.current.forEach((heading, index) => {
+				headingRefs.current.forEach((_heading, index) => {
 					const split = splitTextRefs.current[index];
-					if (split && split.chars && split.chars.length > 0) {
+					if (split?.chars && split.chars.length > 0) {
 						allChars.push(...split.chars);
 					}
 				});
@@ -244,7 +244,9 @@ const Introduction = ({
 		timeouts.push(timeoutId);
 
 		return () => {
-			timeouts.forEach(timeout => clearTimeout(timeout));
+			timeouts.forEach(timeout => {
+				clearTimeout(timeout);
+			});
 			// Clear interval
 			if (intervalRef.current) {
 				clearInterval(intervalRef.current);
@@ -261,7 +263,9 @@ const Introduction = ({
 	// Cleanup on unmount
 	useEffect(() => {
 		return () => {
-			splitTextRefs.current.forEach(split => split?.revert?.());
+			splitTextRefs.current.forEach(split => {
+				split?.revert?.();
+			});
 		};
 	}, []);
 
@@ -270,11 +274,7 @@ const Introduction = ({
 			<S.Top>
 				<Grid $lCols={columnOverride}>
 					<S.TopContent $l='1/9'>
-						<StarHeading
-							text={introSubheading}
-							semantic='h2'
-							passedRef={topSubRef}
-						/>
+						<StarHeading text={introSubheading} semantic='h2' passedRef={topSubRef} />
 						<S.Title>
 							{introHeading.map(({ heading }, index) => (
 								<span

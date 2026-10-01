@@ -1,17 +1,16 @@
 // Imports
 // ------------
+
+import { getGlobal } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
 export const Jacket = styled.svg(
-	props => css`
+	_props => css`
 		--aspect-ratio: 68/24;
 
 		width: auto;

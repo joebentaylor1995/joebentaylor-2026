@@ -1,12 +1,13 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
+
 import { bp, getGap, getGlobal } from '@tackl';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
 export const Jacket = styled.aside(
-	props => css`
+	_props => css`
 		position: absolute;
 		z-index: -2;
 		inset: 0;
@@ -16,7 +17,7 @@ export const Jacket = styled.aside(
 );
 
 export const IntroSection = styled.section(
-	props => css`
+	_props => css`
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
@@ -28,7 +29,7 @@ export const IntroSection = styled.section(
 );
 
 export const GridMotionContainer = styled.div(
-	props => css`
+	_props => css`
 		gap: ${getGap('s')};
 		flex: none;
 		position: relative;
@@ -45,7 +46,7 @@ export const GridMotionContainer = styled.div(
 );
 
 export const Row = styled.div(
-	props => css`
+	_props => css`
 		display: grid;
 		gap: ${getGap('s')};
 		grid-template-columns: repeat(7, 1fr);
@@ -56,13 +57,13 @@ export const Row = styled.div(
 );
 
 export const RowItem = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 	`
 );
 
 export const RowItemInner = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 		aspect-ratio: 4 / 3;
 		width: 40vw;
@@ -78,7 +79,7 @@ export const RowItemInner = styled.div(
 );
 
 export const RowItemImgWrapper = styled.div(
-	props => css`
+	_props => css`
 		position: absolute;
 		inset: 0;
 		overflow: hidden;

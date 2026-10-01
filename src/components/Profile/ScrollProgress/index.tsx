@@ -1,15 +1,14 @@
 'use client';
 
-// Imports
-// ------------
-import { useRef, useEffect } from 'react';
-import { use } from 'react';
-import { gsap } from 'gsap';
+import { bezzy2 } from '@parts/AnimationPlugins/Curves';
 import { GlobalContext } from '@parts/Contexts';
 import { useAnimation } from '@utils/useAnimation';
-import { bezzy, bezzy2 } from '@parts/AnimationPlugins/Curves';
+import { gsap } from 'gsap';
+// Imports
+// ------------
+import { use, useEffect, useRef } from 'react';
 
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
@@ -54,12 +53,7 @@ const ScrollProgress = ({ isActive, wrapperRef }: I.ScrollProgressProps) => {
 		let cleanupFn: (() => void) | null = null;
 
 		const timeoutId = setTimeout(() => {
-			if (
-				!profileLenis.current ||
-				!progressRef.current ||
-				!wrapperRef?.current
-			)
-				return;
+			if (!profileLenis.current || !progressRef.current || !wrapperRef?.current) return;
 
 			const lenis = profileLenis.current;
 			const progress = progressRef.current;

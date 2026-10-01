@@ -4,11 +4,11 @@
 // Exports
 // ------------
 export interface SocialsProps {
-    socials: SocialProps[];
+	socials: SocialProps[];
 }
 
 export interface SocialProps {
-    name: string;
-    url: string;
-    isEnabled?: boolean;
+	name: string;
+	url: string;
+	isEnabled?: boolean;
 }

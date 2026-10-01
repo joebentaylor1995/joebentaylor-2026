@@ -82,9 +82,7 @@ export function useResponsive(): ResponsiveState {
 
 	return {
 		isMobile: windowWidth < DESKTOP_BREAKPOINT,
-		isTablet:
-			windowWidth >= MOBILE_BREAKPOINT &&
-			windowWidth < DESKTOP_BREAKPOINT,
+		isTablet: windowWidth >= MOBILE_BREAKPOINT && windowWidth < DESKTOP_BREAKPOINT,
 		isDesktop: windowWidth >= DESKTOP_BREAKPOINT,
 	};
 }

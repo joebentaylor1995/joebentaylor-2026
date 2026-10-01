@@ -1,7 +1,8 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
+
 import { Div } from '@tackl';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------

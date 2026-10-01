@@ -1,26 +1,17 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import {
-	bp,
-	Section,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getFontWeight,
-} from '@tackl';
+
+import { bp, Div, getGap, getGlobal } from '@tackl';
 import { bodyL, titleL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		position: relative;
 		padding-block: ${getGap('xl')};
 		overflow: clip;
@@ -32,7 +23,7 @@ export const Jacket = styled(Section)(
 );
 
 export const Content = styled(Div)(
-	props => css`
+	_props => css`
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -41,7 +32,7 @@ export const Content = styled(Div)(
 );
 
 export const Heading = styled.h3(
-	props => css`
+	_props => css`
 		${titleL}
 		color: ${getGlobal('white')};
 		text-wrap: balance;
@@ -49,7 +40,7 @@ export const Heading = styled.h3(
 );
 
 export const Desc = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-direction: column;
 		gap: ${getGap('m')};

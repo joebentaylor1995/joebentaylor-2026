@@ -1,21 +1,22 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, Section, getGap, P } from '@tackl';
+
+import { bp, Div, getGap } from '@tackl';
 import { titleL } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		padding-block: ${getGap('xl')};
 
 		${bp.l` padding-block: ${getGap('uber')} `}
 	`
 );
 
-export const Text = styled(P)(
-	props => css`
+export const Text = styled(Div).attrs({ as: 'p' })(
+	_props => css`
 		${titleL}
 		text-wrap: pretty;
 	`

@@ -35,14 +35,9 @@ export interface DribbbleUser {
  * @param page - Page number
  * @returns Promise with array of Dribbble shots
  */
-export async function fetchDribbbleShots(
-	perPage: number = 100,
-	page: number = 1
-): Promise<DribbbleShot[]> {
+export async function fetchDribbbleShots(perPage: number = 100, page: number = 1): Promise<DribbbleShot[]> {
 	// Use server-side token (more secure) or public token (client-side)
-	const accessToken =
-		process.env.DRIBBBLE_ACCESS_TOKEN ||
-		process.env.NEXT_PUBLIC_DRIBBBLE_ACCESS_TOKEN;
+	const accessToken = process.env.DRIBBBLE_ACCESS_TOKEN || process.env.NEXT_PUBLIC_DRIBBBLE_ACCESS_TOKEN;
 
 	if (!accessToken) {
 		console.warn(

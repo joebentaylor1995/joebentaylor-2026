@@ -1,7 +1,8 @@
 // Imports
 // ------
-import { Aside, Div, bp, getEase, getFeedback } from '@/theme/tackl';
+
 import styled, { css } from 'styled-components';
+import { bp, Div, getEase, getFeedback } from '@/theme/tackl';
 
 // Interfaces
 // ------
@@ -10,6 +11,7 @@ interface ColProps {
 	$isMobile?: boolean;
 	$isTablet?: boolean;
 	$isDesktop?: boolean;
+	$col?: number;
 }
 
 interface JacketProps {
@@ -20,18 +22,21 @@ interface JacketProps {
 // Exports
 // ------
 export const Col = styled(Div)<ColProps>(
-	({ $isMobile, $isTablet, $altColor }) => css`
+	props => css`
+		grid-column: ${props.$col};
 		height: 100%;
 		display: none;
 
-		${$isMobile &&
-		css`
+		${
+			props.$isMobile &&
+			css`
 			display: block;
-		`}
+		`
+		}
 
 		${bp.m`
             ${
-				$isTablet &&
+				props.$isTablet &&
 				css`
 					display: block;
 				`
@@ -47,7 +52,7 @@ export const Col = styled(Div)<ColProps>(
 			display: block;
 
 			border-inline-style: dashed;
-			border-inline-width: ${$altColor ? 0 : 1}px;
+			border-inline-width: ${!props.$altColor ? 0 : 1}px;
 			border-inline-color: ${getFeedback('negative')};
 
 			width: var(--max);
@@ -56,31 +61,29 @@ export const Col = styled(Div)<ColProps>(
 
 			&:after {
 				content: '';
-				opacity: ${$altColor ? 0.5 : 0.2};
+				opacity: ${!props.$altColor ? 0.5 : 0.2};
 				display: block;
 				width: var(--max);
 				height: var(--max);
 				transition: all 0.25s linear;
-				background-color: ${$altColor
-					? getFeedback('negative')
-					: 'transparent'};
+				background-color: ${!props.$altColor ? getFeedback('negative') : 'transparent'};
 			}
 		}
 	`
 );
 
-export const Jacket = styled(Aside)<JacketProps>(
-	({ $showGrid }) => css`
+export const Jacket = styled(Div).attrs({ as: 'aside' })<JacketProps>(
+	props => css`
 		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 9999;
 		width: 100%;
-		height: ${$showGrid ? 100 : 0}%;
+		height: ${props.$showGrid ? `100%` : `0%`};
 		pointer-events: none;
 		transition: all 1s ${getEase('bezzy')};
 
-		> waffl-grid {
+		waffl-grid {
 			height: 100%;
 		}
 	`

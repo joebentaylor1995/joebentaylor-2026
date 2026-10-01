@@ -3,21 +3,17 @@
 // Imports
 // ------------
 import { useMagneticMultiple } from '@utils/useMagnetic';
-import { useRef } from 'react';
 import { useIsDesktop } from '@utils/useResponsive';
+import { useRef } from 'react';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const DesktopMenu = ({
-	magneticOptions,
-	navItems,
-	handleClick,
-}: I.DesktopMenuProps) => {
+const DesktopMenu = ({ magneticOptions, navItems, handleClick }: I.DesktopMenuProps) => {
 	// Refs
 	const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -50,6 +46,7 @@ const DesktopMenu = ({
 				>
 					<span>
 						{item.label.split('').map((char, idx) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: static split-text letters — position is the identity
 							<span key={idx} className='letter'>
 								{char === ' ' ? '\u00A0' : char}
 							</span>

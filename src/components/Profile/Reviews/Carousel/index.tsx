@@ -1,23 +1,23 @@
 'use client';
 
+import { useAnimation } from '@utils/useAnimation';
+import gsap from 'gsap';
+import { Draggable } from 'gsap/Draggable';
+import { useRef } from 'react';
 // Imports
 // ------------
 import Card from './Card';
-import gsap from 'gsap';
-import { Draggable } from 'gsap/Draggable';
-import { useAnimation } from '@utils/useAnimation';
-import { useRef } from 'react';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
 const Carousel = ({ reviews, isActive }: I.CarouselProps) => {
 	// Refs
-	const jacketRef = useRef<HTMLDivElement>(null);
+	const _jacketRef = useRef<HTMLDivElement>(null);
 	const initRef = useRef<HTMLDivElement>(null);
 	const wrapRef = useRef<HTMLDivElement>(null);
 	const sliderRef = useRef<HTMLUListElement>(null);
@@ -25,21 +25,17 @@ const Carousel = ({ reviews, isActive }: I.CarouselProps) => {
 
 	// Animation
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			const init = initRef.current;
 			const wrap = wrapRef.current;
 			const slider = sliderRef.current;
-			const slides = slideRefs.current.filter(
-				(slide): slide is HTMLLIElement => slide !== null
-			);
+			const slides = slideRefs.current.filter((slide): slide is HTMLLIElement => slide !== null);
 
 			if (!init || !wrap || !slider || !slides.length) return;
 
 			// Attributes with defaults
-			const minScale =
-				parseFloat(init.getAttribute('data-scale') || '') || 0.45;
-			const maxRotation =
-				parseFloat(init.getAttribute('data-rotate') || '') || -8;
+			const minScale = parseFloat(init.getAttribute('data-scale') || '') || 0.45;
+			const maxRotation = parseFloat(init.getAttribute('data-rotate') || '') || -8;
 			const inertia = true;
 
 			wrap.style.touchAction = 'none';
@@ -151,10 +147,7 @@ const Carousel = ({ reviews, isActive }: I.CarouselProps) => {
 				);
 
 				if (wrap) {
-					wrap.setAttribute(
-						'aria-label',
-						`Slide ${idx + 1} of ${slides.length}`
-					);
+					wrap.setAttribute('aria-label', `Slide ${idx + 1} of ${slides.length}`);
 				}
 			}
 

@@ -25,18 +25,18 @@ import * as S from './styles';
 
 // Component
 // ------------
-const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
+const Hero = ({ subheading, title }: I.HeroProps) => {
 	// Refs
-	const textRef = useRef<HTMLElement>(null);
-	const jacketRef = useRef<HTMLElement>(null);
+	const textRef = useRef<HTMLParagraphElement>(null);
+	const jacketRef = useRef<HTMLDivElement>(null);
 	const textSplitRef = useRef<SplitText | null>(null);
-	const centerContentRef = useRef<HTMLElement>(null);
-	const bottomContentRef = useRef<HTMLElement>(null);
+	const centerContentRef = useRef<HTMLDivElement>(null);
+	const bottomContentRef = useRef<HTMLDivElement>(null);
 	const modalRef = useRef<HTMLElement>(null);
 	const modalContentRef = useRef<HTMLDivElement>(null);
 	const videoPreviewRef = useRef<HTMLDivElement>(null);
-	const buttonAnimationRef = useRef<HTMLElement>(null);
-	const starHeadingRef = useRef<HTMLElement>(null);
+	const buttonAnimationRef = useRef<HTMLDivElement>(null);
+	const starHeadingRef = useRef<HTMLDivElement>(null);
 
 	// Responsive Breakpoints
 	const { isMobile, isDesktop } = useResponsive();
@@ -195,11 +195,13 @@ const Hero = ({ subheading, title, videoThumbnail, video }: I.HeroProps) => {
 	useEffect(() => {
 		if (!videoPreviewRef.current) return;
 
-		const muxPlayerElement = videoPreviewRef.current.querySelector('mux-player') as any;
+		// mux-player is a web component exposing the underlying media element via .media
+		const muxPlayerElement = videoPreviewRef.current.querySelector<HTMLElement & { media?: HTMLMediaElement }>(
+			'mux-player'
+		);
 		if (!muxPlayerElement) return;
 
-		// mux-player is a web component, access the underlying media element
-		const mediaElement = muxPlayerElement.media || (muxPlayerElement as HTMLMediaElement);
+		const mediaElement = muxPlayerElement.media || (muxPlayerElement as unknown as HTMLMediaElement);
 		if (!mediaElement) return;
 
 		if (isModalOpen) {

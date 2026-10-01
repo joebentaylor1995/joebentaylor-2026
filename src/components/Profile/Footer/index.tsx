@@ -1,22 +1,21 @@
 'use client';
 
-// Imports
-// ------------
-import Socials from './Socials';
-import StarHeading from '@/components/StarHeading';
-import Background from './Background';
+import { animateNeonFlicker } from '@utils/animateNeonFlicker';
+import { useAnimation } from '@utils/useAnimation';
+import { useCurrentTime } from '@utils/useCurrentTime';
 import Grid from '@waffl';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
-import { useRef, useEffect, useState } from 'react';
-import { useAnimation } from '@utils/useAnimation';
-import { useCurrentTime } from '@utils/useCurrentTime';
-import { animateNeonFlicker } from '@utils/animateNeonFlicker';
-
+import { useEffect, useRef, useState } from 'react';
+import StarHeading from '@/components/StarHeading';
+import Background from './Background';
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
+// Imports
+// ------------
+import Socials from './Socials';
 import * as S from './styles';
 
 // Component
@@ -38,9 +37,7 @@ const Footer = ({
 	const flickerTimelineRef = useRef<gsap.core.Timeline | null>(null);
 	const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
 	const gradientRef = useRef<HTMLDivElement>(null);
-	const mouseXRef = useRef<number>(
-		typeof window !== 'undefined' ? window.innerWidth / 2 : 0
-	);
+	const mouseXRef = useRef<number>(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
 
 	// State for Dribbble images
 	const [dribbbleImages, setDribbbleImages] = useState<string[]>([]);
@@ -49,6 +46,7 @@ const Footer = ({
 	const totalItems = 49;
 
 	// Fetch Dribbble shots
+	// biome-ignore lint/correctness/useExhaustiveDependencies: totalItems intentionally re-triggers the fetch
 	useEffect(() => {
 		if (!dribbbleUsername) return;
 
@@ -64,11 +62,7 @@ const Footer = ({
 			.then(data => {
 				if (isCancelled) return;
 
-				if (
-					data.imageUrls &&
-					Array.isArray(data.imageUrls) &&
-					data.imageUrls.length > 0
-				) {
+				if (data.imageUrls && Array.isArray(data.imageUrls) && data.imageUrls.length > 0) {
 					setDribbbleImages(data.imageUrls);
 				}
 			})
@@ -87,10 +81,7 @@ const Footer = ({
 	const imageUrls =
 		items.length > 0
 			? items
-					.filter(
-						(item): item is string =>
-							typeof item === 'string' && item.startsWith('http')
-					)
+					.filter((item): item is string => typeof item === 'string' && item.startsWith('http'))
 					.slice(0, totalItems)
 			: dribbbleImages.slice(0, totalItems);
 
@@ -121,16 +112,11 @@ const Footer = ({
 					if (row) {
 						const direction = index % 2 === 0 ? 1 : -1;
 						const moveAmount =
-							((mouseXRef.current / window.innerWidth) *
-								maxMoveAmount -
-								maxMoveAmount / 2) *
-							direction;
+							((mouseXRef.current / window.innerWidth) * maxMoveAmount - maxMoveAmount / 2) * direction;
 
 						gsap.to(row, {
 							x: moveAmount,
-							duration:
-								baseDuration +
-								inertiaFactors[index % inertiaFactors.length],
+							duration: baseDuration + inertiaFactors[index % inertiaFactors.length],
 							ease: 'power3.out',
 							overwrite: 'auto',
 						});
@@ -204,7 +190,7 @@ const Footer = ({
 
 	// Intro section animation
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!isActive || !wrapperRef?.current || !jacketRef.current) return;
 
 			const tl = gsap.timeline({
@@ -235,8 +221,7 @@ const Footer = ({
 	// Neon flicker animation on scroll and hover
 	useAnimation(
 		() => {
-			if (!isActive || !headingRef.current || !wrapperRef?.current)
-				return;
+			if (!isActive || !headingRef.current || !wrapperRef?.current) return;
 
 			const heading = headingRef.current;
 
@@ -252,10 +237,7 @@ const Footer = ({
 				charsClass: 'char++',
 			});
 
-			if (
-				!splitTextRef.current.chars ||
-				splitTextRef.current.chars.length === 0
-			) {
+			if (!splitTextRef.current.chars || splitTextRef.current.chars.length === 0) {
 				return;
 			}
 

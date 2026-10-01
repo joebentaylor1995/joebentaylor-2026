@@ -1,8 +1,9 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
-import { bp, getGlobal, getEase, getGap } from '@tackl';
+
+import { bp, getEase, getGap, getGlobal } from '@tackl';
 import { bodyM } from '@tackl/type';
+import styled, { css } from 'styled-components';
 
 // Interfaces
 // ------------

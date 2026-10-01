@@ -1,12 +1,13 @@
 // Imports
 // ------------
-import styled, { css } from 'styled-components';
+
 import { bp, Div, getBrand, getRadius } from '@tackl';
+import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
 export const Jacket = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: center;
 		width: 100%;
@@ -28,13 +29,13 @@ export const Jacket = styled(Div)(
 );
 
 export const Collection = styled(Div)(
-	props => css`
+	_props => css`
 		width: 100%;
 	`
 );
 
 export const List = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		flex-flow: wrap;
 		border: 1px solid ${getBrand('bc3')};
@@ -43,7 +44,7 @@ export const List = styled(Div)(
 );
 
 export const ListItem = styled(Div)(
-	props => css`
+	_props => css`
 		width: 50%;
 		position: relative;
 		border-right: 1px solid ${getBrand('bc3')};
@@ -72,7 +73,7 @@ export const ListItem = styled(Div)(
 );
 
 export const LogoWall = styled(Div)(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -81,7 +82,7 @@ export const LogoWall = styled(Div)(
 );
 
 export const LogoBefore = styled(Div)(
-	props => css`
+	_props => css`
 		display: block;
 		aspect-ratio: 1/1;
 		width: 100%;
@@ -89,7 +90,7 @@ export const LogoBefore = styled(Div)(
 );
 
 export const LogoTarget = styled(Div)(
-	props => css`
+	_props => css`
 		justify-content: center;
 		align-items: center;
 		width: 100%;

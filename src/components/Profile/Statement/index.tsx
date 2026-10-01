@@ -1,37 +1,30 @@
 'use client';
 
+import { useAnimation } from '@utils/useAnimation';
 // Imports
 // ------------
 import Grid from '@waffl';
+import { gsap } from 'gsap';
 import SplitText from 'gsap/SplitText';
 import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { useAnimation } from '@utils/useAnimation';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Statement = ({
-	statement,
-	columnOverride,
-	wrapperRef,
-	isActive,
-}: I.StatementProps) => {
-	if (!statement) return null;
-
+const Statement = ({ statement, columnOverride, wrapperRef, isActive }: I.StatementProps) => {
 	// Refs
-	const textRef = useRef<HTMLElement>(null);
-	const jacketRef = useRef<HTMLElement>(null);
+	const textRef = useRef<HTMLParagraphElement>(null);
+	const jacketRef = useRef<HTMLDivElement>(null);
 	const splitRef = useRef<SplitText | null>(null);
 	const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
 	// Split text and animate on scroll
 	useAnimation(
-		({ isDesktop }) => {
+		() => {
 			if (!textRef.current || !wrapperRef?.current) return;
 
 			// Revert previous split before creating new one
@@ -79,6 +72,8 @@ const Statement = ({
 		},
 		{ scope: jacketRef, dependencies: [statement, wrapperRef, isActive] }
 	);
+
+	if (!statement) return null;
 
 	return (
 		<S.Jacket ref={jacketRef}>

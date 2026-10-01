@@ -1,8 +1,8 @@
 // Imports
 // ------------
+
+import { bp, Div, getBrand, getEase, getGap } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, Div, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
@@ -73,7 +73,7 @@ export const Content = styled.ul<StylesInterface>(
 );
 
 export const Picture = styled.div(
-	props => css`
+	_props => css`
 		--size: 10.8rem;
 		--icon-size: 4.8rem;
 

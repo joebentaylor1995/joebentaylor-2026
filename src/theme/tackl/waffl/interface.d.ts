@@ -7,11 +7,11 @@ import { Theme } from '@theme/interface';
 // NOTE — Props for responsive grid spans with $ prefix
 type ResponsiveProps = {
 	[K in keyof Breakpoints as `$${K}`]?: string;
-}
+};
 
 // SECTION • Waffl
 // NOTE — The main waffl object structure
-interface GridInterface extends ResponsiveProps {
+export interface GridInterface extends ResponsiveProps {
 	theme?: Theme;
 	$noMargin?: boolean;
 	$isFixed?: boolean;
@@ -20,5 +20,6 @@ interface GridInterface extends ResponsiveProps {
 	$isCenter?: boolean;
 	$noGutter?: boolean;
 	$lCols?: number;
+	ref?: React.Ref<HTMLElement>;
 	children?: React.ReactNode;
 }

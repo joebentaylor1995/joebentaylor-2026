@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 
 // Interfaces
 // ------------
@@ -188,18 +188,11 @@ export const useMagneticMultiple = <T extends HTMLElement>(
 			// Kill all animations and reset positions
 			animationRefs.current.forEach((anim, index) => {
 				anim?.kill();
-				if (elementsRef.current[index]) {
-					gsap.set(elementsRef.current[index]!, { x: 0, y: 0 });
+				const element = elementsRef.current[index];
+				if (element) {
+					gsap.set(element, { x: 0, y: 0 });
 				}
 			});
 		};
-	}, [
-		enabled,
-		radius,
-		strength,
-		pullDuration,
-		releaseDuration,
-		ease,
-		elementsRef,
-	]);
+	}, [enabled, radius, strength, pullDuration, releaseDuration, ease, elementsRef]);
 };

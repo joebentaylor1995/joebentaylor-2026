@@ -6,19 +6,12 @@ import { SRCImage } from 'react-datocms';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
 // ------------
-const Card = ({
-	id,
-	quote,
-	authorName,
-	authorRole,
-	authorPicture,
-	authorCompany,
-}: I.CardProps) => {
+const Card = ({ quote, authorName, authorRole, authorPicture, authorCompany }: I.CardProps) => {
 	return (
 		<S.Jacket data-hover>
 			<header>

@@ -3,9 +3,6 @@
 
 // Exports
 // ------------
-export interface ContactProps {
-
-}
 
 export interface SmoothScrollProps {
 	wrapperRef: React.RefObject<HTMLDivElement | null>;

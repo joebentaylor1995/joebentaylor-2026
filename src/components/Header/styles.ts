@@ -1,12 +1,12 @@
 // Imports
 // ------------
-import { bp, Header, getGap, Div } from '@tackl';
+import { bp, Div, getGap } from '@tackl';
 import styled, { css } from 'styled-components';
 
 // Exports
 // ------------
-export const Jacket = styled(Header)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'header' })(
+	_props => css`
 		position: fixed;
 		z-index: 100;
 		inset: 0 0 auto 0;
@@ -30,17 +30,17 @@ export const Jacket = styled(Header)(
 	`
 );
 
-export const Col = styled(Div)<{ $isRight?: boolean }>(props => css``);
+export const Col = styled(Div)<{ $isRight?: boolean }>(_props => css``);
 
 export const LogoWrapper = styled.div(
-	props => css`
+	_props => css`
 		position: relative; /* Needed for magnetic transform */
 		display: inline-block; /* Keep logo inline but allow transforms */
 	`
 );
 
 export const Hamburger = styled.div(
-	props => css`
+	_props => css`
 		display: flex;
 		justify-content: flex-end;
 

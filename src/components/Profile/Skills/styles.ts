@@ -1,17 +1,16 @@
 // Imports
 // ------------
+
+import { bp, Div, getGap } from '@tackl';
 import styled, { css } from 'styled-components';
-import { bp, Div, Section, getBrand, getGlobal, getEase, getGap } from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Section)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'section' })(
+	_props => css`
 		padding-block: ${getGap('xl')};
 
 		${bp.l`

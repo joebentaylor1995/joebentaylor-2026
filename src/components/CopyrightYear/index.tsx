@@ -2,22 +2,21 @@
 
 // Imports
 // ------------
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Component
 // ------------
-const CopyrightYear = ({ }) => {
-    // States
-    const [currentYear, setCurrentYear] = useState<number | null>(2026);
+const CopyrightYear = () => {
+	// States
+	const [currentYear, setCurrentYear] = useState<number | null>(2026);
 
-    // OnMount
-    useEffect(() => {
-        setCurrentYear(new Date().getFullYear());
-    }, []);
-    
-    
-    return currentYear;
-}
+	// OnMount
+	useEffect(() => {
+		setCurrentYear(new Date().getFullYear());
+	}, []);
+
+	return currentYear;
+};
 
 // Exports
 // ------------

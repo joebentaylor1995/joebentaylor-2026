@@ -1,26 +1,16 @@
 // Imports
 // ------------
+
+import { bp, Div, getBrand, getGap, getGlobal, getRadius } from '@tackl';
 import styled, { css } from 'styled-components';
-import {
-	bp,
-	Div,
-	getBrand,
-	getGlobal,
-	getEase,
-	getGap,
-	getRadius,
-	Aside,
-} from '@tackl';
-import {} from '@tackl/type';
 
 // Interfaces
 // ------------
-interface CHANGE_ME {}
 
 // Exports
 // ------------
-export const Jacket = styled(Aside)(
-	props => css`
+export const Jacket = styled(Div).attrs({ as: 'aside' })(
+	_props => css`
 		position: fixed;
 		inset: 0;
 		z-index: 9998;
@@ -37,7 +27,7 @@ export const Jacket = styled(Aside)(
 );
 
 export const ModalContent = styled.div(
-	props => css`
+	_props => css`
 		position: relative;
 		width: 100%;
 		max-width: 90rem;
@@ -49,7 +39,7 @@ export const ModalContent = styled.div(
 );
 
 export const ModalCloseButton = styled.button(
-	props => css`
+	_props => css`
 		position: absolute;
 		top: ${getGap('s')};
 		right: ${getGap('s')};
@@ -91,7 +81,7 @@ export const ModalCloseButton = styled.button(
 );
 
 export const ModalVideo = styled.div(
-	props => css`
+	_props => css`
 		width: 100%;
 		aspect-ratio: 16/9;
 		position: relative;

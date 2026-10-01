@@ -1,97 +1,162 @@
 // Imports
 // ------
-import { breakpointUp as bp } from '@/theme/tackl/breakpoints';
+
 import { theme } from '@theme';
-import { css } from 'styled-components';
-import { getFont, getFontWeight } from '@tackl';
+import { css, type RuleSet } from 'styled-components';
+import { breakpointUp as bp } from '@/theme/tackl/breakpoints';
 
-export const displayL: ReturnType<typeof css> = css`
-	font-family: ${getFont('body')};
-	font-weight: ${getFontWeight('light')};
+// SECTION • Raw Type Scale
+// NOTE • Single source of truth for the type styles below — mobile-first:
+// `base` always applies and `sm`/`m`/`l`/`xl` layer overrides from their
+// breakpoint up. Every property is optional per breakpoint (omitted =
+// inherited); family/weight resolve through the theme getters, so tokens
+// stay the single source.
+export type TypeScaleFamily = 'heading' | 'body' | 'mono' | 'script';
+export type TypeScaleWeight = 'light' | 'regular' | 'medium' | 'semi' | 'bold' | 'heavy' | 'black';
 
-	display: block;
-	font-style: normal;
-	font-size: 7.2rem;
-	line-height: 1.12;
-	letter-spacing: 2px;
+export type TypeScaleBreakpoint = {
+	family?: TypeScaleFamily;
+	weight?: TypeScaleWeight;
+	size?: string;
+	lineHeight?: string;
+	letterSpacing?: string;
+	textTransform?: string;
+	display?: string;
+};
 
-	${bp.l`
-		font-size: 12rem;
-	`}
+export type TypeScaleEntry = {
+	base: TypeScaleBreakpoint;
+	sm?: TypeScaleBreakpoint;
+	m?: TypeScaleBreakpoint;
+	l?: TypeScaleBreakpoint;
+	xl?: TypeScaleBreakpoint;
+};
+
+export const typeScale = {
+	displayL: {
+		base: {
+			family: 'body',
+			weight: 'light',
+			display: 'block',
+			size: '7.2rem',
+			lineHeight: '1.12',
+			letterSpacing: '2px',
+		},
+		l: { size: '12rem' },
+	},
+
+	titleL: {
+		base: { family: 'body', weight: 'regular', size: '3.2rem', lineHeight: '1.32' },
+		l: { size: '4.8rem' },
+	},
+
+	bodyL: {
+		base: { family: 'body', weight: 'regular', display: 'block', size: '2.2rem', lineHeight: '1.32' },
+		sm: { size: '2.4rem' },
+		l: { size: '2.6rem' },
+	},
+
+	bodyM: {
+		base: {
+			family: 'body',
+			weight: 'regular',
+			display: 'block',
+			size: '1.6rem',
+			lineHeight: '1.32',
+			letterSpacing: '0.5px',
+		},
+		sm: { size: '1.7rem' },
+		l: { size: '1.8rem' },
+	},
+
+	bodyS: {
+		base: {
+			family: 'body',
+			weight: 'regular',
+			display: 'block',
+			size: '1.2rem',
+			lineHeight: '1.32',
+			letterSpacing: '0.5px',
+		},
+		sm: { size: '1.3rem' },
+		l: { size: '1.4rem' },
+	},
+
+	captionL: {
+		base: {
+			family: 'heading',
+			weight: 'regular',
+			display: 'block',
+			size: '0.8rem',
+			lineHeight: '1.2',
+			letterSpacing: '1px',
+			textTransform: 'uppercase',
+		},
+		sm: { size: '0.9rem' },
+		l: { size: '1rem' },
+	},
+
+	captionS: {
+		base: {
+			family: 'body',
+			weight: 'regular',
+			display: 'block',
+			size: '0.8rem',
+			lineHeight: '1.2',
+			letterSpacing: '0.2px',
+		},
+		sm: { size: '0.9rem' },
+		l: { size: '1rem' },
+	},
+} satisfies Record<string, TypeScaleEntry>;
+
+// ANCHOR • Declarations for one breakpoint block — only set what's defined
+const breakpointStyles = (block: TypeScaleBreakpoint): RuleSet => css`
+	${block.family ? css`font-family: ${theme.font.family[block.family]};` : ''}
+	${block.weight ? css`font-weight: ${theme.font.weight[block.weight]};` : ''}
+	${block.display ? `display: ${block.display};` : ''}
+	${block.size ? `font-size: ${block.size};` : ''}
+	${block.lineHeight ? `line-height: ${block.lineHeight};` : ''}
+	${block.letterSpacing ? `letter-spacing: ${block.letterSpacing};` : ''}
+	${block.textTransform ? `text-transform: ${block.textTransform};` : ''}
 `;
 
-export const titleL: ReturnType<typeof css> = css`
-	font-family: ${getFont('body')};
-	font-weight: ${getFontWeight('regular')};
-
-	font-size: 3.2rem;
-	line-height: 1.32;
-
-	${bp.l` font-size: 4.8rem; `}
+const scaleStyles = (entry: TypeScaleEntry): RuleSet => css`
+	${breakpointStyles(entry.base)}
+	${entry.sm ? bp.sm`${breakpointStyles(entry.sm)}` : ''}
+	${entry.m ? bp.m`${breakpointStyles(entry.m)}` : ''}
+	${entry.l ? bp.l`${breakpointStyles(entry.l)}` : ''}
+	${entry.xl ? bp.xl`${breakpointStyles(entry.xl)}` : ''}
 `;
 
-const sharedBodyStyles: ReturnType<typeof css> = css`
-	font-family: ${getFont('body')};
-	font-weight: ${getFontWeight('regular')};
-
-	display: block;
-	font-style: normal;
-	line-height: 1.32;
+// SECTION • Display styles
+export const displayL: RuleSet = css`
+	${scaleStyles(typeScale.displayL)}
 `;
 
-export const bodyL: ReturnType<typeof css> = css`
-	${sharedBodyStyles}
-	font-size: 2.2rem;
-
-	${bp.sm` font-size: 2.4rem; `}
-	${bp.l` font-size: 2.6rem; `}
+// SECTION • Title styles
+export const titleL: RuleSet = css`
+	${scaleStyles(typeScale.titleL)}
 `;
 
-export const bodyM: ReturnType<typeof css> = css`
-	${sharedBodyStyles}
-
-	font-size: 1.6rem;
-	letter-spacing: 0.5px;
-
-	${bp.sm` font-size: 1.7rem; `}
-	${bp.l` font-size: 1.8rem; `}
+// SECTION • Body styles
+export const bodyL: RuleSet = css`
+	${scaleStyles(typeScale.bodyL)}
 `;
 
-export const bodyS: ReturnType<typeof css> = css`
-	${sharedBodyStyles}
-
-	font-size: 1.2rem;
-	letter-spacing: 0.5px;
-
-	${bp.sm` font-size: 1.3rem; `}
-	${bp.l` font-size: 1.4rem; `}
+export const bodyM: RuleSet = css`
+	${scaleStyles(typeScale.bodyM)}
 `;
 
-export const captionL: ReturnType<typeof css> = css`
-	font-family: ${getFont('heading')};
-	font-weight: ${getFontWeight('regular')};
-
-	display: block;
-	font-style: normal;
-	font-size: 0.8rem;
-	line-height: 1.2;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-
-	${bp.sm` font-size: 0.9rem; `}
-	${bp.l` font-size: 1rem; `}
+export const bodyS: RuleSet = css`
+	${scaleStyles(typeScale.bodyS)}
 `;
 
-export const captionS: ReturnType<typeof css> = css`
-	font-family: ${getFont('body')};
-	font-weight: ${getFontWeight('regular')};
+// SECTION • Caption styles
+export const captionL: RuleSet = css`
+	${scaleStyles(typeScale.captionL)}
+`;
 
-	display: block;
-	font-style: normal;
-	font-size: 0.8rem;
-	line-height: 1.2;
-	letter-spacing: 0.2px;
-
-	${bp.sm` font-size: 0.9rem; `}
-	${bp.l` font-size: 1rem; `}
+export const captionS: RuleSet = css`
+	${scaleStyles(typeScale.captionS)}
 `;

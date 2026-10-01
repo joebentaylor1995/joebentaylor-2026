@@ -6,38 +6,29 @@ import Image from 'next/image';
 
 // Styles + Interfaces
 // ------------
-import * as I from './interface';
+import type * as I from './interface';
 import * as S from './styles';
 
 // Component
-const Background = ({
-	imageUrls,
-	rows,
-	itemsPerRow,
-	rowRefs,
-	gridRef,
-	introSectionRef,
-	isActive,
-}: I.BackgroundProps) => {
+const Background = ({ imageUrls, rows, itemsPerRow, rowRefs, gridRef, introSectionRef }: I.BackgroundProps) => {
 	return (
 		<S.Jacket ref={gridRef}>
 			<S.IntroSection ref={introSectionRef}>
 				<S.GridMotionContainer>
 					{Array.from({ length: rows }, (_, rowIndex) => {
-						const rowImages = imageUrls.slice(
-							rowIndex * itemsPerRow,
-							(rowIndex + 1) * itemsPerRow
-						);
+						const rowImages = imageUrls.slice(rowIndex * itemsPerRow, (rowIndex + 1) * itemsPerRow);
 
 						return (
 							<S.Row
+								// biome-ignore lint/suspicious/noArrayIndexKey: decorative generated grid — rows are positional
 								key={rowIndex}
 								ref={el => {
 									rowRefs.current[rowIndex] = el;
 								}}
 							>
 								{rowImages.map((imageUrl, itemIndex) => (
-									<S.RowItem key={`${rowIndex}-${itemIndex}`}>
+									// biome-ignore lint/suspicious/noArrayIndexKey: decorative generated grid — cells are positional
+									<S.RowItem key={`${rowIndex}-${itemIndex}-${imageUrl}`}>
 										<S.RowItemInner>
 											<S.RowItemImgWrapper>
 												<picture>
